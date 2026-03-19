@@ -12,11 +12,14 @@ add_library(easy_rider_core
     src/core/RoadSegment.cpp
     src/core/City.cpp
     src/core/Vehicle.cpp
+    src/core/VehicleGenerator.cpp
+    src/core/TrafficLight.cpp
 )
 
 target_include_directories(easy_rider_core
     PUBLIC
         ${PROJECT_SOURCE_DIR}/include
+        ${PROJECT_SOURCE_DIR}/src/app
 )
 
 add_executable(easy_rider_app

@@ -24,6 +24,9 @@ public:
     Intersection* findIntersectionById(int id);
     RoadSegment* findRoadSegmentById(int id);
 
+    const Intersection* findIntersectionById(int id) const;
+    const RoadSegment* findRoadSegmentById(int id) const;
+
 private:
     string name;
     vector<Intersection> intersections;

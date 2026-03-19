@@ -1,29 +1,38 @@
 #pragma once
 
+#include <vector>
+
 using namespace std;
 
 class Vehicle {
 public:
     Vehicle();
-    Vehicle(int id, int roadSegmentId, double positionOnRoad, double speed);
+    Vehicle(int id, double maxSpeed);
 
     int getId() const;
-    int getRoadSegmentId() const;
     double getPositionOnRoad() const;
     double getSpeed() const;
+    double getMaxSpeed() const;
     bool isStopped() const;
+    bool isFinished() const;
+    int getCurrentRoadSegmentId() const;
+    int getNextRoadSegmentId() const;
+    int getCurrentRoadIndex() const;
 
-    void setRoadSegmentId(int newRoadSegmentId);
-    void setPositionOnRoad(double newPositionOnRoad);
     void setSpeed(double newSpeed);
-    void stop();
+    void setRoute(const vector<int>& newRoute);
 
-    void update(double dt, double roadLength);
+    void update(double dt, double roadLength, double maxAllowedPosition);
+    bool moveToNextRoad();
+    void finish();
 
 private:
     int id;
-    int roadSegmentId;
+    vector<int> route;
+    int currentRoadIndex;
     double positionOnRoad;
     double speed;
+    double maxSpeed;
     bool stopped;
+    bool finished;
 };

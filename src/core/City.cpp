@@ -51,3 +51,23 @@ RoadSegment* City::findRoadSegmentById(int id) {
 
     return nullptr;
 }
+
+const Intersection* City::findIntersectionById(int id) const {
+    for (const auto& intersection : intersections) {
+        if (intersection.getId() == id) {
+            return &intersection;
+        }
+    }
+
+    return nullptr;
+}
+
+const RoadSegment* City::findRoadSegmentById(int id) const {
+    for (const auto& roadSegment : roadSegments) {
+        if (roadSegment.getId() == id) {
+            return &roadSegment;
+        }
+    }
+
+    return nullptr;
+}
