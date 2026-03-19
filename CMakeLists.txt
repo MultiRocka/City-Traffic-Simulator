@@ -8,6 +8,10 @@ set(CMAKE_CXX_EXTENSIONS OFF)
 
 add_library(easy_rider_core
     src/core/Simulation.cpp
+    src/core/Intersection.cpp
+    src/core/RoadSegment.cpp
+    src/core/City.cpp
+    src/core/Vehicle.cpp
 )
 
 target_include_directories(easy_rider_core

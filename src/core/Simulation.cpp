@@ -13,12 +13,28 @@ void Simulation::stop() {
     running = false;
 }
 
-void Simulation::update(double dt) {
+void Simulation::update(double dt, const City& city) {
     if (!running) {
         return;
     }
 
     currentTime += dt;
+
+    for (auto& vehicle : vehicles) {
+        int roadId = vehicle.getRoadSegmentId();
+        double roadLength = 0.0;
+
+        for (const auto& roadSegment : city.getRoadSegments()) {
+            if (roadSegment.getId() == roadId) {
+                roadLength = roadSegment.getLength();
+                break;
+            }
+        }
+
+        if (roadLength > 0.0) {
+            vehicle.update(dt, roadLength);
+        }
+    }
 }
 
 bool Simulation::isRunning() const {
@@ -27,4 +43,16 @@ bool Simulation::isRunning() const {
 
 double Simulation::getTime() const {
     return currentTime;
+}
+
+void Simulation::addVehicle(const Vehicle& vehicle) {
+    vehicles.push_back(vehicle);
+}
+
+vector<Vehicle>& Simulation::getVehicles() {
+    return vehicles;
+}
+
+const vector<Vehicle>& Simulation::getVehicles() const {
+    return vehicles;
 }
