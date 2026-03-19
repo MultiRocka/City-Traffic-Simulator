@@ -1,5 +1,6 @@
 #include <thread>
 #include <chrono>
+#include <iostream>
 #include "core/Simulation.h"
 #include "core/City.h"
 #include "core/VehicleGenerator.h"
@@ -11,6 +12,9 @@ using namespace std;
 int main() {
     Simulation sim;
     City city("Intersection Test");
+
+    sim.setStatisticsOutputFiles("simulation_timeline.csv", "simulation_summary.csv");
+    sim.setEventLogOutputFile("event_log.json");
 
     city.addIntersection(Intersection(1, Vector2D(0.0, 0.0)));
     city.addIntersection(Intersection(2, Vector2D(0.0, 10.0)));
@@ -69,6 +73,14 @@ int main() {
     }
 
     sim.stop();
+    sim.exportStatisticsSummary();
+    sim.exportEventLog();
+
+    cout << "Exported: event_log.json" << endl;
+
+    cout << endl;
+    cout << "Exported: simulation_timeline.csv" << endl;
+    cout << "Exported: simulation_summary.csv" << endl;
 
     return 0;
 }

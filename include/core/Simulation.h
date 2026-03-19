@@ -1,10 +1,15 @@
 #pragma once
 
 #include <vector>
+#include <string>
+#include <map>
+#include <set>
 #include "core/Vehicle.h"
 #include "core/City.h"
 #include "core/VehicleGenerator.h"
 #include "core/TrafficLight.h"
+#include "core/StatisticsCollector.h"
+#include "core/EventLog.h"
 
 using namespace std;
 
@@ -30,6 +35,14 @@ public:
     vector<TrafficLight>& getTrafficLights();
     const vector<TrafficLight>& getTrafficLights() const;
 
+    void setStatisticsOutputFiles(const string& timelineFile, const string& summaryFile);
+    void exportStatisticsSummary() const;
+    const StatisticsCollector& getStatisticsCollector() const;
+
+    void setEventLogOutputFile(const string& filePath);
+    void exportEventLog() const;
+    const EventLog& getEventLog() const;
+
 private:
     bool running;
     double currentTime;
@@ -37,4 +50,12 @@ private:
     vector<VehicleGenerator> generators;
     double minVehicleGap;
     vector<TrafficLight> trafficLights;
+    StatisticsCollector statisticsCollector;
+    EventLog eventLog;
+
+    set<int> knownVehicleIds;
+    map<int, bool> previousStoppedState;
+    map<int, int> previousRoadState;
+
+    string determineStopReason(const Vehicle& vehicle, const vector<Vehicle>& vehicles, const vector<TrafficLight>& trafficLights, const City& city) const;
 };

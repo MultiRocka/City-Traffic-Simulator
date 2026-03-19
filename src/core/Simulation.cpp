@@ -35,6 +35,64 @@ static bool canEnterRoad(int nextRoadId, const vector<Vehicle>& vehicles, double
     return true;
 }
 
+string Simulation::determineStopReason(const Vehicle& vehicle, const vector<Vehicle>& vehicles, const vector<TrafficLight>& trafficLights, const City& city) const {
+    int roadId = vehicle.getCurrentRoadSegmentId();
+
+    if (roadId == -1) {
+        return "unknown";
+    }
+
+    const RoadSegment* road = city.findRoadSegmentById(roadId);
+
+    if (road == nullptr) {
+        return "unknown";
+    }
+
+    double roadLength = road->getLength();
+    double position = vehicle.getPositionOnRoad();
+
+    for (const auto& light : trafficLights) {
+        if (light.getRoadSegmentId() == roadId && light.isRed()) {
+            if (position >= roadLength - 3.0) {
+                return "red_light";
+            }
+        }
+    }
+
+    for (const auto& otherVehicle : vehicles) {
+        if (otherVehicle.getId() == vehicle.getId()) {
+            continue;
+        }
+
+        if (otherVehicle.isFinished()) {
+            continue;
+        }
+
+        if (otherVehicle.getCurrentRoadSegmentId() != roadId) {
+            continue;
+        }
+
+        if (otherVehicle.getPositionOnRoad() > position) {
+            double gap = otherVehicle.getPositionOnRoad() - position;
+
+            if (gap <= minVehicleGap + 0.5) {
+                return "vehicle_ahead";
+            }
+        }
+    }
+
+    if (position >= roadLength) {
+        if (vehicle.getNextRoadSegmentId() == -1) {
+            return "route_finished";
+        }
+
+        return "intersection_blocked";
+    }
+
+    return "unknown";
+}
+
+
 Simulation::Simulation()
     : running(false), currentTime(0.0), minVehicleGap(3.0) {
 }
@@ -60,6 +118,23 @@ void Simulation::update(double dt, const City& city) {
 
     for (auto& generator : generators) {
         generator.update(dt, vehicles);
+    }
+
+    for (const auto& vehicle : vehicles) {
+        if (knownVehicleIds.find(vehicle.getId()) == knownVehicleIds.end()) {
+            knownVehicleIds.insert(vehicle.getId());
+            previousStoppedState[vehicle.getId()] = vehicle.isStopped();
+            previousRoadState[vehicle.getId()] = vehicle.getCurrentRoadSegmentId();
+
+            eventLog.addEvent(
+                currentTime,
+                "vehicle_spawned",
+                vehicle.getId(),
+                vehicle.getCurrentRoadSegmentId(),
+                "generator_spawn",
+                "Vehicle spawned in simulation"
+            );
+        }
     }
 
     for (const auto& roadSegment : city.getRoadSegments()) {
@@ -115,13 +190,83 @@ void Simulation::update(double dt, const City& city) {
 
         if (nextRoadId == -1) {
             vehicle.finish();
+
+            eventLog.addEvent(
+                currentTime,
+                "vehicle_finished",
+                vehicle.getId(),
+                currentRoadId,
+                "route_finished",
+                "Vehicle finished its route"
+            );
+
             continue;
         }
 
         if (isGreenForRoad(trafficLights, currentRoadId) && canEnterRoad(nextRoadId, vehicles, minVehicleGap)) {
             vehicle.moveToNextRoad();
+
+            eventLog.addEvent(
+                currentTime,
+                "vehicle_entered_road",
+                vehicle.getId(),
+                vehicle.getCurrentRoadSegmentId(),
+                "green_and_space_available",
+                "Vehicle entered next road segment"
+            );
         }
     }
+
+    for (const auto& vehicle : vehicles) {
+        if (vehicle.isFinished()) {
+            continue;
+        }
+
+        int vehicleId = vehicle.getId();
+        bool oldStopped = previousStoppedState[vehicleId];
+        bool newStopped = vehicle.isStopped();
+
+        if (!oldStopped && newStopped) {
+            eventLog.addEvent(
+                currentTime,
+                "vehicle_stopped",
+                vehicleId,
+                vehicle.getCurrentRoadSegmentId(),
+                determineStopReason(vehicle, vehicles, trafficLights, city),
+                "Vehicle stopped"
+            );
+        }
+
+        if (oldStopped && !newStopped) {
+            eventLog.addEvent(
+                currentTime,
+                "vehicle_resumed",
+                vehicleId,
+                vehicle.getCurrentRoadSegmentId(),
+                "obstacle_cleared",
+                "Vehicle resumed movement"
+            );
+        }
+
+        int oldRoadId = previousRoadState[vehicleId];
+        int newRoadId = vehicle.getCurrentRoadSegmentId();
+
+        if (oldRoadId != newRoadId) {
+            eventLog.addEvent(
+                currentTime,
+                "vehicle_changed_road",
+                vehicleId,
+                newRoadId,
+                "route_progress",
+                "Vehicle changed road segment"
+            );
+        }
+
+        previousStoppedState[vehicleId] = newStopped;
+        previousRoadState[vehicleId] = newRoadId;
+    }
+
+    statisticsCollector.update(dt, currentTime, vehicles);
 }
 
 bool Simulation::isRunning() const {
@@ -162,4 +307,28 @@ vector<TrafficLight>& Simulation::getTrafficLights() {
 
 const vector<TrafficLight>& Simulation::getTrafficLights() const {
     return trafficLights;
+}
+
+void Simulation::setStatisticsOutputFiles(const string& timelineFile, const string& summaryFile) {
+    statisticsCollector.setOutputFiles(timelineFile, summaryFile);
+}
+
+void Simulation::exportStatisticsSummary() const {
+    statisticsCollector.exportSummary();
+}
+
+const StatisticsCollector& Simulation::getStatisticsCollector() const {
+    return statisticsCollector;
+}
+
+void Simulation::setEventLogOutputFile(const string& filePath) {
+    eventLog.setOutputFile(filePath);
+}
+
+void Simulation::exportEventLog() const {
+    eventLog.exportToJson();
+}
+
+const EventLog& Simulation::getEventLog() const {
+    return eventLog;
 }

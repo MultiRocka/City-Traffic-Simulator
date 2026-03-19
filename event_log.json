@@ -1,0 +1,578 @@
+[
+  {
+    "time": 2.00,
+    "type": "vehicle_spawned",
+    "vehicleId": 1,
+    "roadId": 1,
+    "reason": "generator_spawn",
+    "description": "Vehicle spawned in simulation"
+  },
+  {
+    "time": 3.00,
+    "type": "vehicle_spawned",
+    "vehicleId": 2,
+    "roadId": 2,
+    "reason": "generator_spawn",
+    "description": "Vehicle spawned in simulation"
+  },
+  {
+    "time": 4.00,
+    "type": "vehicle_spawned",
+    "vehicleId": 3,
+    "roadId": 1,
+    "reason": "generator_spawn",
+    "description": "Vehicle spawned in simulation"
+  },
+  {
+    "time": 6.00,
+    "type": "vehicle_spawned",
+    "vehicleId": 4,
+    "roadId": 1,
+    "reason": "generator_spawn",
+    "description": "Vehicle spawned in simulation"
+  },
+  {
+    "time": 6.00,
+    "type": "vehicle_spawned",
+    "vehicleId": 5,
+    "roadId": 2,
+    "reason": "generator_spawn",
+    "description": "Vehicle spawned in simulation"
+  },
+  {
+    "time": 6.00,
+    "type": "vehicle_entered_road",
+    "vehicleId": 2,
+    "roadId": 3,
+    "reason": "green_and_space_available",
+    "description": "Vehicle entered next road segment"
+  },
+  {
+    "time": 6.00,
+    "type": "vehicle_stopped",
+    "vehicleId": 1,
+    "roadId": 1,
+    "reason": "red_light",
+    "description": "Vehicle stopped"
+  },
+  {
+    "time": 6.00,
+    "type": "vehicle_changed_road",
+    "vehicleId": 2,
+    "roadId": 3,
+    "reason": "route_progress",
+    "description": "Vehicle changed road segment"
+  },
+  {
+    "time": 8.00,
+    "type": "vehicle_spawned",
+    "vehicleId": 6,
+    "roadId": 1,
+    "reason": "generator_spawn",
+    "description": "Vehicle spawned in simulation"
+  },
+  {
+    "time": 8.00,
+    "type": "vehicle_entered_road",
+    "vehicleId": 1,
+    "roadId": 3,
+    "reason": "green_and_space_available",
+    "description": "Vehicle entered next road segment"
+  },
+  {
+    "time": 8.00,
+    "type": "vehicle_resumed",
+    "vehicleId": 1,
+    "roadId": 3,
+    "reason": "obstacle_cleared",
+    "description": "Vehicle resumed movement"
+  },
+  {
+    "time": 8.00,
+    "type": "vehicle_changed_road",
+    "vehicleId": 1,
+    "roadId": 3,
+    "reason": "route_progress",
+    "description": "Vehicle changed road segment"
+  },
+  {
+    "time": 9.00,
+    "type": "vehicle_spawned",
+    "vehicleId": 7,
+    "roadId": 2,
+    "reason": "generator_spawn",
+    "description": "Vehicle spawned in simulation"
+  },
+  {
+    "time": 9.00,
+    "type": "vehicle_entered_road",
+    "vehicleId": 3,
+    "roadId": 3,
+    "reason": "green_and_space_available",
+    "description": "Vehicle entered next road segment"
+  },
+  {
+    "time": 9.00,
+    "type": "vehicle_changed_road",
+    "vehicleId": 3,
+    "roadId": 3,
+    "reason": "route_progress",
+    "description": "Vehicle changed road segment"
+  },
+  {
+    "time": 9.00,
+    "type": "vehicle_stopped",
+    "vehicleId": 5,
+    "roadId": 2,
+    "reason": "red_light",
+    "description": "Vehicle stopped"
+  },
+  {
+    "time": 10.00,
+    "type": "vehicle_spawned",
+    "vehicleId": 8,
+    "roadId": 1,
+    "reason": "generator_spawn",
+    "description": "Vehicle spawned in simulation"
+  },
+  {
+    "time": 10.00,
+    "type": "vehicle_entered_road",
+    "vehicleId": 4,
+    "roadId": 3,
+    "reason": "green_and_space_available",
+    "description": "Vehicle entered next road segment"
+  },
+  {
+    "time": 10.00,
+    "type": "vehicle_changed_road",
+    "vehicleId": 4,
+    "roadId": 3,
+    "reason": "route_progress",
+    "description": "Vehicle changed road segment"
+  },
+  {
+    "time": 11.00,
+    "type": "vehicle_stopped",
+    "vehicleId": 7,
+    "roadId": 2,
+    "reason": "vehicle_ahead",
+    "description": "Vehicle stopped"
+  },
+  {
+    "time": 12.00,
+    "type": "vehicle_spawned",
+    "vehicleId": 9,
+    "roadId": 1,
+    "reason": "generator_spawn",
+    "description": "Vehicle spawned in simulation"
+  },
+  {
+    "time": 12.00,
+    "type": "vehicle_spawned",
+    "vehicleId": 10,
+    "roadId": 2,
+    "reason": "generator_spawn",
+    "description": "Vehicle spawned in simulation"
+  },
+  {
+    "time": 12.00,
+    "type": "vehicle_entered_road",
+    "vehicleId": 5,
+    "roadId": 3,
+    "reason": "green_and_space_available",
+    "description": "Vehicle entered next road segment"
+  },
+  {
+    "time": 12.00,
+    "type": "vehicle_resumed",
+    "vehicleId": 5,
+    "roadId": 3,
+    "reason": "obstacle_cleared",
+    "description": "Vehicle resumed movement"
+  },
+  {
+    "time": 12.00,
+    "type": "vehicle_changed_road",
+    "vehicleId": 5,
+    "roadId": 3,
+    "reason": "route_progress",
+    "description": "Vehicle changed road segment"
+  },
+  {
+    "time": 12.00,
+    "type": "vehicle_stopped",
+    "vehicleId": 6,
+    "roadId": 1,
+    "reason": "red_light",
+    "description": "Vehicle stopped"
+  },
+  {
+    "time": 12.00,
+    "type": "vehicle_resumed",
+    "vehicleId": 7,
+    "roadId": 2,
+    "reason": "obstacle_cleared",
+    "description": "Vehicle resumed movement"
+  },
+  {
+    "time": 13.00,
+    "type": "vehicle_finished",
+    "vehicleId": 2,
+    "roadId": 3,
+    "reason": "route_finished",
+    "description": "Vehicle finished its route"
+  },
+  {
+    "time": 13.00,
+    "type": "vehicle_entered_road",
+    "vehicleId": 7,
+    "roadId": 3,
+    "reason": "green_and_space_available",
+    "description": "Vehicle entered next road segment"
+  },
+  {
+    "time": 13.00,
+    "type": "vehicle_changed_road",
+    "vehicleId": 7,
+    "roadId": 3,
+    "reason": "route_progress",
+    "description": "Vehicle changed road segment"
+  },
+  {
+    "time": 14.00,
+    "type": "vehicle_spawned",
+    "vehicleId": 11,
+    "roadId": 1,
+    "reason": "generator_spawn",
+    "description": "Vehicle spawned in simulation"
+  },
+  {
+    "time": 14.00,
+    "type": "vehicle_finished",
+    "vehicleId": 1,
+    "roadId": 3,
+    "reason": "route_finished",
+    "description": "Vehicle finished its route"
+  },
+  {
+    "time": 14.00,
+    "type": "vehicle_stopped",
+    "vehicleId": 8,
+    "roadId": 1,
+    "reason": "vehicle_ahead",
+    "description": "Vehicle stopped"
+  },
+  {
+    "time": 15.00,
+    "type": "vehicle_spawned",
+    "vehicleId": 12,
+    "roadId": 2,
+    "reason": "generator_spawn",
+    "description": "Vehicle spawned in simulation"
+  },
+  {
+    "time": 15.00,
+    "type": "vehicle_finished",
+    "vehicleId": 3,
+    "roadId": 3,
+    "reason": "route_finished",
+    "description": "Vehicle finished its route"
+  },
+  {
+    "time": 15.00,
+    "type": "vehicle_entered_road",
+    "vehicleId": 10,
+    "roadId": 3,
+    "reason": "green_and_space_available",
+    "description": "Vehicle entered next road segment"
+  },
+  {
+    "time": 15.00,
+    "type": "vehicle_stopped",
+    "vehicleId": 9,
+    "roadId": 1,
+    "reason": "vehicle_ahead",
+    "description": "Vehicle stopped"
+  },
+  {
+    "time": 15.00,
+    "type": "vehicle_changed_road",
+    "vehicleId": 10,
+    "roadId": 3,
+    "reason": "route_progress",
+    "description": "Vehicle changed road segment"
+  },
+  {
+    "time": 16.00,
+    "type": "vehicle_spawned",
+    "vehicleId": 13,
+    "roadId": 1,
+    "reason": "generator_spawn",
+    "description": "Vehicle spawned in simulation"
+  },
+  {
+    "time": 16.00,
+    "type": "vehicle_finished",
+    "vehicleId": 4,
+    "roadId": 3,
+    "reason": "route_finished",
+    "description": "Vehicle finished its route"
+  },
+  {
+    "time": 16.00,
+    "type": "vehicle_entered_road",
+    "vehicleId": 6,
+    "roadId": 3,
+    "reason": "green_and_space_available",
+    "description": "Vehicle entered next road segment"
+  },
+  {
+    "time": 16.00,
+    "type": "vehicle_resumed",
+    "vehicleId": 6,
+    "roadId": 3,
+    "reason": "obstacle_cleared",
+    "description": "Vehicle resumed movement"
+  },
+  {
+    "time": 16.00,
+    "type": "vehicle_changed_road",
+    "vehicleId": 6,
+    "roadId": 3,
+    "reason": "route_progress",
+    "description": "Vehicle changed road segment"
+  },
+  {
+    "time": 16.00,
+    "type": "vehicle_resumed",
+    "vehicleId": 8,
+    "roadId": 1,
+    "reason": "obstacle_cleared",
+    "description": "Vehicle resumed movement"
+  },
+  {
+    "time": 16.00,
+    "type": "vehicle_resumed",
+    "vehicleId": 9,
+    "roadId": 1,
+    "reason": "obstacle_cleared",
+    "description": "Vehicle resumed movement"
+  },
+  {
+    "time": 17.00,
+    "type": "vehicle_entered_road",
+    "vehicleId": 8,
+    "roadId": 3,
+    "reason": "green_and_space_available",
+    "description": "Vehicle entered next road segment"
+  },
+  {
+    "time": 17.00,
+    "type": "vehicle_changed_road",
+    "vehicleId": 8,
+    "roadId": 3,
+    "reason": "route_progress",
+    "description": "Vehicle changed road segment"
+  },
+  {
+    "time": 18.00,
+    "type": "vehicle_spawned",
+    "vehicleId": 14,
+    "roadId": 2,
+    "reason": "generator_spawn",
+    "description": "Vehicle spawned in simulation"
+  },
+  {
+    "time": 18.00,
+    "type": "vehicle_entered_road",
+    "vehicleId": 9,
+    "roadId": 3,
+    "reason": "green_and_space_available",
+    "description": "Vehicle entered next road segment"
+  },
+  {
+    "time": 18.00,
+    "type": "vehicle_changed_road",
+    "vehicleId": 9,
+    "roadId": 3,
+    "reason": "route_progress",
+    "description": "Vehicle changed road segment"
+  },
+  {
+    "time": 18.00,
+    "type": "vehicle_stopped",
+    "vehicleId": 12,
+    "roadId": 2,
+    "reason": "red_light",
+    "description": "Vehicle stopped"
+  },
+  {
+    "time": 19.00,
+    "type": "vehicle_finished",
+    "vehicleId": 5,
+    "roadId": 3,
+    "reason": "route_finished",
+    "description": "Vehicle finished its route"
+  },
+  {
+    "time": 19.00,
+    "type": "vehicle_entered_road",
+    "vehicleId": 11,
+    "roadId": 3,
+    "reason": "green_and_space_available",
+    "description": "Vehicle entered next road segment"
+  },
+  {
+    "time": 19.00,
+    "type": "vehicle_changed_road",
+    "vehicleId": 11,
+    "roadId": 3,
+    "reason": "route_progress",
+    "description": "Vehicle changed road segment"
+  },
+  {
+    "time": 20.00,
+    "type": "vehicle_finished",
+    "vehicleId": 7,
+    "roadId": 3,
+    "reason": "route_finished",
+    "description": "Vehicle finished its route"
+  },
+  {
+    "time": 20.00,
+    "type": "vehicle_entered_road",
+    "vehicleId": 12,
+    "roadId": 3,
+    "reason": "green_and_space_available",
+    "description": "Vehicle entered next road segment"
+  },
+  {
+    "time": 20.00,
+    "type": "vehicle_resumed",
+    "vehicleId": 12,
+    "roadId": 3,
+    "reason": "obstacle_cleared",
+    "description": "Vehicle resumed movement"
+  },
+  {
+    "time": 20.00,
+    "type": "vehicle_changed_road",
+    "vehicleId": 12,
+    "roadId": 3,
+    "reason": "route_progress",
+    "description": "Vehicle changed road segment"
+  },
+  {
+    "time": 21.00,
+    "type": "vehicle_entered_road",
+    "vehicleId": 14,
+    "roadId": 3,
+    "reason": "green_and_space_available",
+    "description": "Vehicle entered next road segment"
+  },
+  {
+    "time": 21.00,
+    "type": "vehicle_stopped",
+    "vehicleId": 13,
+    "roadId": 1,
+    "reason": "red_light",
+    "description": "Vehicle stopped"
+  },
+  {
+    "time": 21.00,
+    "type": "vehicle_changed_road",
+    "vehicleId": 14,
+    "roadId": 3,
+    "reason": "route_progress",
+    "description": "Vehicle changed road segment"
+  },
+  {
+    "time": 22.00,
+    "type": "vehicle_finished",
+    "vehicleId": 10,
+    "roadId": 3,
+    "reason": "route_finished",
+    "description": "Vehicle finished its route"
+  },
+  {
+    "time": 23.00,
+    "type": "vehicle_finished",
+    "vehicleId": 6,
+    "roadId": 3,
+    "reason": "route_finished",
+    "description": "Vehicle finished its route"
+  },
+  {
+    "time": 24.00,
+    "type": "vehicle_finished",
+    "vehicleId": 8,
+    "roadId": 3,
+    "reason": "route_finished",
+    "description": "Vehicle finished its route"
+  },
+  {
+    "time": 24.00,
+    "type": "vehicle_entered_road",
+    "vehicleId": 13,
+    "roadId": 3,
+    "reason": "green_and_space_available",
+    "description": "Vehicle entered next road segment"
+  },
+  {
+    "time": 24.00,
+    "type": "vehicle_resumed",
+    "vehicleId": 13,
+    "roadId": 3,
+    "reason": "obstacle_cleared",
+    "description": "Vehicle resumed movement"
+  },
+  {
+    "time": 24.00,
+    "type": "vehicle_changed_road",
+    "vehicleId": 13,
+    "roadId": 3,
+    "reason": "route_progress",
+    "description": "Vehicle changed road segment"
+  },
+  {
+    "time": 25.00,
+    "type": "vehicle_finished",
+    "vehicleId": 9,
+    "roadId": 3,
+    "reason": "route_finished",
+    "description": "Vehicle finished its route"
+  },
+  {
+    "time": 26.00,
+    "type": "vehicle_finished",
+    "vehicleId": 11,
+    "roadId": 3,
+    "reason": "route_finished",
+    "description": "Vehicle finished its route"
+  },
+  {
+    "time": 27.00,
+    "type": "vehicle_finished",
+    "vehicleId": 12,
+    "roadId": 3,
+    "reason": "route_finished",
+    "description": "Vehicle finished its route"
+  },
+  {
+    "time": 28.00,
+    "type": "vehicle_finished",
+    "vehicleId": 14,
+    "roadId": 3,
+    "reason": "route_finished",
+    "description": "Vehicle finished its route"
+  },
+  {
+    "time": 29.00,
+    "type": "vehicle_finished",
+    "vehicleId": 13,
+    "roadId": 3,
+    "reason": "route_finished",
+    "description": "Vehicle finished its route"
+  }
+]

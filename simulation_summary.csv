@@ -1,0 +1,11 @@
+metric,value
+simulation_time,40.00
+total_vehicles_seen,14
+active_vehicles,0
+finished_vehicles,14
+moving_vehicles,0
+stopped_vehicles,0
+overall_average_speed,2.00
+overall_average_moving_speed,2.18
+total_stopped_time,18.00
+max_active_vehicles,10

@@ -14,6 +14,8 @@ add_library(easy_rider_core
     src/core/Vehicle.cpp
     src/core/VehicleGenerator.cpp
     src/core/TrafficLight.cpp
+    src/core/StatisticsCollector.cpp
+    src/core/EventLog.cpp
 )
 
 target_include_directories(easy_rider_core
