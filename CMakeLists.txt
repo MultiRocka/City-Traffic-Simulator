@@ -16,6 +16,7 @@ add_library(easy_rider_core
     src/core/TrafficLight.cpp
     src/core/StatisticsCollector.cpp
     src/core/EventLog.cpp
+    src/core/PedestrianCrossing.cpp
 )
 
 target_include_directories(easy_rider_core

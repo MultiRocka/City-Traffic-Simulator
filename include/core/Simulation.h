@@ -10,6 +10,7 @@
 #include "core/TrafficLight.h"
 #include "core/StatisticsCollector.h"
 #include "core/EventLog.h"
+#include "core/PedestrianCrossing.h"
 
 using namespace std;
 
@@ -35,6 +36,10 @@ public:
     vector<TrafficLight>& getTrafficLights();
     const vector<TrafficLight>& getTrafficLights() const;
 
+    void addPedestrianCrossing(const PedestrianCrossing& pedestrianCrossing);
+    vector<PedestrianCrossing>& getPedestrianCrossings();
+    const vector<PedestrianCrossing>& getPedestrianCrossings() const;
+
     void setStatisticsOutputFiles(const string& timelineFile, const string& summaryFile);
     void exportStatisticsSummary() const;
     const StatisticsCollector& getStatisticsCollector() const;
@@ -50,12 +55,14 @@ private:
     vector<VehicleGenerator> generators;
     double minVehicleGap;
     vector<TrafficLight> trafficLights;
+    vector<PedestrianCrossing> pedestrianCrossings;
     StatisticsCollector statisticsCollector;
     EventLog eventLog;
 
     set<int> knownVehicleIds;
     map<int, bool> previousStoppedState;
     map<int, int> previousRoadState;
+    map<int, bool> previousCrossingState;
 
-    string determineStopReason(const Vehicle& vehicle, const vector<Vehicle>& vehicles, const vector<TrafficLight>& trafficLights, const City& city) const;
+    string determineStopReason(const Vehicle& vehicle, const City& city) const;
 };

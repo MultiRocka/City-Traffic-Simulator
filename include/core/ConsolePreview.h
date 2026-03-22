@@ -9,6 +9,7 @@
 #include "core/Simulation.h"
 #include "core/City.h"
 #include "core/Vehicle.h"
+#include "core/PedestrianCrossing.h"
 
 using namespace std;
 
@@ -43,14 +44,7 @@ inline int mapRange(double value, double maxValue, int startValue, int endValue)
 
 inline char getVehicleChar(int id) {
     return static_cast<char>('0' + (id % 10));
-
-    if (id % 10 == 0) {
-        return '0';
-    }
-
-    return static_cast<char>('0' + (id % 10));
 }
-
 
 inline string getVehicleStatusText(const Vehicle& vehicle) {
     if (vehicle.isFinished()) {
@@ -99,6 +93,25 @@ inline void renderConsolePreview(const City& city, const Simulation& sim) {
     const RoadSegment* road2 = city.findRoadSegmentById(2);
     const RoadSegment* road3 = city.findRoadSegmentById(3);
 
+    for (const auto& crossing : sim.getPedestrianCrossings()) {
+        char crossingChar = crossing.isActive() ? 'P' : 'x';
+
+        if (crossing.getRoadSegmentId() == 1 && road1 != nullptr) {
+            int x = mapRange(crossing.getPositionOnRoad(), road1->getLength(), 2, 17);
+            putChar(grid, x, 7, crossingChar);
+        }
+
+        if (crossing.getRoadSegmentId() == 2 && road2 != nullptr) {
+            int y = mapRange(crossing.getPositionOnRoad(), road2->getLength(), 1, 5);
+            putChar(grid, 20, y, crossingChar);
+        }
+
+        if (crossing.getRoadSegmentId() == 3 && road3 != nullptr) {
+            int x = mapRange(crossing.getPositionOnRoad(), road3->getLength(), 21, 38);
+            putChar(grid, x, 7, crossingChar);
+        }
+    }
+
     for (const auto& vehicle : sim.getVehicles()) {
         if (vehicle.isFinished()) {
             continue;
@@ -131,7 +144,7 @@ inline void renderConsolePreview(const City& city, const Simulation& sim) {
     }
 
     cout << "========================================" << endl;
-    cout << "Legend: A/B/C... = vehicles, G = green, R = red, + = intersection" << endl;
+    cout << "Legend: 1/2/3... = vehicles, G = green, R = red, P = active pedestrian, x = inactive crossing" << endl;
     cout << endl;
     cout << "Vehicle details:" << endl;
 
@@ -153,6 +166,21 @@ inline void renderConsolePreview(const City& city, const Simulation& sim) {
                  << " | pos: " << fixed << setprecision(1) << vehicle.getPositionOnRoad() << " m"
                  << " | speed: " << fixed << setprecision(1) << vehicle.getSpeed() << " m/s"
                  << " | status: " << getVehicleStatusText(vehicle)
+                 << endl;
+        }
+    }
+
+    cout << endl;
+    cout << "Crossings:" << endl;
+
+    if (sim.getPedestrianCrossings().empty()) {
+        cout << "No pedestrian crossings." << endl;
+    } else {
+        for (const auto& crossing : sim.getPedestrianCrossings()) {
+            cout << "Crossing " << crossing.getId()
+                 << " | road: " << crossing.getRoadSegmentId()
+                 << " | pos: " << fixed << setprecision(1) << crossing.getPositionOnRoad() << " m"
+                 << " | state: " << (crossing.isActive() ? "ACTIVE" : "INACTIVE")
                  << endl;
         }
     }

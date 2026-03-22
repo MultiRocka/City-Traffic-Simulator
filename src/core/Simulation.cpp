@@ -35,7 +35,11 @@ static bool canEnterRoad(int nextRoadId, const vector<Vehicle>& vehicles, double
     return true;
 }
 
-string Simulation::determineStopReason(const Vehicle& vehicle, const vector<Vehicle>& vehicles, const vector<TrafficLight>& trafficLights, const City& city) const {
+Simulation::Simulation()
+    : running(false), currentTime(0.0), minVehicleGap(3.0) {
+}
+
+string Simulation::determineStopReason(const Vehicle& vehicle, const City& city) const {
     int roadId = vehicle.getCurrentRoadSegmentId();
 
     if (roadId == -1) {
@@ -50,6 +54,15 @@ string Simulation::determineStopReason(const Vehicle& vehicle, const vector<Vehi
 
     double roadLength = road->getLength();
     double position = vehicle.getPositionOnRoad();
+
+    for (const auto& crossing : pedestrianCrossings) {
+        if (crossing.getRoadSegmentId() == roadId && crossing.isActive()) {
+            if (position >= crossing.getPositionOnRoad() - 2.0 &&
+                position <= crossing.getPositionOnRoad()) {
+                return "pedestrian_crossing";
+            }
+        }
+    }
 
     for (const auto& light : trafficLights) {
         if (light.getRoadSegmentId() == roadId && light.isRed()) {
@@ -92,11 +105,6 @@ string Simulation::determineStopReason(const Vehicle& vehicle, const vector<Vehi
     return "unknown";
 }
 
-
-Simulation::Simulation()
-    : running(false), currentTime(0.0), minVehicleGap(3.0) {
-}
-
 void Simulation::start() {
     running = true;
 }
@@ -114,6 +122,41 @@ void Simulation::update(double dt, const City& city) {
 
     for (auto& trafficLight : trafficLights) {
         trafficLight.update(dt);
+    }
+
+    for (auto& crossing : pedestrianCrossings) {
+        crossing.update(dt);
+
+        if (previousCrossingState.find(crossing.getId()) == previousCrossingState.end()) {
+            previousCrossingState[crossing.getId()] = crossing.isActive();
+        } else {
+            bool oldState = previousCrossingState[crossing.getId()];
+            bool newState = crossing.isActive();
+
+            if (!oldState && newState) {
+                eventLog.addEvent(
+                    currentTime,
+                    "pedestrian_crossing_started",
+                    -1,
+                    crossing.getRoadSegmentId(),
+                    "pedestrian_request",
+                    "Pedestrian started crossing"
+                );
+            }
+
+            if (oldState && !newState) {
+                eventLog.addEvent(
+                    currentTime,
+                    "pedestrian_crossing_finished",
+                    -1,
+                    crossing.getRoadSegmentId(),
+                    "pedestrian_finished",
+                    "Pedestrian finished crossing"
+                );
+            }
+
+            previousCrossingState[crossing.getId()] = newState;
+        }
     }
 
     for (auto& generator : generators) {
@@ -156,6 +199,12 @@ void Simulation::update(double dt, const City& city) {
 
             if (hasRedLightForRoad(trafficLights, roadSegment.getId())) {
                 maxAllowedPosition = min(maxAllowedPosition, roadSegment.getLength() - 2.0);
+            }
+
+            for (const auto& crossing : pedestrianCrossings) {
+                if (crossing.getRoadSegmentId() == roadSegment.getId() && crossing.isActive()) {
+                    maxAllowedPosition = min(maxAllowedPosition, crossing.getPositionOnRoad() - 1.0);
+                }
             }
 
             if (i > 0) {
@@ -232,7 +281,7 @@ void Simulation::update(double dt, const City& city) {
                 "vehicle_stopped",
                 vehicleId,
                 vehicle.getCurrentRoadSegmentId(),
-                determineStopReason(vehicle, vehicles, trafficLights, city),
+                determineStopReason(vehicle, city),
                 "Vehicle stopped"
             );
         }
@@ -307,6 +356,19 @@ vector<TrafficLight>& Simulation::getTrafficLights() {
 
 const vector<TrafficLight>& Simulation::getTrafficLights() const {
     return trafficLights;
+}
+
+void Simulation::addPedestrianCrossing(const PedestrianCrossing& pedestrianCrossing) {
+    pedestrianCrossings.push_back(pedestrianCrossing);
+    previousCrossingState[pedestrianCrossing.getId()] = pedestrianCrossing.isActive();
+}
+
+vector<PedestrianCrossing>& Simulation::getPedestrianCrossings() {
+    return pedestrianCrossings;
+}
+
+const vector<PedestrianCrossing>& Simulation::getPedestrianCrossings() const {
+    return pedestrianCrossings;
 }
 
 void Simulation::setStatisticsOutputFiles(const string& timelineFile, const string& summaryFile) {

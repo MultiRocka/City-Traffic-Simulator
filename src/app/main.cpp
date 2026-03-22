@@ -5,6 +5,7 @@
 #include "core/City.h"
 #include "core/VehicleGenerator.h"
 #include "core/TrafficLight.h"
+#include "core/PedestrianCrossing.h"
 #include "core/ConsolePreview.h"
 
 using namespace std;
@@ -64,6 +65,9 @@ int main() {
     sim.addTrafficLight(westLight);
     sim.addTrafficLight(northLight);
 
+    PedestrianCrossing crossing1(1, 3, 8.0, 5.0, 3.0, false);
+    sim.addPedestrianCrossing(crossing1);
+
     sim.start();
 
     for (int i = 0; i < 40; i++) {
@@ -76,11 +80,10 @@ int main() {
     sim.exportStatisticsSummary();
     sim.exportEventLog();
 
-    cout << "Exported: event_log.json" << endl;
-
     cout << endl;
     cout << "Exported: simulation_timeline.csv" << endl;
     cout << "Exported: simulation_summary.csv" << endl;
+    cout << "Exported: event_log.json" << endl;
 
     return 0;
 }

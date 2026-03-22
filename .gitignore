@@ -1,2 +1,5 @@
 build/
 .vscode/
+simulation_summary.csv
+simulation_timeline.csv
+event_log.json
