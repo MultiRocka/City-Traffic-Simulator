@@ -1,0 +1,43 @@
+{
+  "_comment": "SYNTHETIC — incomplete restriction relation (stored by parser; Stage 3 WARNs, does not enforce).",
+  "version": 0.6,
+  "generator": "easy_rider_synthetic_fixture",
+  "osm3s": {
+    "timestamp_osm_base": "1970-01-01T00:00:00Z",
+    "copyright": "SYNTHETIC FIXTURE — NOT OSM"
+  },
+  "elements": [
+    {
+      "type": "node",
+      "id": 900041,
+      "lat": 52.2253,
+      "lon": 21.0163
+    },
+    {
+      "type": "node",
+      "id": 900042,
+      "lat": 52.2258,
+      "lon": 21.0173
+    },
+    {
+      "type": "way",
+      "id": 800041,
+      "nodes": [900041, 900042],
+      "tags": {
+        "highway": "residential",
+        "name": "Synthetic Relation Neighbor"
+      }
+    },
+    {
+      "type": "relation",
+      "id": 700001,
+      "members": [
+        { "type": "way", "ref": 800041, "role": "" }
+      ],
+      "tags": {
+        "type": "restriction",
+        "restriction": "no_left_turn"
+      }
+    }
+  ]
+}

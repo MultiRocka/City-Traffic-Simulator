@@ -1,0 +1,53 @@
+{
+  "_comment": "SYNTHETIC — only_straight_on forces allowed exit; other exits disallowed.",
+  "version": 0.6,
+  "generator": "easy_rider_synthetic_fixture",
+  "osm3s": {
+    "timestamp_osm_base": "1970-01-01T00:00:00Z",
+    "copyright": "SYNTHETIC FIXTURE — NOT OSM"
+  },
+  "elements": [
+    { "type": "node", "id": 911001, "lat": 52.2250, "lon": 21.0165 },
+    { "type": "node", "id": 911002, "lat": 52.2255, "lon": 21.0165 },
+    { "type": "node", "id": 911003, "lat": 52.2260, "lon": 21.0165 },
+    { "type": "node", "id": 911004, "lat": 52.2255, "lon": 21.0160 },
+    { "type": "node", "id": 911005, "lat": 52.2255, "lon": 21.0170 },
+    {
+      "type": "way",
+      "id": 811001,
+      "nodes": [911001, 911002],
+      "tags": { "highway": "residential", "oneway": "yes" }
+    },
+    {
+      "type": "way",
+      "id": 811002,
+      "nodes": [911002, 911003],
+      "tags": { "highway": "residential", "oneway": "yes" }
+    },
+    {
+      "type": "way",
+      "id": 811003,
+      "nodes": [911002, 911005],
+      "tags": { "highway": "residential", "oneway": "yes" }
+    },
+    {
+      "type": "way",
+      "id": 811004,
+      "nodes": [911002, 911004],
+      "tags": { "highway": "residential", "oneway": "yes" }
+    },
+    {
+      "type": "relation",
+      "id": 711001,
+      "members": [
+        { "type": "way", "ref": 811001, "role": "from" },
+        { "type": "node", "ref": 911002, "role": "via" },
+        { "type": "way", "ref": 811002, "role": "to" }
+      ],
+      "tags": {
+        "type": "restriction",
+        "restriction": "only_straight_on"
+      }
+    }
+  ]
+}

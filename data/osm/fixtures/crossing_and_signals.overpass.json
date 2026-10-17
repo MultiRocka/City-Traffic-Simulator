@@ -1,0 +1,52 @@
+{
+  "_comment": "SYNTHETIC — mid-segment crossing + traffic_signals junction.",
+  "version": 0.6,
+  "generator": "easy_rider_synthetic_fixture",
+  "osm3s": {
+    "timestamp_osm_base": "1970-01-01T00:00:00Z",
+    "copyright": "SYNTHETIC FIXTURE — NOT OSM"
+  },
+  "elements": [
+    {
+      "type": "node",
+      "id": 960001,
+      "lat": 52.2250,
+      "lon": 21.0160
+    },
+    {
+      "type": "node",
+      "id": 960002,
+      "lat": 52.2250,
+      "lon": 21.0165,
+      "tags": {
+        "highway": "crossing",
+        "crossing": "uncontrolled"
+      }
+    },
+    {
+      "type": "node",
+      "id": 960003,
+      "lat": 52.2250,
+      "lon": 21.0170,
+      "tags": {
+        "highway": "traffic_signals"
+      }
+    },
+    {
+      "type": "node",
+      "id": 960004,
+      "lat": 52.2250,
+      "lon": 21.0175
+    },
+    {
+      "type": "way",
+      "id": 860001,
+      "nodes": [960001, 960002, 960003, 960004],
+      "tags": {
+        "highway": "residential",
+        "oneway": "yes",
+        "maxspeed": "40"
+      }
+    }
+  ]
+}

@@ -1,0 +1,53 @@
+{
+  "_comment": "SYNTHETIC — two ways whose geometries cross but share NO node (must NOT connect).",
+  "version": 0.6,
+  "generator": "easy_rider_synthetic_fixture",
+  "osm3s": {
+    "timestamp_osm_base": "1970-01-01T00:00:00Z",
+    "copyright": "SYNTHETIC FIXTURE — NOT OSM"
+  },
+  "elements": [
+    {
+      "type": "node",
+      "id": 930001,
+      "lat": 52.2250,
+      "lon": 21.0160
+    },
+    {
+      "type": "node",
+      "id": 930002,
+      "lat": 52.2250,
+      "lon": 21.0170
+    },
+    {
+      "type": "node",
+      "id": 930003,
+      "lat": 52.2247,
+      "lon": 21.0165
+    },
+    {
+      "type": "node",
+      "id": 930004,
+      "lat": 52.2253,
+      "lon": 21.0165
+    },
+    {
+      "type": "way",
+      "id": 830001,
+      "nodes": [930001, 930002],
+      "tags": {
+        "highway": "residential",
+        "name": "Horizontal"
+      }
+    },
+    {
+      "type": "way",
+      "id": 830002,
+      "nodes": [930003, 930004],
+      "tags": {
+        "highway": "residential",
+        "name": "Vertical"
+      }
+    }
+  ]
+}

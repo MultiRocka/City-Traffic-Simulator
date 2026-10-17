@@ -1,0 +1,67 @@
+{
+  "_comment": "SYNTHETIC — stop + give_way nodes → YieldToRight (no priorityRoadIds).",
+  "version": 0.6,
+  "generator": "easy_rider_synthetic_fixture",
+  "osm3s": {
+    "timestamp_osm_base": "1970-01-01T00:00:00Z",
+    "copyright": "SYNTHETIC FIXTURE — NOT OSM"
+  },
+  "elements": [
+    {
+      "type": "node",
+      "id": 970001,
+      "lat": 52.2250,
+      "lon": 21.0160
+    },
+    {
+      "type": "node",
+      "id": 970002,
+      "lat": 52.2250,
+      "lon": 21.0165,
+      "tags": {
+        "highway": "stop"
+      }
+    },
+    {
+      "type": "node",
+      "id": 970003,
+      "lat": 52.2250,
+      "lon": 21.0170
+    },
+    {
+      "type": "node",
+      "id": 970004,
+      "lat": 52.2255,
+      "lon": 21.0165,
+      "tags": {
+        "highway": "give_way"
+      }
+    },
+    {
+      "type": "node",
+      "id": 970005,
+      "lat": 52.2260,
+      "lon": 21.0165
+    },
+    {
+      "type": "way",
+      "id": 870001,
+      "nodes": [970001, 970002, 970003],
+      "tags": {
+        "highway": "residential",
+        "oneway": "yes",
+        "maxspeed": "40"
+      }
+    },
+    {
+      "type": "way",
+      "id": 870002,
+      "nodes": [970005, 970004, 970002],
+      "tags": {
+        "highway": "residential",
+        "oneway": "yes",
+        "maxspeed": "30"
+      }
+    }
+  ]
+}

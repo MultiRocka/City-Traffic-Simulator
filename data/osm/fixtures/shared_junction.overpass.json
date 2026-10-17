@@ -1,0 +1,53 @@
+{
+  "_comment": "SYNTHETIC — two highways share a middle node (connected junction).",
+  "version": 0.6,
+  "generator": "easy_rider_synthetic_fixture",
+  "osm3s": {
+    "timestamp_osm_base": "1970-01-01T00:00:00Z",
+    "copyright": "SYNTHETIC FIXTURE — NOT OSM"
+  },
+  "elements": [
+    {
+      "type": "node",
+      "id": 920001,
+      "lat": 52.2250,
+      "lon": 21.0160
+    },
+    {
+      "type": "node",
+      "id": 920002,
+      "lat": 52.2250,
+      "lon": 21.0165
+    },
+    {
+      "type": "node",
+      "id": 920003,
+      "lat": 52.2250,
+      "lon": 21.0170
+    },
+    {
+      "type": "node",
+      "id": 920004,
+      "lat": 52.2254,
+      "lon": 21.0165
+    },
+    {
+      "type": "way",
+      "id": 820001,
+      "nodes": [920001, 920002, 920003],
+      "tags": {
+        "highway": "residential",
+        "name": "EastWest"
+      }
+    },
+    {
+      "type": "way",
+      "id": 820002,
+      "nodes": [920004, 920002],
+      "tags": {
+        "highway": "residential",
+        "name": "NorthSpur"
+      }
+    }
+  ]
+}

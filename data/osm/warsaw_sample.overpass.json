@@ -1,0 +1,1041 @@
+{
+  "version": 0.6,
+  "generator": "Overpass API 0.7.62.11 87bfad18",
+  "osm3s": {
+    "timestamp_osm_base": "2026-10-13T17:47:39Z",
+    "copyright": "The data included in this document is from www.openstreetmap.org. The data is made available under ODbL."
+  },
+  "elements": [
+
+{
+  "type": "way",
+  "id": 22920748,
+  "nodes": [
+    8927686666,
+    9315285611,
+    7440114130,
+    246806081,
+    10154587307,
+    10154587308
+  ],
+  "tags": {
+    "alt_name": "KsiÄdza Ignacego Jana Skorupki",
+    "highway": "residential",
+    "lanes": "2",
+    "lit": "yes",
+    "maxspeed": "30",
+    "name": "KsiÄdza Ignacego Skorupki",
+    "name:etymology:wikidata": "Q674790",
+    "official_name": "ks. Ignacego Skorupki",
+    "sidewalk": "separate",
+    "smoothness": "excellent",
+    "source:maxspeed": "PL:zone30",
+    "surface": "asphalt",
+    "wikidata": "Q107301456"
+  }
+},
+{
+  "type": "way",
+  "id": 44191648,
+  "nodes": [
+    561293417,
+    7440114174,
+    7440116717
+  ],
+  "tags": {
+    "highway": "service",
+    "service": "driveway",
+    "surface": "paving_stones"
+  }
+},
+{
+  "type": "way",
+  "id": 67806177,
+  "nodes": [
+    255304601,
+    376319261,
+    9461544646,
+    9461419001,
+    9353527848,
+    376546258,
+    255304600,
+    376546728,
+    7440114158,
+    561293417,
+    2153212690
+  ],
+  "tags": {
+    "highway": "residential",
+    "lanes": "1",
+    "lit": "yes",
+    "maxspeed": "50",
+    "name": "Wilcza",
+    "oneway": "yes",
+    "sidewalk": "separate",
+    "surface": "asphalt",
+    "wikidata": "Q8000338",
+    "wikipedia": "pl:Ulica Wilcza w Warszawie"
+  }
+},
+{
+  "type": "way",
+  "id": 488561336,
+  "nodes": [
+    4808482438,
+    4808482437
+  ],
+  "tags": {
+    "highway": "service",
+    "service": "parking_aisle",
+    "surface": "paving_stones"
+  }
+},
+{
+  "type": "way",
+  "id": 488561337,
+  "nodes": [
+    4808482445,
+    4808482444,
+    4808482438,
+    9461363684,
+    4808482443,
+    9461364236,
+    9461364237,
+    9461364238,
+    9461364239,
+    4808482442,
+    9461364243,
+    9461364242,
+    9461364241,
+    4808482441,
+    4808482440,
+    8507830395,
+    4808482439
+  ],
+  "tags": {
+    "highway": "service",
+    "oneway": "yes",
+    "service": "parking_aisle",
+    "surface": "paving_stones"
+  }
+},
+{
+  "type": "way",
+  "id": 500230681,
+  "nodes": [
+    9463130576,
+    9463130572,
+    4913331574
+  ],
+  "tags": {
+    "highway": "service",
+    "service": "parking_aisle",
+    "surface": "paving_stones"
+  }
+},
+{
+  "type": "way",
+  "id": 795475770,
+  "nodes": [
+    7440114158,
+    7440114159,
+    7440114156,
+    7440114147,
+    7440114157,
+    11055536280,
+    11055536282,
+    11055536279,
+    11055536281,
+    11055536278
+  ],
+  "tags": {
+    "highway": "service",
+    "service": "driveway",
+    "surface": "paving_stones"
+  }
+},
+{
+  "type": "way",
+  "id": 881060547,
+  "nodes": [
+    8194651821,
+    8194651823,
+    9462988778
+  ],
+  "tags": {
+    "highway": "service",
+    "service": "driveway",
+    "surface": "paving_stones"
+  }
+},
+{
+  "type": "way",
+  "id": 881060548,
+  "nodes": [
+    9462988757,
+    9462988758,
+    9462988759,
+    9462988760,
+    9462988761,
+    9462988762,
+    9462988763,
+    9462988774,
+    9462988773,
+    9462988772,
+    9462988771,
+    9462988770,
+    9462988769,
+    9462988768,
+    9462988766,
+    9462988764,
+    9462988765,
+    9462988767,
+    9462988778
+  ],
+  "tags": {
+    "access": "private",
+    "highway": "service",
+    "service": "driveway"
+  }
+},
+{
+  "type": "way",
+  "id": 1013826054,
+  "nodes": [
+    60937005,
+    329997051,
+    9353583509,
+    3034620780,
+    9461474115,
+    9353583512
+  ],
+  "tags": {
+    "highway": "tertiary",
+    "lanes": "4",
+    "lanes:backward": "2",
+    "lanes:forward": "2",
+    "lit": "yes",
+    "maxspeed": "50",
+    "name": "Krucza",
+    "sidewalk": "separate",
+    "source:maxspeed": "PL:urban",
+    "surface": "asphalt",
+    "turn:lanes:backward": "through|through;right",
+    "wikidata": "Q9365523",
+    "wikipedia": "pl:Ulica Krucza w Warszawie"
+  }
+},
+{
+  "type": "way",
+  "id": 1013826055,
+  "nodes": [
+    9353583512,
+    9353527847,
+    376546416,
+    255304600
+  ],
+  "tags": {
+    "cycleway:both": "no",
+    "highway": "tertiary",
+    "lanes": "4",
+    "lanes:backward": "2",
+    "lanes:forward": "2",
+    "lit": "yes",
+    "maxspeed": "50",
+    "name": "Krucza",
+    "sidewalk": "separate",
+    "source:maxspeed": "PL:urban",
+    "surface": "asphalt",
+    "turn:lanes:forward": "through|through;right",
+    "wikidata": "Q9365523",
+    "wikipedia": "pl:Ulica Krucza w Warszawie"
+  }
+},
+{
+  "type": "way",
+  "id": 1026192102,
+  "nodes": [
+    9461363674,
+    9461363673,
+    9461363672,
+    9461363671
+  ],
+  "tags": {
+    "access": "private",
+    "highway": "service",
+    "service": "parking_aisle"
+  }
+},
+{
+  "type": "way",
+  "id": 1026192103,
+  "nodes": [
+    7440116717,
+    561293413,
+    9461363674,
+    9461363675
+  ],
+  "tags": {
+    "access": "private",
+    "highway": "service",
+    "service": "parking_aisle"
+  }
+},
+{
+  "type": "way",
+  "id": 1026192106,
+  "nodes": [
+    9461363685,
+    9461363683
+  ],
+  "tags": {
+    "access": "private",
+    "highway": "service",
+    "service": "parking_aisle",
+    "surface": "paving_stones"
+  }
+},
+{
+  "type": "way",
+  "id": 1026192107,
+  "nodes": [
+    9461363684,
+    9461363685
+  ],
+  "tags": {
+    "highway": "service",
+    "service": "parking_aisle",
+    "surface": "paving_stones"
+  }
+},
+{
+  "type": "way",
+  "id": 1026213603,
+  "nodes": [
+    9461474115,
+    9461474114,
+    9461474088,
+    9461474113,
+    9461544655
+  ],
+  "tags": {
+    "highway": "service",
+    "service": "driveway",
+    "surface": "paving_stones"
+  }
+},
+{
+  "type": "way",
+  "id": 1026379489,
+  "nodes": [
+    246806081,
+    7440116715,
+    246806090
+  ],
+  "tags": {
+    "highway": "residential",
+    "lanes": "2",
+    "lit": "yes",
+    "maxspeed": "30",
+    "noname": "yes",
+    "sidewalk:left": "separate",
+    "sidewalk:right": "yes",
+    "smoothness": "excellent",
+    "source:maxspeed": "PL:zone30",
+    "surface": "paving_stones"
+  }
+},
+{
+  "type": "way",
+  "id": 1109991384,
+  "nodes": [
+    60937004,
+    8927686630,
+    1412975517,
+    333427716,
+    246806083,
+    7440114124,
+    8194651821,
+    10154587299
+  ],
+  "tags": {
+    "highway": "residential",
+    "lanes": "1",
+    "lit": "yes",
+    "maxspeed": "50",
+    "name": "HoÅ¼a",
+    "oneway": "yes",
+    "sidewalk": "separate",
+    "source:maxspeed": "PL:urban",
+    "surface": "asphalt",
+    "wikidata": "Q9365276",
+    "wikipedia": "pl:Ulica HoÅ¼a w Warszawie"
+  }
+},
+{
+  "type": "way",
+  "id": 1109991387,
+  "nodes": [
+    10154587305,
+    4913331574,
+    2809319366,
+    333427716
+  ],
+  "tags": {
+    "esperanto": "yes",
+    "highway": "service",
+    "lit": "yes",
+    "maxspeed": "50",
+    "name": "Antoniego Grabowskiego",
+    "source:maxspeed": "PL:urban",
+    "surface": "paving_stones",
+    "vehicle": "private",
+    "wikidata": "Q111992760"
+  }
+},
+{
+  "type": "way",
+  "id": 1109991388,
+  "nodes": [
+    10154587308,
+    7440114135,
+    10568048915,
+    246806083
+  ],
+  "tags": {
+    "alt_name": "KsiÄdza Ignacego Jana Skorupki",
+    "highway": "residential",
+    "lanes": "2",
+    "lit": "yes",
+    "maxspeed": "50",
+    "name": "KsiÄdza Ignacego Skorupki",
+    "name:etymology:wikidata": "Q674790",
+    "official_name": "ks. Ignacego Skorupki",
+    "sidewalk": "separate",
+    "smoothness": "excellent",
+    "source:maxspeed": "PL:urban",
+    "surface": "asphalt",
+    "wikidata": "Q107301456"
+  }
+},
+{
+  "type": "node",
+  "id": 60937004,
+  "lat": 52.2262062,
+  "lon": 21.0140507
+},
+{
+  "type": "node",
+  "id": 246806081,
+  "lat": 52.2258995,
+  "lon": 21.0165023
+},
+{
+  "type": "node",
+  "id": 246806083,
+  "lat": 52.2266401,
+  "lon": 21.0160522
+},
+{
+  "type": "node",
+  "id": 246806090,
+  "lat": 52.2255930,
+  "lon": 21.0166835
+},
+{
+  "type": "node",
+  "id": 333427716,
+  "lat": 52.2266208,
+  "lon": 21.0159584
+},
+{
+  "type": "node",
+  "id": 561293413,
+  "lat": 52.2248033,
+  "lon": 21.0166693
+},
+{
+  "type": "node",
+  "id": 561293417,
+  "lat": 52.2250460,
+  "lon": 21.0165315
+},
+{
+  "type": "node",
+  "id": 1412975517,
+  "lat": 52.2262527,
+  "lon": 21.0142682
+},
+{
+  "type": "node",
+  "id": 2153212690,
+  "lat": 52.2248832,
+  "lon": 21.0157505
+},
+{
+  "type": "node",
+  "id": 2809319366,
+  "lat": 52.2266830,
+  "lon": 21.0159253
+},
+{
+  "type": "node",
+  "id": 4913331574,
+  "lat": 52.2267668,
+  "lon": 21.0158809
+},
+{
+  "type": "node",
+  "id": 7440114124,
+  "lat": 52.2266833,
+  "lon": 21.0162645
+},
+{
+  "type": "node",
+  "id": 7440114130,
+  "lat": 52.2258697,
+  "lon": 21.0163732
+},
+{
+  "type": "node",
+  "id": 7440114135,
+  "lat": 52.2265761,
+  "lon": 21.0160904
+},
+{
+  "type": "node",
+  "id": 7440114174,
+  "lat": 52.2249875,
+  "lon": 21.0165631
+},
+{
+  "type": "node",
+  "id": 7440116715,
+  "lat": 52.2258050,
+  "lon": 21.0165590
+},
+{
+  "type": "node",
+  "id": 7440116717,
+  "lat": 52.2249776,
+  "lon": 21.0165685
+},
+{
+  "type": "node",
+  "id": 8194651821,
+  "lat": 52.2268986,
+  "lon": 21.0172747
+},
+{
+  "type": "node",
+  "id": 8194651823,
+  "lat": 52.2268462,
+  "lon": 21.0173030
+},
+{
+  "type": "node",
+  "id": 8927686630,
+  "lat": 52.2262224,
+  "lon": 21.0141251
+},
+{
+  "type": "node",
+  "id": 8927686666,
+  "lat": 52.2255431,
+  "lon": 21.0148883
+},
+{
+  "type": "node",
+  "id": 9315285611,
+  "lat": 52.2256603,
+  "lon": 21.0154242
+},
+{
+  "type": "node",
+  "id": 9461363671,
+  "lat": 52.2248182,
+  "lon": 21.0170853
+},
+{
+  "type": "node",
+  "id": 9461363672,
+  "lat": 52.2247759,
+  "lon": 21.0171111
+},
+{
+  "type": "node",
+  "id": 9461363673,
+  "lat": 52.2247198,
+  "lon": 21.0168267
+},
+{
+  "type": "node",
+  "id": 9461363674,
+  "lat": 52.2248229,
+  "lon": 21.0167698
+},
+{
+  "type": "node",
+  "id": 9461363675,
+  "lat": 52.2248691,
+  "lon": 21.0170073
+},
+{
+  "type": "node",
+  "id": 9462988757,
+  "lat": 52.2265242,
+  "lon": 21.0169541
+},
+{
+  "type": "node",
+  "id": 9462988758,
+  "lat": 52.2265871,
+  "lon": 21.0172698
+},
+{
+  "type": "node",
+  "id": 9462988765,
+  "lat": 52.2266938,
+  "lon": 21.0173903
+},
+{
+  "type": "node",
+  "id": 9462988767,
+  "lat": 52.2267064,
+  "lon": 21.0173744
+},
+{
+  "type": "node",
+  "id": 9462988778,
+  "lat": 52.2267871,
+  "lon": 21.0173349
+},
+{
+  "type": "node",
+  "id": 9463130572,
+  "lat": 52.2267587,
+  "lon": 21.0158430
+},
+{
+  "type": "node",
+  "id": 9463130576,
+  "lat": 52.2267466,
+  "lon": 21.0157870
+},
+{
+  "type": "node",
+  "id": 10154587305,
+  "lat": 52.2269288,
+  "lon": 21.0157948
+},
+{
+  "type": "node",
+  "id": 10154587307,
+  "lat": 52.2263818,
+  "lon": 21.0162087
+},
+{
+  "type": "node",
+  "id": 10154587308,
+  "lat": 52.2264788,
+  "lon": 21.0161497
+},
+{
+  "type": "node",
+  "id": 10568048915,
+  "lat": 52.2266191,
+  "lon": 21.0160647
+},
+{
+  "type": "node",
+  "id": 60937005,
+  "lat": 52.2271185,
+  "lon": 21.0182513
+},
+{
+  "type": "node",
+  "id": 255304600,
+  "lat": 52.2255705,
+  "lon": 21.0190319
+},
+{
+  "type": "node",
+  "id": 255304601,
+  "lat": 52.2262361,
+  "lon": 21.0222173
+},
+{
+  "type": "node",
+  "id": 329997051,
+  "lat": 52.2269920,
+  "lon": 21.0183171
+},
+{
+  "type": "node",
+  "id": 376319261,
+  "lat": 52.2262048,
+  "lon": 21.0220899
+},
+{
+  "type": "node",
+  "id": 376546258,
+  "lat": 52.2256159,
+  "lon": 21.0192290
+},
+{
+  "type": "node",
+  "id": 376546416,
+  "lat": 52.2256590,
+  "lon": 21.0189896
+},
+{
+  "type": "node",
+  "id": 376546728,
+  "lat": 52.2255295,
+  "lon": 21.0188430
+},
+{
+  "type": "node",
+  "id": 3034620780,
+  "lat": 52.2268151,
+  "lon": 21.0184052
+},
+{
+  "type": "node",
+  "id": 4808482437,
+  "lat": 52.2247107,
+  "lon": 21.0183535
+},
+{
+  "type": "node",
+  "id": 4808482438,
+  "lat": 52.2249442,
+  "lon": 21.0182291
+},
+{
+  "type": "node",
+  "id": 4808482439,
+  "lat": 52.2243568,
+  "lon": 21.0196463
+},
+{
+  "type": "node",
+  "id": 4808482440,
+  "lat": 52.2241668,
+  "lon": 21.0186413
+},
+{
+  "type": "node",
+  "id": 4808482441,
+  "lat": 52.2243812,
+  "lon": 21.0185277
+},
+{
+  "type": "node",
+  "id": 4808482442,
+  "lat": 52.2243318,
+  "lon": 21.0181281
+},
+{
+  "type": "node",
+  "id": 4808482443,
+  "lat": 52.2248790,
+  "lon": 21.0178817
+},
+{
+  "type": "node",
+  "id": 4808482444,
+  "lat": 52.2251051,
+  "lon": 21.0190627
+},
+{
+  "type": "node",
+  "id": 4808482445,
+  "lat": 52.2251433,
+  "lon": 21.0192500
+},
+{
+  "type": "node",
+  "id": 7440114147,
+  "lat": 52.2256919,
+  "lon": 21.0177093
+},
+{
+  "type": "node",
+  "id": 7440114156,
+  "lat": 52.2255768,
+  "lon": 21.0177736
+},
+{
+  "type": "node",
+  "id": 7440114157,
+  "lat": 52.2257584,
+  "lon": 21.0176722
+},
+{
+  "type": "node",
+  "id": 7440114158,
+  "lat": 52.2253345,
+  "lon": 21.0179089
+},
+{
+  "type": "node",
+  "id": 7440114159,
+  "lat": 52.2253921,
+  "lon": 21.0178768
+},
+{
+  "type": "node",
+  "id": 8507830395,
+  "lat": 52.2243247,
+  "lon": 21.0194736
+},
+{
+  "type": "node",
+  "id": 9353527847,
+  "lat": 52.2257009,
+  "lon": 21.0189685
+},
+{
+  "type": "node",
+  "id": 9353527848,
+  "lat": 52.2256284,
+  "lon": 21.0192897
+},
+{
+  "type": "node",
+  "id": 9353583509,
+  "lat": 52.2269469,
+  "lon": 21.0183392
+},
+{
+  "type": "node",
+  "id": 9353583512,
+  "lat": 52.2262754,
+  "lon": 21.0186780
+},
+{
+  "type": "node",
+  "id": 9461363683,
+  "lat": 52.2250943,
+  "lon": 21.0180501
+},
+{
+  "type": "node",
+  "id": 9461363684,
+  "lat": 52.2249267,
+  "lon": 21.0181391
+},
+{
+  "type": "node",
+  "id": 9461363685,
+  "lat": 52.2249618,
+  "lon": 21.0181201
+},
+{
+  "type": "node",
+  "id": 9461364236,
+  "lat": 52.2248743,
+  "lon": 21.0178669
+},
+{
+  "type": "node",
+  "id": 9461364237,
+  "lat": 52.2248683,
+  "lon": 21.0178573
+},
+{
+  "type": "node",
+  "id": 9461364238,
+  "lat": 52.2248594,
+  "lon": 21.0178528
+},
+{
+  "type": "node",
+  "id": 9461364239,
+  "lat": 52.2248503,
+  "lon": 21.0178517
+},
+{
+  "type": "node",
+  "id": 9461364241,
+  "lat": 52.2243935,
+  "lon": 21.0185086
+},
+{
+  "type": "node",
+  "id": 9461364242,
+  "lat": 52.2243990,
+  "lon": 21.0184790
+},
+{
+  "type": "node",
+  "id": 9461364243,
+  "lat": 52.2243979,
+  "lon": 21.0184468
+},
+{
+  "type": "node",
+  "id": 9461419001,
+  "lat": 52.2257925,
+  "lon": 21.0200866
+},
+{
+  "type": "node",
+  "id": 9461474088,
+  "lat": 52.2264789,
+  "lon": 21.0189867
+},
+{
+  "type": "node",
+  "id": 9461474113,
+  "lat": 52.2265207,
+  "lon": 21.0191554
+},
+{
+  "type": "node",
+  "id": 9461474114,
+  "lat": 52.2264425,
+  "lon": 21.0188058
+},
+{
+  "type": "node",
+  "id": 9461474115,
+  "lat": 52.2264109,
+  "lon": 21.0186095
+},
+{
+  "type": "node",
+  "id": 9461544646,
+  "lat": 52.2259827,
+  "lon": 21.0210008
+},
+{
+  "type": "node",
+  "id": 9461544655,
+  "lat": 52.2265412,
+  "lon": 21.0192393
+},
+{
+  "type": "node",
+  "id": 9462988759,
+  "lat": 52.2266072,
+  "lon": 21.0174142
+},
+{
+  "type": "node",
+  "id": 9462988760,
+  "lat": 52.2266096,
+  "lon": 21.0175038
+},
+{
+  "type": "node",
+  "id": 9462988761,
+  "lat": 52.2266102,
+  "lon": 21.0178564
+},
+{
+  "type": "node",
+  "id": 9462988762,
+  "lat": 52.2266115,
+  "lon": 21.0178913
+},
+{
+  "type": "node",
+  "id": 9462988763,
+  "lat": 52.2266237,
+  "lon": 21.0179062
+},
+{
+  "type": "node",
+  "id": 9462988764,
+  "lat": 52.2266883,
+  "lon": 21.0174112
+},
+{
+  "type": "node",
+  "id": 9462988766,
+  "lat": 52.2266899,
+  "lon": 21.0174406
+},
+{
+  "type": "node",
+  "id": 9462988768,
+  "lat": 52.2267365,
+  "lon": 21.0176961
+},
+{
+  "type": "node",
+  "id": 9462988769,
+  "lat": 52.2267438,
+  "lon": 21.0177708
+},
+{
+  "type": "node",
+  "id": 9462988770,
+  "lat": 52.2267414,
+  "lon": 21.0178156
+},
+{
+  "type": "node",
+  "id": 9462988771,
+  "lat": 52.2267286,
+  "lon": 21.0178584
+},
+{
+  "type": "node",
+  "id": 9462988772,
+  "lat": 52.2267078,
+  "lon": 21.0178793
+},
+{
+  "type": "node",
+  "id": 9462988773,
+  "lat": 52.2266621,
+  "lon": 21.0178993
+},
+{
+  "type": "node",
+  "id": 9462988774,
+  "lat": 52.2266377,
+  "lon": 21.0179112
+},
+{
+  "type": "node",
+  "id": 10154587299,
+  "lat": 52.2269681,
+  "lon": 21.0176074
+},
+{
+  "type": "node",
+  "id": 11055536278,
+  "lat": 52.2259266,
+  "lon": 21.0182506
+},
+{
+  "type": "node",
+  "id": 11055536279,
+  "lat": 52.2257976,
+  "lon": 21.0176843
+},
+{
+  "type": "node",
+  "id": 11055536280,
+  "lat": 52.2257711,
+  "lon": 21.0176682
+},
+{
+  "type": "node",
+  "id": 11055536281,
+  "lat": 52.2258069,
+  "lon": 21.0177052
+},
+{
+  "type": "node",
+  "id": 11055536282,
+  "lat": 52.2257839,
+  "lon": 21.0176713
+}
+
+  ]
+}

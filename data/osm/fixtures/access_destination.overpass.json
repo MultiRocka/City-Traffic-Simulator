@@ -1,0 +1,38 @@
+{
+  "_comment": "SYNTHETIC — access=destination spur must not be used in auto-generated demand routes.",
+  "version": 0.6,
+  "generator": "easy_rider_synthetic_fixture",
+  "osm3s": {
+    "timestamp_osm_base": "1970-01-01T00:00:00Z",
+    "copyright": "SYNTHETIC FIXTURE — NOT OSM"
+  },
+  "elements": [
+    { "type": "node", "id": 914001, "lat": 52.2250, "lon": 21.0160 },
+    { "type": "node", "id": 914002, "lat": 52.2250, "lon": 21.0165 },
+    { "type": "node", "id": 914003, "lat": 52.2250, "lon": 21.0170 },
+    { "type": "node", "id": 914004, "lat": 52.2255, "lon": 21.0165 },
+    {
+      "type": "way",
+      "id": 814001,
+      "nodes": [914001, 914002],
+      "tags": { "highway": "residential", "oneway": "yes" }
+    },
+    {
+      "type": "way",
+      "id": 814002,
+      "nodes": [914002, 914003],
+      "tags": { "highway": "residential", "oneway": "yes" }
+    },
+    {
+      "type": "way",
+      "id": 814003,
+      "nodes": [914002, 914004],
+      "tags": {
+        "highway": "service",
+        "oneway": "yes",
+        "access": "destination",
+        "name": "DestinationSpur"
+      }
+    }
+  ]
+}

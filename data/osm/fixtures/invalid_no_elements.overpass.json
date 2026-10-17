@@ -1,0 +1,6 @@
+{
+  "_comment": "SYNTHETIC — not real OpenStreetMap data. Valid JSON but missing required Overpass 'elements' array.",
+  "version": 0.6,
+  "generator": "easy_rider_synthetic_fixture",
+  "remark": "error: timeout (fake)"
+}

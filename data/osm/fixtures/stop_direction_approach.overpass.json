@@ -1,0 +1,40 @@
+{
+  "_comment": "SYNTHETIC — stop with direction=forward binds to that approach (PriorityRoad), not blanket invent.",
+  "version": 0.6,
+  "generator": "easy_rider_synthetic_fixture",
+  "osm3s": {
+    "timestamp_osm_base": "1970-01-01T00:00:00Z",
+    "copyright": "SYNTHETIC FIXTURE — NOT OSM"
+  },
+  "elements": [
+    { "type": "node", "id": 915001, "lat": 52.2260, "lon": 21.0165 },
+    {
+      "type": "node",
+      "id": 915002,
+      "lat": 52.2255,
+      "lon": 21.0165,
+      "tags": { "highway": "stop", "direction": "forward" }
+    },
+    { "type": "node", "id": 915003, "lat": 52.2250, "lon": 21.0165 },
+    { "type": "node", "id": 915004, "lat": 52.2255, "lon": 21.0160 },
+    { "type": "node", "id": 915005, "lat": 52.2255, "lon": 21.0170 },
+    {
+      "type": "way",
+      "id": 815001,
+      "nodes": [915001, 915002, 915003],
+      "tags": { "highway": "residential", "oneway": "yes", "name": "NorthToSouth" }
+    },
+    {
+      "type": "way",
+      "id": 815002,
+      "nodes": [915004, 915002],
+      "tags": { "highway": "residential", "oneway": "yes", "name": "FromWest" }
+    },
+    {
+      "type": "way",
+      "id": 815003,
+      "nodes": [915005, 915002],
+      "tags": { "highway": "residential", "oneway": "yes", "name": "FromEast" }
+    }
+  ]
+}

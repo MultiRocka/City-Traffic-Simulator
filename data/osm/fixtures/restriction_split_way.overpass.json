@@ -1,0 +1,54 @@
+{
+  "_comment": "SYNTHETIC — from-way splits at mid junction; restriction must bind arriving segment at via.",
+  "version": 0.6,
+  "generator": "easy_rider_synthetic_fixture",
+  "osm3s": {
+    "timestamp_osm_base": "1970-01-01T00:00:00Z",
+    "copyright": "SYNTHETIC FIXTURE — NOT OSM"
+  },
+  "elements": [
+    { "type": "node", "id": 912001, "lat": 52.2248, "lon": 21.0165 },
+    { "type": "node", "id": 912002, "lat": 52.2252, "lon": 21.0165 },
+    { "type": "node", "id": 912003, "lat": 52.2255, "lon": 21.0165 },
+    { "type": "node", "id": 912004, "lat": 52.2252, "lon": 21.0160 },
+    { "type": "node", "id": 912005, "lat": 52.2255, "lon": 21.0170 },
+    { "type": "node", "id": 912006, "lat": 52.2260, "lon": 21.0165 },
+    {
+      "type": "way",
+      "id": 812001,
+      "nodes": [912001, 912002, 912003],
+      "tags": { "highway": "residential", "oneway": "yes", "name": "LongFrom" }
+    },
+    {
+      "type": "way",
+      "id": 812002,
+      "nodes": [912002, 912004],
+      "tags": { "highway": "residential", "oneway": "yes", "name": "StubSplit" }
+    },
+    {
+      "type": "way",
+      "id": 812003,
+      "nodes": [912003, 912005],
+      "tags": { "highway": "residential", "oneway": "yes", "name": "ForbiddenTo" }
+    },
+    {
+      "type": "way",
+      "id": 812004,
+      "nodes": [912003, 912006],
+      "tags": { "highway": "residential", "oneway": "yes", "name": "AllowedTo" }
+    },
+    {
+      "type": "relation",
+      "id": 712001,
+      "members": [
+        { "type": "way", "ref": 812001, "role": "from" },
+        { "type": "node", "ref": 912003, "role": "via" },
+        { "type": "way", "ref": 812003, "role": "to" }
+      ],
+      "tags": {
+        "type": "restriction",
+        "restriction": "no_right_turn"
+      }
+    }
+  ]
+}

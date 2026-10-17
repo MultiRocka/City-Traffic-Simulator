@@ -1,0 +1,32 @@
+{
+  "_comment": "SYNTHETIC — junction=roundabout implies oneway forward.",
+  "version": 0.6,
+  "generator": "easy_rider_synthetic_fixture",
+  "osm3s": {
+    "timestamp_osm_base": "1970-01-01T00:00:00Z",
+    "copyright": "SYNTHETIC FIXTURE — NOT OSM"
+  },
+  "elements": [
+    {
+      "type": "node",
+      "id": 980001,
+      "lat": 52.2250,
+      "lon": 21.0160
+    },
+    {
+      "type": "node",
+      "id": 980002,
+      "lat": 52.2252,
+      "lon": 21.0162
+    },
+    {
+      "type": "way",
+      "id": 880001,
+      "nodes": [980001, 980002],
+      "tags": {
+        "highway": "residential",
+        "junction": "roundabout"
+      }
+    }
+  ]
+}

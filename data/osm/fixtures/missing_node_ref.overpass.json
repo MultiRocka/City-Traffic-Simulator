@@ -1,0 +1,26 @@
+{
+  "_comment": "SYNTHETIC — not real OpenStreetMap data. Way references a node id that is absent from elements.",
+  "version": 0.6,
+  "generator": "easy_rider_synthetic_fixture",
+  "osm3s": {
+    "timestamp_osm_base": "1970-01-01T00:00:00Z",
+    "copyright": "SYNTHETIC FIXTURE — NOT OSM"
+  },
+  "elements": [
+    {
+      "type": "node",
+      "id": 900021,
+      "lat": 52.2251,
+      "lon": 21.0161
+    },
+    {
+      "type": "way",
+      "id": 800021,
+      "nodes": [900021, 999999],
+      "tags": {
+        "highway": "residential",
+        "name": "Synthetic Missing Node Ref"
+      }
+    }
+  ]
+}

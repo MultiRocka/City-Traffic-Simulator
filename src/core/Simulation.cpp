@@ -1,108 +1,16 @@
 #include "core/Simulation.h"
+#include "core/CollisionDetector.h"
 #include <algorithm>
 
 using namespace std;
 
-static bool isGreenForRoad(const vector<TrafficLight>& trafficLights, int roadId) {
-    for (const auto& light : trafficLights) {
-        if (light.getRoadSegmentId() == roadId) {
-            return light.isGreen();
-        }
-    }
-
-    return true;
-}
-
-static bool hasRedLightForRoad(const vector<TrafficLight>& trafficLights, int roadId) {
-    for (const auto& light : trafficLights) {
-        if (light.getRoadSegmentId() == roadId) {
-            return light.isRed();
-        }
-    }
-
-    return false;
-}
-
-static bool canEnterRoad(int nextRoadId, const vector<Vehicle>& vehicles, double minVehicleGap) {
-    for (const auto& vehicle : vehicles) {
-        if (!vehicle.isFinished() &&
-            vehicle.getCurrentRoadSegmentId() == nextRoadId &&
-            vehicle.getPositionOnRoad() < minVehicleGap) {
-            return false;
-        }
-    }
-
-    return true;
-}
-
 Simulation::Simulation()
-    : running(false), currentTime(0.0), minVehicleGap(3.0) {
-}
-
-string Simulation::determineStopReason(const Vehicle& vehicle, const City& city) const {
-    int roadId = vehicle.getCurrentRoadSegmentId();
-
-    if (roadId == -1) {
-        return "unknown";
-    }
-
-    const RoadSegment* road = city.findRoadSegmentById(roadId);
-
-    if (road == nullptr) {
-        return "unknown";
-    }
-
-    double roadLength = road->getLength();
-    double position = vehicle.getPositionOnRoad();
-
-    for (const auto& crossing : pedestrianCrossings) {
-        if (crossing.getRoadSegmentId() == roadId && crossing.isActive()) {
-            if (position >= crossing.getPositionOnRoad() - 2.0 &&
-                position <= crossing.getPositionOnRoad()) {
-                return "pedestrian_crossing";
-            }
-        }
-    }
-
-    for (const auto& light : trafficLights) {
-        if (light.getRoadSegmentId() == roadId && light.isRed()) {
-            if (position >= roadLength - 3.0) {
-                return "red_light";
-            }
-        }
-    }
-
-    for (const auto& otherVehicle : vehicles) {
-        if (otherVehicle.getId() == vehicle.getId()) {
-            continue;
-        }
-
-        if (otherVehicle.isFinished()) {
-            continue;
-        }
-
-        if (otherVehicle.getCurrentRoadSegmentId() != roadId) {
-            continue;
-        }
-
-        if (otherVehicle.getPositionOnRoad() > position) {
-            double gap = otherVehicle.getPositionOnRoad() - position;
-
-            if (gap <= minVehicleGap + 0.5) {
-                return "vehicle_ahead";
-            }
-        }
-    }
-
-    if (position >= roadLength) {
-        if (vehicle.getNextRoadSegmentId() == -1) {
-            return "route_finished";
-        }
-
-        return "intersection_blocked";
-    }
-
-    return "unknown";
+    : running(false),
+      currentTime(0.0),
+      vehicleSpawnRateMultiplier(1.0),
+      minVehicleGap(2.5),
+      nextVehicleId(1),
+      collisionDetector(minVehicleGap) {
 }
 
 void Simulation::start() {
@@ -111,6 +19,66 @@ void Simulation::start() {
 
 void Simulation::stop() {
     running = false;
+    pruneFinishedVehicles();
+}
+
+void Simulation::clear() {
+    running = false;
+    currentTime = 0.0;
+    vehicles.clear();
+    generators.clear();
+    vehicleSpawnBaselines.clear();
+    vehicleSpawnRateMultiplier = 1.0;
+    minVehicleGap = 2.5;
+    collisionDetector.setMinVehicleGap(minVehicleGap);
+    intersectionRules.clear();
+    nextVehicleId = 1;
+    trafficLights.clear();
+    phaseControllers.clear();
+    pedestrianCrossings.clear();
+    pedestrianManager.clear();
+    laneBlockageManager.clear();
+    statisticsCollector.resetRuntime();
+    eventLog.clear();
+    knownVehicleIds.clear();
+    knownInvalidRoutes.clear();
+    previousStoppedState.clear();
+    previousRoadState.clear();
+    previousCrossingState.clear();
+}
+
+void Simulation::syncPhaseControlledLights() {
+    for (auto& trafficLight : trafficLights) {
+        if (!trafficLight.isPhaseControlled()) {
+            continue;
+        }
+
+        bool isGreen = false;
+
+        for (const auto& controller : phaseControllers) {
+            if (controller.getIntersectionId() == trafficLight.getIntersectionId()) {
+                isGreen = controller.isRoadGreen(trafficLight.getRoadSegmentId());
+                break;
+            }
+        }
+
+        trafficLight.setGreen(isGreen);
+    }
+}
+
+void Simulation::pruneFinishedVehicles() {
+    for (const auto& vehicle : vehicles) {
+        if (vehicle.isFinished()) {
+            intersectionRules.releaseVehicle(vehicle.getId());
+        }
+    }
+
+    vehicles.erase(
+        remove_if(vehicles.begin(), vehicles.end(), [](const Vehicle& vehicle) {
+            return vehicle.isFinished();
+        }),
+        vehicles.end()
+    );
 }
 
 void Simulation::update(double dt, const City& city) {
@@ -120,13 +88,37 @@ void Simulation::update(double dt, const City& city) {
 
     currentTime += dt;
 
+    for (auto& phaseController : phaseControllers) {
+        const bool hold = pedestrianManager.shouldHoldPhaseController(
+            phaseController,
+            pedestrianCrossings,
+            trafficLights
+        );
+        phaseController.update(dt, hold);
+    }
+
+    syncPhaseControlledLights();
+
     for (auto& trafficLight : trafficLights) {
         trafficLight.update(dt);
     }
 
     for (auto& crossing : pedestrianCrossings) {
         crossing.update(dt);
+    }
 
+    pedestrianManager.update(dt, city, pedestrianCrossings, vehicles, trafficLights);
+
+    laneBlockageManager.update(dt, currentTime, city, vehicles, eventLog, &collisionDetector);
+    laneBlockageManager.tryEscapeLaneChanges(
+        currentTime,
+        city,
+        vehicles,
+        collisionDetector,
+        eventLog
+    );
+
+    for (auto& crossing : pedestrianCrossings) {
         if (previousCrossingState.find(crossing.getId()) == previousCrossingState.end()) {
             previousCrossingState[crossing.getId()] = crossing.isActive();
         } else {
@@ -160,7 +152,7 @@ void Simulation::update(double dt, const City& city) {
     }
 
     for (auto& generator : generators) {
-        generator.update(dt, vehicles);
+        generator.update(dt, vehicles, nextVehicleId, &city, &laneBlockageManager, currentTime);
     }
 
     for (const auto& vehicle : vehicles) {
@@ -180,44 +172,74 @@ void Simulation::update(double dt, const City& city) {
         }
     }
 
+    // Optional preferLane: try one intentional LC per vehicle when cooldown allows.
+    // Not zipper — blockage escape LC runs earlier via LaneBlockageManager.
+    for (auto& vehicle : vehicles) {
+        if (vehicle.isFinished() || vehicle.getPreferLane() < 0 || vehicle.getLaneChangeCooldown() > 0.0) {
+            continue;
+        }
+
+        if (vehicle.getPreferLane() == vehicle.getLaneIndex()) {
+            continue;
+        }
+
+        tryLaneChange(vehicle.getId(), vehicle.getPreferLane(), city);
+    }
+
     for (const auto& roadSegment : city.getRoadSegments()) {
         vector<Vehicle*> vehiclesOnRoad;
 
         for (auto& vehicle : vehicles) {
             if (!vehicle.isFinished() && vehicle.getCurrentRoadSegmentId() == roadSegment.getId()) {
+                // Keep laneIndex valid for this directed segment.
+                vehicle.clampLaneIndex(roadSegment.getLaneCount());
                 vehiclesOnRoad.push_back(&vehicle);
             }
         }
 
+        // Front-most first; predecessor lookup is still lane-aware via findPredecessor.
         sort(vehiclesOnRoad.begin(), vehiclesOnRoad.end(),
             [](Vehicle* a, Vehicle* b) {
                 return a->getPositionOnRoad() > b->getPositionOnRoad();
             });
 
-        for (int i = 0; i < static_cast<int>(vehiclesOnRoad.size()); i++) {
-            double maxAllowedPosition = roadSegment.getLength();
+        for (Vehicle* vehiclePtr : vehiclesOnRoad) {
+            const Vehicle* leader = collisionDetector.findPredecessor(*vehiclePtr, vehicles);
+            double aheadPosition = -1.0;
+            double aheadLength = 0.0;
 
-            if (hasRedLightForRoad(trafficLights, roadSegment.getId())) {
-                maxAllowedPosition = min(maxAllowedPosition, roadSegment.getLength() - 2.0);
+            if (leader != nullptr) {
+                aheadPosition = leader->getPositionOnRoad();
+                aheadLength = leader->getLength();
             }
 
-            for (const auto& crossing : pedestrianCrossings) {
-                if (crossing.getRoadSegmentId() == roadSegment.getId() && crossing.isActive()) {
-                    maxAllowedPosition = min(maxAllowedPosition, crossing.getPositionOnRoad() - 1.0);
-                }
-            }
+            double maxAllowedPosition = collisionDetector.computeMaxAllowedPosition(
+                roadSegment,
+                trafficLights,
+                pedestrianCrossings,
+                vehiclePtr->getPositionOnRoad(),
+                aheadPosition,
+                aheadLength,
+                &pedestrianManager,
+                vehiclePtr,
+                &laneBlockageManager,
+                currentTime
+            );
 
-            if (i > 0) {
-                maxAllowedPosition = min(maxAllowedPosition, vehiclesOnRoad[i - 1]->getPositionOnRoad() - minVehicleGap);
-            }
-
-            if (maxAllowedPosition < vehiclesOnRoad[i]->getPositionOnRoad()) {
-                maxAllowedPosition = vehiclesOnRoad[i]->getPositionOnRoad();
-            }
-
-            vehiclesOnRoad[i]->update(dt, roadSegment.getLength(), maxAllowedPosition);
+            vehiclePtr->update(
+                dt,
+                roadSegment.getLength(),
+                maxAllowedPosition,
+                roadSegment.getSpeedLimit(),
+                minVehicleGap
+            );
         }
     }
+
+    intersectionRules.clearStaleReservations(city, vehicles);
+
+    // Collect vehicles ready at stop lines, then grant per intersection (priority / conflict).
+    map<int, vector<int>> candidatesByIntersection;
 
     for (auto& vehicle : vehicles) {
         if (vehicle.isFinished()) {
@@ -231,13 +253,15 @@ void Simulation::update(double dt, const City& city) {
             continue;
         }
 
-        if (vehicle.getPositionOnRoad() < currentRoad->getLength()) {
+        if (!collisionDetector.isAtIntersectionEntry(vehicle.getPositionOnRoad(), currentRoad->getLength())) {
+            intersectionRules.clearWaiting(vehicle.getId());
             continue;
         }
 
         int nextRoadId = vehicle.getNextRoadSegmentId();
 
         if (nextRoadId == -1) {
+            intersectionRules.releaseVehicle(vehicle.getId());
             vehicle.finish();
 
             eventLog.addEvent(
@@ -245,22 +269,109 @@ void Simulation::update(double dt, const City& city) {
                 "vehicle_finished",
                 vehicle.getId(),
                 currentRoadId,
-                "route_finished",
+                "destination_reached",
                 "Vehicle finished its route"
             );
 
             continue;
         }
 
-        if (isGreenForRoad(trafficLights, currentRoadId) && canEnterRoad(nextRoadId, vehicles, minVehicleGap)) {
-            vehicle.moveToNextRoad();
+        if (!city.areRoadsConnected(currentRoadId, nextRoadId)) {
+            if (knownInvalidRoutes.find(vehicle.getId()) == knownInvalidRoutes.end()) {
+                knownInvalidRoutes.insert(vehicle.getId());
+
+                eventLog.addEvent(
+                    currentTime,
+                    "vehicle_stopped",
+                    vehicle.getId(),
+                    currentRoadId,
+                    "route_invalid",
+                    "Vehicle route has invalid road connection"
+                );
+            }
+
+            continue;
+        }
+
+        const RoadSegment* nextRoad = city.findRoadSegmentById(nextRoadId);
+        int entryLane = vehicle.getLaneIndex();
+        if (nextRoad != nullptr) {
+            entryLane = min(vehicle.getLaneIndex(), max(0, nextRoad->getLaneCount() - 1));
+        }
+
+        // Lights + entrance space are hard gates. Yield/priority among peers is resolved below
+        // so circular yield-to-right can break via wait time / bearing (not vehicleId).
+        if (!collisionDetector.isGreenForRoad(trafficLights, currentRoadId) ||
+            !collisionDetector.canEnterRoad(nextRoadId, entryLane, vehicles) ||
+            laneBlockageManager.blocksEntrance(nextRoadId, entryLane, currentTime)) {
+            intersectionRules.noteWaiting(vehicle.getId(), currentTime);
+            continue;
+        }
+
+        candidatesByIntersection[currentRoad->getToIntersectionId()].push_back(vehicle.getId());
+    }
+
+    for (auto& entry : candidatesByIntersection) {
+        const int intersectionId = entry.first;
+        const vector<int> grants = intersectionRules.resolveGrants(
+            intersectionId,
+            entry.second,
+            city,
+            trafficLights,
+            vehicles,
+            currentTime
+        );
+
+        set<int> grantedIds(grants.begin(), grants.end());
+        for (int vehicleId : entry.second) {
+            if (grantedIds.find(vehicleId) == grantedIds.end()) {
+                intersectionRules.noteWaiting(vehicleId, currentTime);
+            }
+        }
+
+        for (int vehicleId : grants) {
+            Vehicle* vehiclePtr = nullptr;
+            for (auto& vehicle : vehicles) {
+                if (vehicle.getId() == vehicleId && !vehicle.isFinished()) {
+                    vehiclePtr = &vehicle;
+                    break;
+                }
+            }
+            if (vehiclePtr == nullptr) {
+                continue;
+            }
+
+            const int currentRoadId = vehiclePtr->getCurrentRoadSegmentId();
+            const int nextRoadId = vehiclePtr->getNextRoadSegmentId();
+            const RoadSegment* nextRoad = city.findRoadSegmentById(nextRoadId);
+            int entryLane = vehiclePtr->getLaneIndex();
+            if (nextRoad != nullptr) {
+                entryLane = min(vehiclePtr->getLaneIndex(), max(0, nextRoad->getLaneCount() - 1));
+            }
+
+            // Re-check space: green does not skip conflict clearance / entrance room.
+            if (!collisionDetector.isGreenForRoad(trafficLights, currentRoadId) ||
+                !collisionDetector.canEnterRoad(nextRoadId, entryLane, vehicles) ||
+                laneBlockageManager.blocksEntrance(nextRoadId, entryLane, currentTime)) {
+                intersectionRules.noteWaiting(vehicleId, currentTime);
+                continue;
+            }
+
+            const MovementKey movement = intersectionRules.makeMovement(city, *vehiclePtr);
+            intersectionRules.reserve(intersectionId, *vehiclePtr, movement);
+            intersectionRules.clearWaiting(vehicleId);
+
+            vehiclePtr->moveToNextRoad();
+            if (nextRoad != nullptr) {
+                vehiclePtr->clampLaneIndex(nextRoad->getLaneCount());
+            }
 
             eventLog.addEvent(
                 currentTime,
                 "vehicle_entered_road",
-                vehicle.getId(),
-                vehicle.getCurrentRoadSegmentId(),
-                "green_and_space_available",
+                vehiclePtr->getId(),
+                vehiclePtr->getCurrentRoadSegmentId(),
+                "junction_cleared",
                 "Vehicle entered next road segment"
             );
         }
@@ -281,7 +392,17 @@ void Simulation::update(double dt, const City& city) {
                 "vehicle_stopped",
                 vehicleId,
                 vehicle.getCurrentRoadSegmentId(),
-                determineStopReason(vehicle, city),
+                collisionDetector.determineStopReason(
+                    vehicle,
+                    city,
+                    trafficLights,
+                    pedestrianCrossings,
+                    vehicles,
+                    &intersectionRules,
+                    &pedestrianManager,
+                    &laneBlockageManager,
+                    currentTime
+                ),
                 "Vehicle stopped"
             );
         }
@@ -316,6 +437,7 @@ void Simulation::update(double dt, const City& city) {
     }
 
     statisticsCollector.update(dt, currentTime, vehicles);
+    pruneFinishedVehicles();
 }
 
 bool Simulation::isRunning() const {
@@ -328,6 +450,55 @@ double Simulation::getTime() const {
 
 void Simulation::addVehicle(const Vehicle& vehicle) {
     vehicles.push_back(vehicle);
+    nextVehicleId = max(nextVehicleId, vehicle.getId() + 1);
+}
+
+bool Simulation::tryLaneChange(int vehicleId, int targetLane, const City& city) {
+    Vehicle* subject = nullptr;
+    for (auto& vehicle : vehicles) {
+        if (vehicle.getId() == vehicleId && !vehicle.isFinished()) {
+            subject = &vehicle;
+            break;
+        }
+    }
+
+    if (subject == nullptr) {
+        return false;
+    }
+
+    const RoadSegment* road = city.findRoadSegmentById(subject->getCurrentRoadSegmentId());
+    if (road == nullptr) {
+        return false;
+    }
+
+    if (!collisionDetector.canChangeLane(*subject, targetLane, *road, vehicles)) {
+        return false;
+    }
+
+    subject->applyLaneChange(targetLane, SimConstants::LANE_CHANGE_COOLDOWN);
+
+    eventLog.addEvent(
+        currentTime,
+        "vehicle_lane_change",
+        subject->getId(),
+        subject->getCurrentRoadSegmentId(),
+        "lane_change",
+        "Vehicle changed lane on current road"
+    );
+
+    return true;
+}
+
+const CollisionDetector& Simulation::getCollisionDetector() const {
+    return collisionDetector;
+}
+
+const IntersectionRules& Simulation::getIntersectionRules() const {
+    return intersectionRules;
+}
+
+IntersectionRules& Simulation::getIntersectionRules() {
+    return intersectionRules;
 }
 
 vector<Vehicle>& Simulation::getVehicles() {
@@ -340,10 +511,59 @@ const vector<Vehicle>& Simulation::getVehicles() const {
 
 void Simulation::addVehicleGenerator(const VehicleGenerator& generator) {
     generators.push_back(generator);
+    vehicleSpawnBaselines.push_back(generator.getSpawnInterval());
+}
+
+vector<VehicleGenerator>& Simulation::getVehicleGenerators() {
+    return generators;
+}
+
+const vector<VehicleGenerator>& Simulation::getVehicleGenerators() const {
+    return generators;
+}
+
+void Simulation::captureVehicleSpawnBaselines() {
+    vehicleSpawnBaselines.clear();
+    vehicleSpawnBaselines.reserve(generators.size());
+    for (const auto& generator : generators) {
+        vehicleSpawnBaselines.push_back(generator.getSpawnInterval());
+    }
+}
+
+void Simulation::setVehicleSpawnRateMultiplier(double rate) {
+    if (rate < 0.1) {
+        rate = 0.1;
+    }
+    if (rate > 10.0) {
+        rate = 10.0;
+    }
+    vehicleSpawnRateMultiplier = rate;
+
+    if (vehicleSpawnBaselines.size() != generators.size()) {
+        captureVehicleSpawnBaselines();
+    }
+
+    for (size_t i = 0; i < generators.size(); ++i) {
+        const double base = (i < vehicleSpawnBaselines.size()) ? vehicleSpawnBaselines[i] : generators[i].getSpawnInterval();
+        generators[i].setSpawnInterval(base / vehicleSpawnRateMultiplier);
+    }
+}
+
+double Simulation::getVehicleSpawnRateMultiplier() const {
+    return vehicleSpawnRateMultiplier;
+}
+
+void Simulation::setPedestrianRequestTempo(double tempo) {
+    pedestrianManager.setRequestTempoMultiplier(tempo);
+}
+
+double Simulation::getPedestrianRequestTempo() const {
+    return pedestrianManager.getRequestTempoMultiplier();
 }
 
 void Simulation::setMinVehicleGap(double newMinVehicleGap) {
     minVehicleGap = newMinVehicleGap;
+    collisionDetector.setMinVehicleGap(newMinVehicleGap);
 }
 
 void Simulation::addTrafficLight(const TrafficLight& trafficLight) {
@@ -356,6 +576,18 @@ vector<TrafficLight>& Simulation::getTrafficLights() {
 
 const vector<TrafficLight>& Simulation::getTrafficLights() const {
     return trafficLights;
+}
+
+void Simulation::addPhaseController(const PhaseController& phaseController) {
+    phaseControllers.push_back(phaseController);
+}
+
+vector<PhaseController>& Simulation::getPhaseControllers() {
+    return phaseControllers;
+}
+
+const vector<PhaseController>& Simulation::getPhaseControllers() const {
+    return phaseControllers;
 }
 
 void Simulation::addPedestrianCrossing(const PedestrianCrossing& pedestrianCrossing) {
@@ -371,12 +603,110 @@ const vector<PedestrianCrossing>& Simulation::getPedestrianCrossings() const {
     return pedestrianCrossings;
 }
 
+PedestrianManager& Simulation::getPedestrianManager() {
+    return pedestrianManager;
+}
+
+const PedestrianManager& Simulation::getPedestrianManager() const {
+    return pedestrianManager;
+}
+
+void Simulation::setPedestrianYieldRefusalProbability(double probability) {
+    pedestrianManager.setYieldRefusalProbability(probability);
+}
+
+void Simulation::setPedestrianSeed(uint32_t seed) {
+    pedestrianManager.setSeed(seed);
+}
+
+int Simulation::addLaneBlockage(
+    int roadId,
+    int laneIndex,
+    double positionAlongRoad,
+    double length,
+    double startTime,
+    double duration,
+    const City& city
+) {
+    return laneBlockageManager.addBlockage(
+        roadId,
+        laneIndex,
+        positionAlongRoad,
+        length,
+        startTime,
+        duration,
+        city,
+        vehicles
+    );
+}
+
+bool Simulation::clearLaneBlockage(int blockageId) {
+    int roadId = -1;
+    for (const auto& block : laneBlockageManager.getBlockages()) {
+        if (block.id == blockageId) {
+            roadId = block.roadId;
+            break;
+        }
+    }
+
+    const bool removed = laneBlockageManager.clearBlockage(blockageId);
+    if (removed) {
+        eventLog.addEvent(
+            currentTime,
+            "lane_blockage_ended",
+            -1,
+            roadId,
+            "lane_blockage_cleared",
+            "Lane blockage cleared manually"
+        );
+    }
+    return removed;
+}
+
+void Simulation::clearAllLaneBlockages() {
+    if (!laneBlockageManager.getBlockages().empty()) {
+        eventLog.addEvent(
+            currentTime,
+            "lane_blockage_ended",
+            -1,
+            -1,
+            "lane_blockage_cleared",
+            "All lane blockages cleared"
+        );
+    }
+    laneBlockageManager.clearAllBlockages();
+}
+
+const vector<LaneBlockage>& Simulation::getLaneBlockages() const {
+    return laneBlockageManager.getBlockages();
+}
+
+LaneBlockageManager& Simulation::getLaneBlockageManager() {
+    return laneBlockageManager;
+}
+
+const LaneBlockageManager& Simulation::getLaneBlockageManager() const {
+    return laneBlockageManager;
+}
+
+void Simulation::setRandomLaneBlockConfig(const RandomBlockConfig& config) {
+    laneBlockageManager.setRandomConfig(config);
+}
+
+const RandomBlockConfig& Simulation::getRandomLaneBlockConfig() const {
+    return laneBlockageManager.getRandomConfig();
+}
+
+void Simulation::setLaneBlockSeed(uint32_t seed) {
+    laneBlockageManager.setSeed(seed);
+}
+
 void Simulation::setStatisticsOutputFiles(const string& timelineFile, const string& summaryFile) {
     statisticsCollector.setOutputFiles(timelineFile, summaryFile);
 }
 
 void Simulation::exportStatisticsSummary() const {
-    statisticsCollector.exportSummary();
+    statisticsCollector.exportAll();
 }
 
 const StatisticsCollector& Simulation::getStatisticsCollector() const {

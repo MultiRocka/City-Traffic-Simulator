@@ -1,6 +1,6 @@
 [
   {
-    "time": 2.00,
+    "time": 2.20,
     "type": "vehicle_spawned",
     "vehicleId": 1,
     "roadId": 1,
@@ -11,20 +11,36 @@
     "time": 3.00,
     "type": "vehicle_spawned",
     "vehicleId": 2,
-    "roadId": 2,
+    "roadId": 4,
     "reason": "generator_spawn",
     "description": "Vehicle spawned in simulation"
   },
   {
-    "time": 4.00,
+    "time": 3.20,
     "type": "vehicle_spawned",
     "vehicleId": 3,
+    "roadId": 9,
+    "reason": "generator_spawn",
+    "description": "Vehicle spawned in simulation"
+  },
+  {
+    "time": 3.50,
+    "type": "vehicle_spawned",
+    "vehicleId": 4,
+    "roadId": 5,
+    "reason": "generator_spawn",
+    "description": "Vehicle spawned in simulation"
+  },
+  {
+    "time": 4.40,
+    "type": "vehicle_spawned",
+    "vehicleId": 5,
     "roadId": 1,
     "reason": "generator_spawn",
     "description": "Vehicle spawned in simulation"
   },
   {
-    "time": 5.00,
+    "time": 5.10,
     "type": "pedestrian_crossing_started",
     "vehicleId": -1,
     "roadId": 3,
@@ -34,117 +50,29 @@
   {
     "time": 6.00,
     "type": "vehicle_spawned",
-    "vehicleId": 4,
-    "roadId": 1,
-    "reason": "generator_spawn",
-    "description": "Vehicle spawned in simulation"
-  },
-  {
-    "time": 6.00,
-    "type": "vehicle_spawned",
-    "vehicleId": 5,
-    "roadId": 2,
-    "reason": "generator_spawn",
-    "description": "Vehicle spawned in simulation"
-  },
-  {
-    "time": 6.00,
-    "type": "vehicle_entered_road",
-    "vehicleId": 2,
-    "roadId": 3,
-    "reason": "green_and_space_available",
-    "description": "Vehicle entered next road segment"
-  },
-  {
-    "time": 6.00,
-    "type": "vehicle_stopped",
-    "vehicleId": 1,
-    "roadId": 1,
-    "reason": "red_light",
-    "description": "Vehicle stopped"
-  },
-  {
-    "time": 6.00,
-    "type": "vehicle_changed_road",
-    "vehicleId": 2,
-    "roadId": 3,
-    "reason": "route_progress",
-    "description": "Vehicle changed road segment"
-  },
-  {
-    "time": 8.00,
-    "type": "pedestrian_crossing_finished",
-    "vehicleId": -1,
-    "roadId": 3,
-    "reason": "pedestrian_finished",
-    "description": "Pedestrian finished crossing"
-  },
-  {
-    "time": 8.00,
-    "type": "vehicle_spawned",
     "vehicleId": 6,
-    "roadId": 1,
+    "roadId": 4,
     "reason": "generator_spawn",
     "description": "Vehicle spawned in simulation"
   },
   {
-    "time": 8.00,
-    "type": "vehicle_entered_road",
-    "vehicleId": 1,
-    "roadId": 3,
-    "reason": "green_and_space_available",
-    "description": "Vehicle entered next road segment"
+    "time": 6.10,
+    "type": "pedestrian_crossing_started",
+    "vehicleId": -1,
+    "roadId": 2,
+    "reason": "pedestrian_request",
+    "description": "Pedestrian started crossing"
   },
   {
-    "time": 8.00,
-    "type": "vehicle_resumed",
-    "vehicleId": 1,
-    "roadId": 3,
-    "reason": "obstacle_cleared",
-    "description": "Vehicle resumed movement"
-  },
-  {
-    "time": 8.00,
-    "type": "vehicle_changed_road",
-    "vehicleId": 1,
-    "roadId": 3,
-    "reason": "route_progress",
-    "description": "Vehicle changed road segment"
-  },
-  {
-    "time": 9.00,
+    "time": 6.40,
     "type": "vehicle_spawned",
     "vehicleId": 7,
-    "roadId": 2,
+    "roadId": 9,
     "reason": "generator_spawn",
     "description": "Vehicle spawned in simulation"
   },
   {
-    "time": 9.00,
-    "type": "vehicle_entered_road",
-    "vehicleId": 3,
-    "roadId": 3,
-    "reason": "green_and_space_available",
-    "description": "Vehicle entered next road segment"
-  },
-  {
-    "time": 9.00,
-    "type": "vehicle_changed_road",
-    "vehicleId": 3,
-    "roadId": 3,
-    "reason": "route_progress",
-    "description": "Vehicle changed road segment"
-  },
-  {
-    "time": 9.00,
-    "type": "vehicle_stopped",
-    "vehicleId": 5,
-    "roadId": 2,
-    "reason": "red_light",
-    "description": "Vehicle stopped"
-  },
-  {
-    "time": 10.00,
+    "time": 6.60,
     "type": "vehicle_spawned",
     "vehicleId": 8,
     "roadId": 1,
@@ -152,143 +80,63 @@
     "description": "Vehicle spawned in simulation"
   },
   {
-    "time": 10.00,
-    "type": "vehicle_entered_road",
-    "vehicleId": 4,
-    "roadId": 3,
-    "reason": "green_and_space_available",
-    "description": "Vehicle entered next road segment"
-  },
-  {
-    "time": 10.00,
-    "type": "vehicle_changed_road",
-    "vehicleId": 4,
-    "roadId": 3,
-    "reason": "route_progress",
-    "description": "Vehicle changed road segment"
-  },
-  {
-    "time": 11.00,
-    "type": "vehicle_stopped",
-    "vehicleId": 7,
-    "roadId": 2,
-    "reason": "vehicle_ahead",
-    "description": "Vehicle stopped"
-  },
-  {
-    "time": 12.00,
+    "time": 6.80,
     "type": "vehicle_spawned",
     "vehicleId": 9,
-    "roadId": 1,
+    "roadId": 5,
     "reason": "generator_spawn",
     "description": "Vehicle spawned in simulation"
   },
   {
-    "time": 12.00,
-    "type": "vehicle_spawned",
-    "vehicleId": 10,
-    "roadId": 2,
-    "reason": "generator_spawn",
-    "description": "Vehicle spawned in simulation"
-  },
-  {
-    "time": 12.00,
-    "type": "vehicle_entered_road",
-    "vehicleId": 5,
-    "roadId": 3,
-    "reason": "green_and_space_available",
-    "description": "Vehicle entered next road segment"
-  },
-  {
-    "time": 12.00,
-    "type": "vehicle_resumed",
-    "vehicleId": 5,
-    "roadId": 3,
-    "reason": "obstacle_cleared",
-    "description": "Vehicle resumed movement"
-  },
-  {
-    "time": 12.00,
-    "type": "vehicle_changed_road",
-    "vehicleId": 5,
-    "roadId": 3,
-    "reason": "route_progress",
-    "description": "Vehicle changed road segment"
-  },
-  {
-    "time": 12.00,
-    "type": "vehicle_stopped",
-    "vehicleId": 6,
-    "roadId": 1,
-    "reason": "red_light",
-    "description": "Vehicle stopped"
-  },
-  {
-    "time": 12.00,
-    "type": "vehicle_resumed",
-    "vehicleId": 7,
-    "roadId": 2,
-    "reason": "obstacle_cleared",
-    "description": "Vehicle resumed movement"
-  },
-  {
-    "time": 13.00,
+    "time": 7.10,
     "type": "pedestrian_crossing_started",
     "vehicleId": -1,
-    "roadId": 3,
+    "roadId": 4,
     "reason": "pedestrian_request",
     "description": "Pedestrian started crossing"
   },
   {
-    "time": 13.00,
-    "type": "vehicle_entered_road",
-    "vehicleId": 7,
-    "roadId": 3,
-    "reason": "green_and_space_available",
-    "description": "Vehicle entered next road segment"
-  },
-  {
-    "time": 13.00,
-    "type": "vehicle_stopped",
-    "vehicleId": 1,
-    "roadId": 3,
-    "reason": "vehicle_ahead",
-    "description": "Vehicle stopped"
-  },
-  {
-    "time": 13.00,
+    "time": 7.10,
     "type": "vehicle_stopped",
     "vehicleId": 2,
-    "roadId": 3,
-    "reason": "unknown",
+    "roadId": 4,
+    "reason": "pedestrian_on_road",
     "description": "Vehicle stopped"
   },
   {
-    "time": 13.00,
-    "type": "vehicle_stopped",
-    "vehicleId": 3,
+    "time": 7.60,
+    "type": "pedestrian_crossing_finished",
+    "vehicleId": -1,
     "roadId": 3,
+    "reason": "pedestrian_finished",
+    "description": "Pedestrian finished crossing"
+  },
+  {
+    "time": 7.80,
+    "type": "vehicle_spawned",
+    "vehicleId": 10,
+    "roadId": 1,
+    "reason": "generator_spawn",
+    "description": "Vehicle spawned in simulation"
+  },
+  {
+    "time": 8.80,
+    "type": "vehicle_stopped",
+    "vehicleId": 6,
+    "roadId": 4,
     "reason": "vehicle_ahead",
     "description": "Vehicle stopped"
   },
   {
-    "time": 13.00,
-    "type": "vehicle_stopped",
-    "vehicleId": 4,
-    "roadId": 3,
-    "reason": "pedestrian_crossing",
-    "description": "Vehicle stopped"
+    "time": 9.10,
+    "type": "pedestrian_crossing_finished",
+    "vehicleId": -1,
+    "roadId": 2,
+    "reason": "pedestrian_finished",
+    "description": "Pedestrian finished crossing"
   },
   {
-    "time": 13.00,
-    "type": "vehicle_changed_road",
-    "vehicleId": 7,
-    "roadId": 3,
-    "reason": "route_progress",
-    "description": "Vehicle changed road segment"
-  },
-  {
-    "time": 14.00,
+    "time": 9.40,
     "type": "vehicle_spawned",
     "vehicleId": 11,
     "roadId": 1,
@@ -296,55 +144,159 @@
     "description": "Vehicle spawned in simulation"
   },
   {
-    "time": 14.00,
-    "type": "vehicle_stopped",
-    "vehicleId": 8,
-    "roadId": 1,
-    "reason": "vehicle_ahead",
-    "description": "Vehicle stopped"
-  },
-  {
-    "time": 15.00,
+    "time": 9.70,
     "type": "vehicle_spawned",
     "vehicleId": 12,
-    "roadId": 2,
+    "roadId": 9,
     "reason": "generator_spawn",
     "description": "Vehicle spawned in simulation"
   },
   {
-    "time": 15.00,
-    "type": "vehicle_stopped",
-    "vehicleId": 5,
-    "roadId": 3,
-    "reason": "vehicle_ahead",
-    "description": "Vehicle stopped"
+    "time": 9.90,
+    "type": "vehicle_spawned",
+    "vehicleId": 13,
+    "roadId": 5,
+    "reason": "generator_spawn",
+    "description": "Vehicle spawned in simulation"
   },
   {
-    "time": 15.00,
-    "type": "vehicle_stopped",
-    "vehicleId": 7,
-    "roadId": 3,
-    "reason": "vehicle_ahead",
-    "description": "Vehicle stopped"
+    "time": 10.10,
+    "type": "pedestrian_crossing_finished",
+    "vehicleId": -1,
+    "roadId": 4,
+    "reason": "pedestrian_finished",
+    "description": "Pedestrian finished crossing"
   },
   {
-    "time": 15.00,
-    "type": "vehicle_stopped",
-    "vehicleId": 9,
+    "time": 10.10,
+    "type": "vehicle_resumed",
+    "vehicleId": 2,
+    "roadId": 4,
+    "reason": "obstacle_cleared",
+    "description": "Vehicle resumed movement"
+  },
+  {
+    "time": 10.20,
+    "type": "vehicle_resumed",
+    "vehicleId": 6,
+    "roadId": 4,
+    "reason": "obstacle_cleared",
+    "description": "Vehicle resumed movement"
+  },
+  {
+    "time": 10.60,
+    "type": "vehicle_spawned",
+    "vehicleId": 14,
     "roadId": 1,
-    "reason": "vehicle_ahead",
+    "reason": "generator_spawn",
+    "description": "Vehicle spawned in simulation"
+  },
+  {
+    "time": 11.80,
+    "type": "vehicle_spawned",
+    "vehicleId": 15,
+    "roadId": 4,
+    "reason": "generator_spawn",
+    "description": "Vehicle spawned in simulation"
+  },
+  {
+    "time": 12.10,
+    "type": "vehicle_spawned",
+    "vehicleId": 16,
+    "roadId": 1,
+    "reason": "generator_spawn",
+    "description": "Vehicle spawned in simulation"
+  },
+  {
+    "time": 12.70,
+    "type": "pedestrian_crossing_started",
+    "vehicleId": -1,
+    "roadId": 3,
+    "reason": "pedestrian_request",
+    "description": "Pedestrian started crossing"
+  },
+  {
+    "time": 13.10,
+    "type": "vehicle_spawned",
+    "vehicleId": 17,
+    "roadId": 5,
+    "reason": "generator_spawn",
+    "description": "Vehicle spawned in simulation"
+  },
+  {
+    "time": 13.10,
+    "type": "vehicle_spawned",
+    "vehicleId": 18,
+    "roadId": 9,
+    "reason": "generator_spawn",
+    "description": "Vehicle spawned in simulation"
+  },
+  {
+    "time": 13.30,
+    "type": "vehicle_spawned",
+    "vehicleId": 19,
+    "roadId": 1,
+    "reason": "generator_spawn",
+    "description": "Vehicle spawned in simulation"
+  },
+  {
+    "time": 13.80,
+    "type": "vehicle_entered_road",
+    "vehicleId": 1,
+    "roadId": 2,
+    "reason": "junction_cleared",
+    "description": "Vehicle entered next road segment"
+  },
+  {
+    "time": 13.80,
+    "type": "vehicle_changed_road",
+    "vehicleId": 1,
+    "roadId": 2,
+    "reason": "route_progress",
+    "description": "Vehicle changed road segment"
+  },
+  {
+    "time": 14.30,
+    "type": "vehicle_stopped",
+    "vehicleId": 4,
+    "roadId": 5,
+    "reason": "intersection_conflict",
     "description": "Vehicle stopped"
+  },
+  {
+    "time": 14.90,
+    "type": "vehicle_entered_road",
+    "vehicleId": 5,
+    "roadId": 2,
+    "reason": "junction_cleared",
+    "description": "Vehicle entered next road segment"
+  },
+  {
+    "time": 14.90,
+    "type": "vehicle_changed_road",
+    "vehicleId": 5,
+    "roadId": 2,
+    "reason": "route_progress",
+    "description": "Vehicle changed road segment"
   },
   {
     "time": 15.00,
-    "type": "vehicle_stopped",
-    "vehicleId": 10,
-    "roadId": 2,
-    "reason": "intersection_blocked",
-    "description": "Vehicle stopped"
+    "type": "vehicle_spawned",
+    "vehicleId": 20,
+    "roadId": 1,
+    "reason": "generator_spawn",
+    "description": "Vehicle spawned in simulation"
   },
   {
-    "time": 16.00,
+    "time": 15.20,
+    "type": "pedestrian_crossing_started",
+    "vehicleId": -1,
+    "roadId": 2,
+    "reason": "pedestrian_request",
+    "description": "Pedestrian started crossing"
+  },
+  {
+    "time": 15.20,
     "type": "pedestrian_crossing_finished",
     "vehicleId": -1,
     "roadId": 3,
@@ -352,231 +304,207 @@
     "description": "Pedestrian finished crossing"
   },
   {
-    "time": 16.00,
+    "time": 15.50,
     "type": "vehicle_spawned",
-    "vehicleId": 13,
+    "vehicleId": 21,
+    "roadId": 4,
+    "reason": "generator_spawn",
+    "description": "Vehicle spawned in simulation"
+  },
+  {
+    "time": 15.60,
+    "type": "vehicle_stopped",
+    "vehicleId": 9,
+    "roadId": 5,
+    "reason": "vehicle_ahead",
+    "description": "Vehicle stopped"
+  },
+  {
+    "time": 16.20,
+    "type": "vehicle_spawned",
+    "vehicleId": 22,
     "roadId": 1,
     "reason": "generator_spawn",
     "description": "Vehicle spawned in simulation"
   },
   {
-    "time": 16.00,
-    "type": "vehicle_finished",
+    "time": 16.30,
+    "type": "vehicle_spawned",
+    "vehicleId": 23,
+    "roadId": 5,
+    "reason": "generator_spawn",
+    "description": "Vehicle spawned in simulation"
+  },
+  {
+    "time": 16.60,
+    "type": "vehicle_entered_road",
     "vehicleId": 2,
     "roadId": 3,
-    "reason": "route_finished",
-    "description": "Vehicle finished its route"
-  },
-  {
-    "time": 16.00,
-    "type": "vehicle_entered_road",
-    "vehicleId": 6,
-    "roadId": 3,
-    "reason": "green_and_space_available",
+    "reason": "junction_cleared",
     "description": "Vehicle entered next road segment"
   },
   {
-    "time": 16.00,
-    "type": "vehicle_resumed",
-    "vehicleId": 1,
-    "roadId": 3,
-    "reason": "obstacle_cleared",
-    "description": "Vehicle resumed movement"
-  },
-  {
-    "time": 16.00,
-    "type": "vehicle_resumed",
-    "vehicleId": 3,
-    "roadId": 3,
-    "reason": "obstacle_cleared",
-    "description": "Vehicle resumed movement"
-  },
-  {
-    "time": 16.00,
-    "type": "vehicle_resumed",
-    "vehicleId": 4,
-    "roadId": 3,
-    "reason": "obstacle_cleared",
-    "description": "Vehicle resumed movement"
-  },
-  {
-    "time": 16.00,
-    "type": "vehicle_resumed",
-    "vehicleId": 5,
-    "roadId": 3,
-    "reason": "obstacle_cleared",
-    "description": "Vehicle resumed movement"
-  },
-  {
-    "time": 16.00,
-    "type": "vehicle_resumed",
-    "vehicleId": 6,
-    "roadId": 3,
-    "reason": "obstacle_cleared",
-    "description": "Vehicle resumed movement"
-  },
-  {
-    "time": 16.00,
+    "time": 16.60,
     "type": "vehicle_changed_road",
-    "vehicleId": 6,
+    "vehicleId": 2,
     "roadId": 3,
     "reason": "route_progress",
     "description": "Vehicle changed road segment"
   },
   {
-    "time": 16.00,
-    "type": "vehicle_resumed",
-    "vehicleId": 7,
-    "roadId": 3,
-    "reason": "obstacle_cleared",
-    "description": "Vehicle resumed movement"
-  },
-  {
-    "time": 16.00,
-    "type": "vehicle_resumed",
-    "vehicleId": 8,
-    "roadId": 1,
-    "reason": "obstacle_cleared",
-    "description": "Vehicle resumed movement"
-  },
-  {
-    "time": 16.00,
-    "type": "vehicle_resumed",
-    "vehicleId": 9,
-    "roadId": 1,
-    "reason": "obstacle_cleared",
-    "description": "Vehicle resumed movement"
-  },
-  {
-    "time": 17.00,
-    "type": "vehicle_finished",
-    "vehicleId": 1,
-    "roadId": 3,
-    "reason": "route_finished",
-    "description": "Vehicle finished its route"
-  },
-  {
-    "time": 17.00,
-    "type": "vehicle_entered_road",
-    "vehicleId": 8,
-    "roadId": 3,
-    "reason": "green_and_space_available",
-    "description": "Vehicle entered next road segment"
-  },
-  {
-    "time": 17.00,
-    "type": "vehicle_changed_road",
-    "vehicleId": 8,
-    "roadId": 3,
-    "reason": "route_progress",
-    "description": "Vehicle changed road segment"
-  },
-  {
-    "time": 18.00,
+    "time": 16.80,
     "type": "vehicle_spawned",
-    "vehicleId": 14,
-    "roadId": 2,
+    "vehicleId": 24,
+    "roadId": 9,
     "reason": "generator_spawn",
     "description": "Vehicle spawned in simulation"
   },
   {
-    "time": 18.00,
-    "type": "vehicle_finished",
-    "vehicleId": 3,
-    "roadId": 3,
-    "reason": "route_finished",
-    "description": "Vehicle finished its route"
+    "time": 17.20,
+    "type": "pedestrian_crossing_started",
+    "vehicleId": -1,
+    "roadId": 4,
+    "reason": "pedestrian_request",
+    "description": "Pedestrian started crossing"
   },
   {
-    "time": 18.00,
+    "time": 17.20,
+    "type": "vehicle_stopped",
+    "vehicleId": 13,
+    "roadId": 5,
+    "reason": "vehicle_ahead",
+    "description": "Vehicle stopped"
+  },
+  {
+    "time": 17.80,
+    "type": "vehicle_spawned",
+    "vehicleId": 25,
+    "roadId": 1,
+    "reason": "generator_spawn",
+    "description": "Vehicle spawned in simulation"
+  },
+  {
+    "time": 17.80,
     "type": "vehicle_entered_road",
-    "vehicleId": 9,
-    "roadId": 3,
-    "reason": "green_and_space_available",
+    "vehicleId": 8,
+    "roadId": 2,
+    "reason": "junction_cleared",
     "description": "Vehicle entered next road segment"
   },
   {
-    "time": 18.00,
+    "time": 17.80,
     "type": "vehicle_changed_road",
-    "vehicleId": 9,
-    "roadId": 3,
+    "vehicleId": 8,
+    "roadId": 2,
     "reason": "route_progress",
     "description": "Vehicle changed road segment"
   },
   {
-    "time": 18.00,
+    "time": 17.90,
     "type": "vehicle_stopped",
-    "vehicleId": 12,
+    "vehicleId": 17,
+    "roadId": 5,
+    "reason": "vehicle_ahead",
+    "description": "Vehicle stopped"
+  },
+  {
+    "time": 18.20,
+    "type": "pedestrian_crossing_finished",
+    "vehicleId": -1,
     "roadId": 2,
-    "reason": "red_light",
+    "reason": "pedestrian_finished",
+    "description": "Pedestrian finished crossing"
+  },
+  {
+    "time": 18.40,
+    "type": "vehicle_entered_road",
+    "vehicleId": 10,
+    "roadId": 2,
+    "reason": "junction_cleared",
+    "description": "Vehicle entered next road segment"
+  },
+  {
+    "time": 18.40,
+    "type": "vehicle_changed_road",
+    "vehicleId": 10,
+    "roadId": 2,
+    "reason": "route_progress",
+    "description": "Vehicle changed road segment"
+  },
+  {
+    "time": 18.70,
+    "type": "vehicle_spawned",
+    "vehicleId": 26,
+    "roadId": 4,
+    "reason": "generator_spawn",
+    "description": "Vehicle spawned in simulation"
+  },
+  {
+    "time": 18.80,
+    "type": "vehicle_stopped",
+    "vehicleId": 23,
+    "roadId": 5,
+    "reason": "vehicle_ahead",
     "description": "Vehicle stopped"
   },
   {
     "time": 19.00,
-    "type": "vehicle_finished",
-    "vehicleId": 4,
-    "roadId": 3,
-    "reason": "route_finished",
-    "description": "Vehicle finished its route"
+    "type": "vehicle_spawned",
+    "vehicleId": 27,
+    "roadId": 1,
+    "reason": "generator_spawn",
+    "description": "Vehicle spawned in simulation"
   },
   {
-    "time": 19.00,
+    "time": 19.80,
     "type": "vehicle_entered_road",
-    "vehicleId": 11,
+    "vehicleId": 6,
     "roadId": 3,
-    "reason": "green_and_space_available",
+    "reason": "junction_cleared",
     "description": "Vehicle entered next road segment"
   },
   {
-    "time": 19.00,
+    "time": 19.80,
     "type": "vehicle_changed_road",
-    "vehicleId": 11,
+    "vehicleId": 6,
     "roadId": 3,
     "reason": "route_progress",
     "description": "Vehicle changed road segment"
   },
   {
-    "time": 20.00,
-    "type": "vehicle_finished",
-    "vehicleId": 5,
-    "roadId": 3,
-    "reason": "route_finished",
-    "description": "Vehicle finished its route"
+    "time": 20.10,
+    "type": "vehicle_stopped",
+    "vehicleId": 21,
+    "roadId": 4,
+    "reason": "pedestrian_on_road",
+    "description": "Vehicle stopped"
   },
   {
-    "time": 20.00,
-    "type": "vehicle_entered_road",
-    "vehicleId": 10,
-    "roadId": 3,
-    "reason": "green_and_space_available",
-    "description": "Vehicle entered next road segment"
+    "time": 20.20,
+    "type": "pedestrian_crossing_finished",
+    "vehicleId": -1,
+    "roadId": 4,
+    "reason": "pedestrian_finished",
+    "description": "Pedestrian finished crossing"
   },
   {
-    "time": 20.00,
+    "time": 20.20,
+    "type": "vehicle_spawned",
+    "vehicleId": 28,
+    "roadId": 9,
+    "reason": "generator_spawn",
+    "description": "Vehicle spawned in simulation"
+  },
+  {
+    "time": 20.20,
     "type": "vehicle_resumed",
-    "vehicleId": 10,
-    "roadId": 3,
+    "vehicleId": 21,
+    "roadId": 4,
     "reason": "obstacle_cleared",
     "description": "Vehicle resumed movement"
   },
   {
-    "time": 20.00,
-    "type": "vehicle_changed_road",
-    "vehicleId": 10,
-    "roadId": 3,
-    "reason": "route_progress",
-    "description": "Vehicle changed road segment"
-  },
-  {
-    "time": 20.00,
-    "type": "vehicle_stopped",
-    "vehicleId": 14,
-    "roadId": 2,
-    "reason": "vehicle_ahead",
-    "description": "Vehicle stopped"
-  },
-  {
-    "time": 21.00,
+    "time": 20.30,
     "type": "pedestrian_crossing_started",
     "vehicleId": -1,
     "roadId": 3,
@@ -584,7 +512,71 @@
     "description": "Pedestrian started crossing"
   },
   {
+    "time": 20.60,
+    "type": "vehicle_spawned",
+    "vehicleId": 29,
+    "roadId": 1,
+    "reason": "generator_spawn",
+    "description": "Vehicle spawned in simulation"
+  },
+  {
+    "time": 20.90,
+    "type": "vehicle_entered_road",
+    "vehicleId": 11,
+    "roadId": 2,
+    "reason": "junction_cleared",
+    "description": "Vehicle entered next road segment"
+  },
+  {
+    "time": 20.90,
+    "type": "vehicle_changed_road",
+    "vehicleId": 11,
+    "roadId": 2,
+    "reason": "route_progress",
+    "description": "Vehicle changed road segment"
+  },
+  {
     "time": 21.00,
+    "type": "vehicle_stopped",
+    "vehicleId": 2,
+    "roadId": 3,
+    "reason": "pedestrian_on_road",
+    "description": "Vehicle stopped"
+  },
+  {
+    "time": 21.40,
+    "type": "vehicle_entered_road",
+    "vehicleId": 14,
+    "roadId": 2,
+    "reason": "junction_cleared",
+    "description": "Vehicle entered next road segment"
+  },
+  {
+    "time": 21.40,
+    "type": "vehicle_changed_road",
+    "vehicleId": 14,
+    "roadId": 2,
+    "reason": "route_progress",
+    "description": "Vehicle changed road segment"
+  },
+  {
+    "time": 21.80,
+    "type": "vehicle_spawned",
+    "vehicleId": 30,
+    "roadId": 1,
+    "reason": "generator_spawn",
+    "description": "Vehicle spawned in simulation"
+  },
+  {
+    "time": 22.60,
+    "type": "vehicle_spawned",
+    "vehicleId": 31,
+    "roadId": 4,
+    "reason": "generator_spawn",
+    "description": "Vehicle spawned in simulation"
+  },
+  {
+    "time": 22.70,
     "type": "vehicle_stopped",
     "vehicleId": 6,
     "roadId": 3,
@@ -592,39 +584,239 @@
     "description": "Vehicle stopped"
   },
   {
-    "time": 21.00,
-    "type": "vehicle_stopped",
-    "vehicleId": 7,
+    "time": 22.80,
+    "type": "pedestrian_crossing_finished",
+    "vehicleId": -1,
     "roadId": 3,
-    "reason": "unknown",
-    "description": "Vehicle stopped"
+    "reason": "pedestrian_finished",
+    "description": "Pedestrian finished crossing"
   },
   {
-    "time": 21.00,
-    "type": "vehicle_stopped",
-    "vehicleId": 8,
+    "time": 22.80,
+    "type": "vehicle_resumed",
+    "vehicleId": 2,
     "roadId": 3,
-    "reason": "vehicle_ahead",
-    "description": "Vehicle stopped"
+    "reason": "obstacle_cleared",
+    "description": "Vehicle resumed movement"
   },
   {
-    "time": 21.00,
-    "type": "vehicle_stopped",
-    "vehicleId": 9,
+    "time": 22.90,
+    "type": "vehicle_resumed",
+    "vehicleId": 6,
     "roadId": 3,
-    "reason": "pedestrian_crossing",
-    "description": "Vehicle stopped"
+    "reason": "obstacle_cleared",
+    "description": "Vehicle resumed movement"
   },
   {
-    "time": 21.00,
+    "time": 23.60,
     "type": "vehicle_stopped",
-    "vehicleId": 13,
-    "roadId": 1,
+    "vehicleId": 15,
+    "roadId": 4,
     "reason": "red_light",
     "description": "Vehicle stopped"
   },
   {
-    "time": 21.00,
+    "time": 23.90,
+    "type": "vehicle_spawned",
+    "vehicleId": 32,
+    "roadId": 9,
+    "reason": "generator_spawn",
+    "description": "Vehicle spawned in simulation"
+  },
+  {
+    "time": 23.90,
+    "type": "vehicle_entered_road",
+    "vehicleId": 16,
+    "roadId": 2,
+    "reason": "junction_cleared",
+    "description": "Vehicle entered next road segment"
+  },
+  {
+    "time": 23.90,
+    "type": "vehicle_changed_road",
+    "vehicleId": 16,
+    "roadId": 2,
+    "reason": "route_progress",
+    "description": "Vehicle changed road segment"
+  },
+  {
+    "time": 24.30,
+    "type": "pedestrian_crossing_started",
+    "vehicleId": -1,
+    "roadId": 2,
+    "reason": "pedestrian_request",
+    "description": "Pedestrian started crossing"
+  },
+  {
+    "time": 24.60,
+    "type": "vehicle_stopped",
+    "vehicleId": 21,
+    "roadId": 4,
+    "reason": "vehicle_ahead",
+    "description": "Vehicle stopped"
+  },
+  {
+    "time": 25.10,
+    "type": "vehicle_entered_road",
+    "vehicleId": 19,
+    "roadId": 2,
+    "reason": "junction_cleared",
+    "description": "Vehicle entered next road segment"
+  },
+  {
+    "time": 25.10,
+    "type": "vehicle_changed_road",
+    "vehicleId": 19,
+    "roadId": 2,
+    "reason": "route_progress",
+    "description": "Vehicle changed road segment"
+  },
+  {
+    "time": 25.50,
+    "type": "vehicle_stopped",
+    "vehicleId": 1,
+    "roadId": 2,
+    "reason": "red_light",
+    "description": "Vehicle stopped"
+  },
+  {
+    "time": 25.50,
+    "type": "vehicle_stopped",
+    "vehicleId": 11,
+    "roadId": 2,
+    "reason": "pedestrian_on_road",
+    "description": "Vehicle stopped"
+  },
+  {
+    "time": 25.50,
+    "type": "vehicle_resumed",
+    "vehicleId": 15,
+    "roadId": 4,
+    "reason": "obstacle_cleared",
+    "description": "Vehicle resumed movement"
+  },
+  {
+    "time": 25.60,
+    "type": "vehicle_resumed",
+    "vehicleId": 21,
+    "roadId": 4,
+    "reason": "obstacle_cleared",
+    "description": "Vehicle resumed movement"
+  },
+  {
+    "time": 25.60,
+    "type": "vehicle_stopped",
+    "vehicleId": 26,
+    "roadId": 4,
+    "reason": "vehicle_ahead",
+    "description": "Vehicle stopped"
+  },
+  {
+    "time": 25.70,
+    "type": "vehicle_spawned",
+    "vehicleId": 33,
+    "roadId": 4,
+    "reason": "generator_spawn",
+    "description": "Vehicle spawned in simulation"
+  },
+  {
+    "time": 25.70,
+    "type": "vehicle_stopped",
+    "vehicleId": 5,
+    "roadId": 2,
+    "reason": "red_light",
+    "description": "Vehicle stopped"
+  },
+  {
+    "time": 25.70,
+    "type": "vehicle_resumed",
+    "vehicleId": 26,
+    "roadId": 4,
+    "reason": "obstacle_cleared",
+    "description": "Vehicle resumed movement"
+  },
+  {
+    "time": 25.80,
+    "type": "vehicle_stopped",
+    "vehicleId": 14,
+    "roadId": 2,
+    "reason": "pedestrian_on_road",
+    "description": "Vehicle stopped"
+  },
+  {
+    "time": 26.20,
+    "type": "vehicle_entered_road",
+    "vehicleId": 15,
+    "roadId": 3,
+    "reason": "junction_cleared",
+    "description": "Vehicle entered next road segment"
+  },
+  {
+    "time": 26.20,
+    "type": "vehicle_changed_road",
+    "vehicleId": 15,
+    "roadId": 3,
+    "reason": "route_progress",
+    "description": "Vehicle changed road segment"
+  },
+  {
+    "time": 26.40,
+    "type": "vehicle_entered_road",
+    "vehicleId": 20,
+    "roadId": 2,
+    "reason": "junction_cleared",
+    "description": "Vehicle entered next road segment"
+  },
+  {
+    "time": 26.40,
+    "type": "vehicle_changed_road",
+    "vehicleId": 20,
+    "roadId": 2,
+    "reason": "route_progress",
+    "description": "Vehicle changed road segment"
+  },
+  {
+    "time": 27.20,
+    "type": "vehicle_stopped",
+    "vehicleId": 16,
+    "roadId": 2,
+    "reason": "vehicle_ahead",
+    "description": "Vehicle stopped"
+  },
+  {
+    "time": 27.30,
+    "type": "pedestrian_crossing_finished",
+    "vehicleId": -1,
+    "roadId": 2,
+    "reason": "pedestrian_finished",
+    "description": "Pedestrian finished crossing"
+  },
+  {
+    "time": 27.30,
+    "type": "pedestrian_crossing_started",
+    "vehicleId": -1,
+    "roadId": 4,
+    "reason": "pedestrian_request",
+    "description": "Pedestrian started crossing"
+  },
+  {
+    "time": 27.30,
+    "type": "vehicle_stopped",
+    "vehicleId": 8,
+    "roadId": 2,
+    "reason": "vehicle_ahead",
+    "description": "Vehicle stopped"
+  },
+  {
+    "time": 27.30,
+    "type": "vehicle_resumed",
+    "vehicleId": 11,
+    "roadId": 2,
+    "reason": "obstacle_cleared",
+    "description": "Vehicle resumed movement"
+  },
+  {
+    "time": 27.30,
     "type": "vehicle_resumed",
     "vehicleId": 14,
     "roadId": 2,
@@ -632,167 +824,55 @@
     "description": "Vehicle resumed movement"
   },
   {
-    "time": 22.00,
+    "time": 27.40,
+    "type": "vehicle_spawned",
+    "vehicleId": 34,
+    "roadId": 9,
+    "reason": "generator_spawn",
+    "description": "Vehicle spawned in simulation"
+  },
+  {
+    "time": 27.40,
+    "type": "vehicle_resumed",
+    "vehicleId": 16,
+    "roadId": 2,
+    "reason": "obstacle_cleared",
+    "description": "Vehicle resumed movement"
+  },
+  {
+    "time": 27.60,
     "type": "vehicle_stopped",
     "vehicleId": 10,
-    "roadId": 3,
-    "reason": "vehicle_ahead",
-    "description": "Vehicle stopped"
-  },
-  {
-    "time": 22.00,
-    "type": "vehicle_stopped",
-    "vehicleId": 11,
-    "roadId": 3,
-    "reason": "vehicle_ahead",
-    "description": "Vehicle stopped"
-  },
-  {
-    "time": 22.00,
-    "type": "vehicle_stopped",
-    "vehicleId": 14,
     "roadId": 2,
     "reason": "vehicle_ahead",
     "description": "Vehicle stopped"
   },
   {
-    "time": 24.00,
-    "type": "pedestrian_crossing_finished",
-    "vehicleId": -1,
-    "roadId": 3,
-    "reason": "pedestrian_finished",
-    "description": "Pedestrian finished crossing"
+    "time": 27.60,
+    "type": "vehicle_stopped",
+    "vehicleId": 31,
+    "roadId": 4,
+    "reason": "pedestrian_on_road",
+    "description": "Vehicle stopped"
   },
   {
-    "time": 24.00,
-    "type": "vehicle_finished",
-    "vehicleId": 7,
-    "roadId": 3,
-    "reason": "route_finished",
-    "description": "Vehicle finished its route"
-  },
-  {
-    "time": 24.00,
+    "time": 27.70,
     "type": "vehicle_entered_road",
-    "vehicleId": 13,
-    "roadId": 3,
-    "reason": "green_and_space_available",
+    "vehicleId": 22,
+    "roadId": 2,
+    "reason": "junction_cleared",
     "description": "Vehicle entered next road segment"
   },
   {
-    "time": 24.00,
-    "type": "vehicle_resumed",
-    "vehicleId": 6,
-    "roadId": 3,
-    "reason": "obstacle_cleared",
-    "description": "Vehicle resumed movement"
-  },
-  {
-    "time": 24.00,
-    "type": "vehicle_resumed",
-    "vehicleId": 8,
-    "roadId": 3,
-    "reason": "obstacle_cleared",
-    "description": "Vehicle resumed movement"
-  },
-  {
-    "time": 24.00,
-    "type": "vehicle_resumed",
-    "vehicleId": 9,
-    "roadId": 3,
-    "reason": "obstacle_cleared",
-    "description": "Vehicle resumed movement"
-  },
-  {
-    "time": 24.00,
-    "type": "vehicle_resumed",
-    "vehicleId": 10,
-    "roadId": 3,
-    "reason": "obstacle_cleared",
-    "description": "Vehicle resumed movement"
-  },
-  {
-    "time": 24.00,
-    "type": "vehicle_resumed",
-    "vehicleId": 11,
-    "roadId": 3,
-    "reason": "obstacle_cleared",
-    "description": "Vehicle resumed movement"
-  },
-  {
-    "time": 24.00,
-    "type": "vehicle_resumed",
-    "vehicleId": 13,
-    "roadId": 3,
-    "reason": "obstacle_cleared",
-    "description": "Vehicle resumed movement"
-  },
-  {
-    "time": 24.00,
+    "time": 27.70,
     "type": "vehicle_changed_road",
-    "vehicleId": 13,
-    "roadId": 3,
+    "vehicleId": 22,
+    "roadId": 2,
     "reason": "route_progress",
     "description": "Vehicle changed road segment"
   },
   {
-    "time": 25.00,
-    "type": "vehicle_finished",
-    "vehicleId": 6,
-    "roadId": 3,
-    "reason": "route_finished",
-    "description": "Vehicle finished its route"
-  },
-  {
-    "time": 26.00,
-    "type": "vehicle_finished",
-    "vehicleId": 8,
-    "roadId": 3,
-    "reason": "route_finished",
-    "description": "Vehicle finished its route"
-  },
-  {
-    "time": 27.00,
-    "type": "vehicle_finished",
-    "vehicleId": 9,
-    "roadId": 3,
-    "reason": "route_finished",
-    "description": "Vehicle finished its route"
-  },
-  {
-    "time": 28.00,
-    "type": "vehicle_finished",
-    "vehicleId": 11,
-    "roadId": 3,
-    "reason": "route_finished",
-    "description": "Vehicle finished its route"
-  },
-  {
-    "time": 28.00,
-    "type": "vehicle_entered_road",
-    "vehicleId": 12,
-    "roadId": 3,
-    "reason": "green_and_space_available",
-    "description": "Vehicle entered next road segment"
-  },
-  {
-    "time": 28.00,
-    "type": "vehicle_resumed",
-    "vehicleId": 12,
-    "roadId": 3,
-    "reason": "obstacle_cleared",
-    "description": "Vehicle resumed movement"
-  },
-  {
-    "time": 28.00,
-    "type": "vehicle_changed_road",
-    "vehicleId": 12,
-    "roadId": 3,
-    "reason": "route_progress",
-    "description": "Vehicle changed road segment"
-  },
-  {
-    "time": 29.00,
+    "time": 27.90,
     "type": "pedestrian_crossing_started",
     "vehicleId": -1,
     "roadId": 3,
@@ -800,103 +880,63 @@
     "description": "Pedestrian started crossing"
   },
   {
-    "time": 29.00,
-    "type": "vehicle_entered_road",
-    "vehicleId": 14,
-    "roadId": 3,
-    "reason": "green_and_space_available",
-    "description": "Vehicle entered next road segment"
-  },
-  {
-    "time": 29.00,
+    "time": 28.40,
     "type": "vehicle_stopped",
-    "vehicleId": 10,
-    "roadId": 3,
-    "reason": "unknown",
-    "description": "Vehicle stopped"
-  },
-  {
-    "time": 29.00,
-    "type": "vehicle_stopped",
-    "vehicleId": 13,
-    "roadId": 3,
+    "vehicleId": 33,
+    "roadId": 4,
     "reason": "vehicle_ahead",
     "description": "Vehicle stopped"
   },
   {
-    "time": 29.00,
-    "type": "vehicle_resumed",
-    "vehicleId": 14,
+    "time": 28.90,
+    "type": "vehicle_entered_road",
+    "vehicleId": 21,
     "roadId": 3,
-    "reason": "obstacle_cleared",
-    "description": "Vehicle resumed movement"
+    "reason": "junction_cleared",
+    "description": "Vehicle entered next road segment"
   },
   {
-    "time": 29.00,
+    "time": 28.90,
     "type": "vehicle_changed_road",
-    "vehicleId": 14,
+    "vehicleId": 21,
     "roadId": 3,
     "reason": "route_progress",
     "description": "Vehicle changed road segment"
   },
   {
-    "time": 32.00,
+    "time": 30.00,
+    "type": "vehicle_entered_road",
+    "vehicleId": 25,
+    "roadId": 2,
+    "reason": "junction_cleared",
+    "description": "Vehicle entered next road segment"
+  },
+  {
+    "time": 30.00,
+    "type": "vehicle_changed_road",
+    "vehicleId": 25,
+    "roadId": 2,
+    "reason": "route_progress",
+    "description": "Vehicle changed road segment"
+  },
+  {
+    "time": 30.30,
     "type": "pedestrian_crossing_finished",
     "vehicleId": -1,
-    "roadId": 3,
+    "roadId": 4,
     "reason": "pedestrian_finished",
     "description": "Pedestrian finished crossing"
   },
   {
-    "time": 32.00,
-    "type": "vehicle_finished",
-    "vehicleId": 10,
-    "roadId": 3,
-    "reason": "route_finished",
-    "description": "Vehicle finished its route"
-  },
-  {
-    "time": 32.00,
+    "time": 30.30,
     "type": "vehicle_resumed",
-    "vehicleId": 13,
-    "roadId": 3,
+    "vehicleId": 31,
+    "roadId": 4,
     "reason": "obstacle_cleared",
     "description": "Vehicle resumed movement"
   },
   {
-    "time": 33.00,
-    "type": "vehicle_finished",
-    "vehicleId": 13,
-    "roadId": 3,
-    "reason": "route_finished",
-    "description": "Vehicle finished its route"
-  },
-  {
-    "time": 36.00,
-    "type": "vehicle_finished",
-    "vehicleId": 12,
-    "roadId": 3,
-    "reason": "route_finished",
-    "description": "Vehicle finished its route"
-  },
-  {
-    "time": 37.00,
-    "type": "pedestrian_crossing_started",
-    "vehicleId": -1,
-    "roadId": 3,
-    "reason": "pedestrian_request",
-    "description": "Pedestrian started crossing"
-  },
-  {
-    "time": 37.00,
-    "type": "vehicle_stopped",
-    "vehicleId": 14,
-    "roadId": 3,
-    "reason": "unknown",
-    "description": "Vehicle stopped"
-  },
-  {
-    "time": 40.00,
+    "time": 30.40,
     "type": "pedestrian_crossing_finished",
     "vehicleId": -1,
     "roadId": 3,
@@ -904,11 +944,99 @@
     "description": "Pedestrian finished crossing"
   },
   {
-    "time": 40.00,
-    "type": "vehicle_finished",
-    "vehicleId": 14,
-    "roadId": 3,
-    "reason": "route_finished",
-    "description": "Vehicle finished its route"
+    "time": 30.40,
+    "type": "vehicle_resumed",
+    "vehicleId": 33,
+    "roadId": 4,
+    "reason": "obstacle_cleared",
+    "description": "Vehicle resumed movement"
+  },
+  {
+    "time": 30.50,
+    "type": "vehicle_entered_road",
+    "vehicleId": 27,
+    "roadId": 2,
+    "reason": "junction_cleared",
+    "description": "Vehicle entered next road segment"
+  },
+  {
+    "time": 30.50,
+    "type": "vehicle_changed_road",
+    "vehicleId": 27,
+    "roadId": 2,
+    "reason": "route_progress",
+    "description": "Vehicle changed road segment"
+  },
+  {
+    "time": 30.60,
+    "type": "vehicle_resumed",
+    "vehicleId": 1,
+    "roadId": 2,
+    "reason": "obstacle_cleared",
+    "description": "Vehicle resumed movement"
+  },
+  {
+    "time": 30.60,
+    "type": "vehicle_resumed",
+    "vehicleId": 5,
+    "roadId": 2,
+    "reason": "obstacle_cleared",
+    "description": "Vehicle resumed movement"
+  },
+  {
+    "time": 30.70,
+    "type": "vehicle_resumed",
+    "vehicleId": 8,
+    "roadId": 2,
+    "reason": "obstacle_cleared",
+    "description": "Vehicle resumed movement"
+  },
+  {
+    "time": 30.70,
+    "type": "vehicle_resumed",
+    "vehicleId": 10,
+    "roadId": 2,
+    "reason": "obstacle_cleared",
+    "description": "Vehicle resumed movement"
+  },
+  {
+    "time": 31.20,
+    "type": "vehicle_stopped",
+    "vehicleId": 1,
+    "roadId": 2,
+    "reason": "blocked_next_road",
+    "description": "Vehicle stopped"
+  },
+  {
+    "time": 31.30,
+    "type": "vehicle_stopped",
+    "vehicleId": 8,
+    "roadId": 2,
+    "reason": "vehicle_ahead",
+    "description": "Vehicle stopped"
+  },
+  {
+    "time": 31.40,
+    "type": "vehicle_stopped",
+    "vehicleId": 5,
+    "roadId": 2,
+    "reason": "blocked_next_road",
+    "description": "Vehicle stopped"
+  },
+  {
+    "time": 31.50,
+    "type": "vehicle_stopped",
+    "vehicleId": 10,
+    "roadId": 2,
+    "reason": "vehicle_ahead",
+    "description": "Vehicle stopped"
+  },
+  {
+    "time": 31.70,
+    "type": "vehicle_stopped",
+    "vehicleId": 26,
+    "roadId": 4,
+    "reason": "red_light",
+    "description": "Vehicle stopped"
   }
 ]

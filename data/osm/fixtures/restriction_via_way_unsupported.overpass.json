@@ -1,0 +1,46 @@
+{
+  "_comment": "SYNTHETIC — via-way restriction must WARN, not claim enforcement.",
+  "version": 0.6,
+  "generator": "easy_rider_synthetic_fixture",
+  "osm3s": {
+    "timestamp_osm_base": "1970-01-01T00:00:00Z",
+    "copyright": "SYNTHETIC FIXTURE — NOT OSM"
+  },
+  "elements": [
+    { "type": "node", "id": 913001, "lat": 52.2250, "lon": 21.0160 },
+    { "type": "node", "id": 913002, "lat": 52.2250, "lon": 21.0165 },
+    { "type": "node", "id": 913003, "lat": 52.2250, "lon": 21.0170 },
+    { "type": "node", "id": 913004, "lat": 52.2255, "lon": 21.0170 },
+    {
+      "type": "way",
+      "id": 813001,
+      "nodes": [913001, 913002],
+      "tags": { "highway": "residential", "oneway": "yes" }
+    },
+    {
+      "type": "way",
+      "id": 813002,
+      "nodes": [913002, 913003],
+      "tags": { "highway": "residential", "oneway": "yes" }
+    },
+    {
+      "type": "way",
+      "id": 813003,
+      "nodes": [913003, 913004],
+      "tags": { "highway": "residential", "oneway": "yes" }
+    },
+    {
+      "type": "relation",
+      "id": 713001,
+      "members": [
+        { "type": "way", "ref": 813001, "role": "from" },
+        { "type": "way", "ref": 813002, "role": "via" },
+        { "type": "way", "ref": 813003, "role": "to" }
+      ],
+      "tags": {
+        "type": "restriction",
+        "restriction": "no_straight_on"
+      }
+    }
+  ]
+}

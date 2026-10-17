@@ -4,6 +4,36 @@
 
 using namespace std;
 
+static string escapeJsonString(const string& value) {
+    string escaped;
+    escaped.reserve(value.size());
+
+    for (char character : value) {
+        switch (character) {
+            case '\\':
+                escaped += "\\\\";
+                break;
+            case '"':
+                escaped += "\\\"";
+                break;
+            case '\n':
+                escaped += "\\n";
+                break;
+            case '\r':
+                escaped += "\\r";
+                break;
+            case '\t':
+                escaped += "\\t";
+                break;
+            default:
+                escaped += character;
+                break;
+        }
+    }
+
+    return escaped;
+}
+
 EventLog::EventLog() : outputFilePath("event_log.json") {
 }
 
@@ -37,11 +67,11 @@ void EventLog::exportToJson() const {
 
         file << "  {\n";
         file << "    \"time\": " << fixed << setprecision(2) << event.time << ",\n";
-        file << "    \"type\": \"" << event.type << "\",\n";
+        file << "    \"type\": \"" << escapeJsonString(event.type) << "\",\n";
         file << "    \"vehicleId\": " << event.vehicleId << ",\n";
         file << "    \"roadId\": " << event.roadId << ",\n";
-        file << "    \"reason\": \"" << event.reason << "\",\n";
-        file << "    \"description\": \"" << event.description << "\"\n";
+        file << "    \"reason\": \"" << escapeJsonString(event.reason) << "\",\n";
+        file << "    \"description\": \"" << escapeJsonString(event.description) << "\"\n";
         file << "  }";
 
         if (i + 1 < static_cast<int>(events.size())) {

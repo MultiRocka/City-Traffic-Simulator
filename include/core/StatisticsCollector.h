@@ -26,18 +26,19 @@ public:
 
     void setOutputFiles(const string& timelineFile, const string& summaryFile);
     void reset();
+    void resetRuntime();
     void update(double dt, double currentTime, const vector<Vehicle>& vehicles);
-    void exportSummary() const;
+    void exportAll() const;
 
     const StatisticsSnapshot& getLastSnapshot() const;
 
 private:
-    void writeTimelineHeaderIfNeeded();
-    void appendTimelineRow(const StatisticsSnapshot& snapshot);
+    string formatCsvDouble(double value) const;
+    void writeTimeline() const;
+    void writeSummary() const;
 
     string timelineFilePath;
     string summaryFilePath;
-    bool timelineHeaderWritten;
 
     set<int> seenVehicleIds;
     set<int> finishedVehicleIds;
@@ -49,4 +50,5 @@ private:
     int maxActiveVehicles;
 
     StatisticsSnapshot lastSnapshot;
+    vector<StatisticsSnapshot> timeline;
 };

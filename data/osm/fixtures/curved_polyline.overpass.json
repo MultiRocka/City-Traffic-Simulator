@@ -1,0 +1,45 @@
+{
+  "_comment": "SYNTHETIC — curved highway polyline (shape nodes are NOT junctions).",
+  "version": 0.6,
+  "generator": "easy_rider_synthetic_fixture",
+  "osm3s": {
+    "timestamp_osm_base": "1970-01-01T00:00:00Z",
+    "copyright": "SYNTHETIC FIXTURE — NOT OSM"
+  },
+  "elements": [
+    {
+      "type": "node",
+      "id": 940001,
+      "lat": 52.2250,
+      "lon": 21.0160
+    },
+    {
+      "type": "node",
+      "id": 940002,
+      "lat": 52.2252,
+      "lon": 21.0163
+    },
+    {
+      "type": "node",
+      "id": 940003,
+      "lat": 52.2254,
+      "lon": 21.0166
+    },
+    {
+      "type": "node",
+      "id": 940004,
+      "lat": 52.2256,
+      "lon": 21.0170
+    },
+    {
+      "type": "way",
+      "id": 840001,
+      "nodes": [940001, 940002, 940003, 940004],
+      "tags": {
+        "highway": "residential",
+        "oneway": "yes",
+        "maxspeed": "30"
+      }
+    }
+  ]
+}

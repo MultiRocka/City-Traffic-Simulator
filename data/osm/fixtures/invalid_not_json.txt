@@ -1,0 +1,4 @@
+SYNTHETIC — not real OpenStreetMap data.
+This file is intentionally NOT JSON (HTML-ish error stub for parser/importer negative tests).
+<!DOCTYPE html>
+<html><body>Overpass error (fake)</body></html>

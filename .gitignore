@@ -1,5 +1,22 @@
 build/
 .vscode/
+tests/output/
 simulation_summary.csv
 simulation_timeline.csv
 event_log.json
+*.csv
+
+# OSM fetch temps / partial downloads (keep committed sample + fixtures)
+data/osm/.*.tmp
+data/osm/**/.*.tmp
+data/osm/*.tmp
+data/osm/**/*.tmp
+data/osm/*.partial
+data/osm/**/*.partial
+
+# Runtime HTTP cache (geocode + Overpass). Keep directory via README; ignore payloads.
+data/cache/geocode/
+data/cache/overpass/
+data/cache/**/*.tmp
+data/cache/**/.*.tmp
+tests/output/cache_stage3/

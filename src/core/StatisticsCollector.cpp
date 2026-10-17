@@ -1,6 +1,8 @@
 #include "core/StatisticsCollector.h"
 #include <fstream>
 #include <iomanip>
+#include <sstream>
+#include <algorithm>
 
 using namespace std;
 
@@ -11,16 +13,18 @@ StatisticsCollector::StatisticsCollector() {
 void StatisticsCollector::setOutputFiles(const string& timelineFile, const string& summaryFile) {
     timelineFilePath = timelineFile;
     summaryFilePath = summaryFile;
-    timelineHeaderWritten = false;
 }
 
 void StatisticsCollector::reset() {
     timelineFilePath = "simulation_timeline.csv";
     summaryFilePath = "simulation_summary.csv";
-    timelineHeaderWritten = false;
+    resetRuntime();
+}
 
+void StatisticsCollector::resetRuntime() {
     seenVehicleIds.clear();
     finishedVehicleIds.clear();
+    timeline.clear();
 
     totalStoppedTime = 0.0;
     accumulatedAverageSpeed = 0.0;
@@ -31,38 +35,14 @@ void StatisticsCollector::reset() {
     lastSnapshot = {0.0, 0, 0, 0, 0, 0, 0.0, 0.0, 0.0, 0};
 }
 
-void StatisticsCollector::writeTimelineHeaderIfNeeded() {
-    if (timelineHeaderWritten) {
-        return;
-    }
+string StatisticsCollector::formatCsvDouble(double value) const {
+    ostringstream stream;
+    stream << fixed << setprecision(2) << value;
 
-    ofstream file(timelineFilePath);
+    string text = stream.str();
+    replace(text.begin(), text.end(), '.', ',');
 
-    file << "time,total_vehicles_seen,active_vehicles,moving_vehicles,stopped_vehicles,finished_vehicles,average_speed,average_moving_speed,total_stopped_time,max_active_vehicles\n";
-
-    file.close();
-    timelineHeaderWritten = true;
-}
-
-void StatisticsCollector::appendTimelineRow(const StatisticsSnapshot& snapshot) {
-    writeTimelineHeaderIfNeeded();
-
-    ofstream file(timelineFilePath, ios::app);
-
-    file << fixed << setprecision(2)
-         << snapshot.time << ","
-         << snapshot.totalVehiclesSeen << ","
-         << snapshot.activeVehicles << ","
-         << snapshot.movingVehicles << ","
-         << snapshot.stoppedVehicles << ","
-         << snapshot.finishedVehicles << ","
-         << snapshot.averageSpeed << ","
-         << snapshot.averageMovingSpeed << ","
-         << snapshot.totalStoppedTime << ","
-         << snapshot.maxActiveVehicles
-         << "\n";
-
-    file.close();
+    return text;
 }
 
 void StatisticsCollector::update(double dt, double currentTime, const vector<Vehicle>& vehicles) {
@@ -122,10 +102,33 @@ void StatisticsCollector::update(double dt, double currentTime, const vector<Veh
     lastSnapshot.totalStoppedTime = totalStoppedTime;
     lastSnapshot.maxActiveVehicles = maxActiveVehicles;
 
-    appendTimelineRow(lastSnapshot);
+    timeline.push_back(lastSnapshot);
 }
 
-void StatisticsCollector::exportSummary() const {
+void StatisticsCollector::writeTimeline() const {
+    ofstream file(timelineFilePath);
+
+    file << "sep=;\n";
+    file << "time;total_vehicles_seen;active_vehicles;moving_vehicles;stopped_vehicles;finished_vehicles;average_speed;average_moving_speed;total_stopped_time;max_active_vehicles\n";
+
+    for (const auto& snapshot : timeline) {
+        file << formatCsvDouble(snapshot.time) << ";"
+             << snapshot.totalVehiclesSeen << ";"
+             << snapshot.activeVehicles << ";"
+             << snapshot.movingVehicles << ";"
+             << snapshot.stoppedVehicles << ";"
+             << snapshot.finishedVehicles << ";"
+             << formatCsvDouble(snapshot.averageSpeed) << ";"
+             << formatCsvDouble(snapshot.averageMovingSpeed) << ";"
+             << formatCsvDouble(snapshot.totalStoppedTime) << ";"
+             << snapshot.maxActiveVehicles
+             << "\n";
+    }
+
+    file.close();
+}
+
+void StatisticsCollector::writeSummary() const {
     ofstream file(summaryFilePath);
 
     double overallAverageSpeed = 0.0;
@@ -136,20 +139,25 @@ void StatisticsCollector::exportSummary() const {
         overallAverageMovingSpeed = accumulatedAverageMovingSpeed / tickCount;
     }
 
-    file << "metric,value\n";
-    file << fixed << setprecision(2);
-    file << "simulation_time," << lastSnapshot.time << "\n";
-    file << "total_vehicles_seen," << lastSnapshot.totalVehiclesSeen << "\n";
-    file << "active_vehicles," << lastSnapshot.activeVehicles << "\n";
-    file << "finished_vehicles," << lastSnapshot.finishedVehicles << "\n";
-    file << "moving_vehicles," << lastSnapshot.movingVehicles << "\n";
-    file << "stopped_vehicles," << lastSnapshot.stoppedVehicles << "\n";
-    file << "overall_average_speed," << overallAverageSpeed << "\n";
-    file << "overall_average_moving_speed," << overallAverageMovingSpeed << "\n";
-    file << "total_stopped_time," << totalStoppedTime << "\n";
-    file << "max_active_vehicles," << maxActiveVehicles << "\n";
+    file << "sep=;\n";
+    file << "metric;value\n";
+    file << "simulation_time;" << formatCsvDouble(lastSnapshot.time) << "\n";
+    file << "total_vehicles_seen;" << lastSnapshot.totalVehiclesSeen << "\n";
+    file << "active_vehicles;" << lastSnapshot.activeVehicles << "\n";
+    file << "finished_vehicles;" << lastSnapshot.finishedVehicles << "\n";
+    file << "moving_vehicles;" << lastSnapshot.movingVehicles << "\n";
+    file << "stopped_vehicles;" << lastSnapshot.stoppedVehicles << "\n";
+    file << "overall_average_speed;" << formatCsvDouble(overallAverageSpeed) << "\n";
+    file << "overall_average_moving_speed;" << formatCsvDouble(overallAverageMovingSpeed) << "\n";
+    file << "total_stopped_time;" << formatCsvDouble(totalStoppedTime) << "\n";
+    file << "max_active_vehicles;" << maxActiveVehicles << "\n";
 
     file.close();
+}
+
+void StatisticsCollector::exportAll() const {
+    writeTimeline();
+    writeSummary();
 }
 
 const StatisticsSnapshot& StatisticsCollector::getLastSnapshot() const {

@@ -1,0 +1,10 @@
+{
+  "_comment": "SYNTHETIC — not real OpenStreetMap data. Minimal empty Overpass-like payload for parser tests.",
+  "version": 0.6,
+  "generator": "easy_rider_synthetic_fixture",
+  "osm3s": {
+    "timestamp_osm_base": "1970-01-01T00:00:00Z",
+    "copyright": "SYNTHETIC FIXTURE — NOT OSM"
+  },
+  "elements": []
+}
