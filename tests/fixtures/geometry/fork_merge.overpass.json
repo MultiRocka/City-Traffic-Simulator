@@ -1,0 +1,53 @@
+{
+  "_comment": "SYNTHETIC — fork then merge (Y topology).",
+  "version": 0.6,
+  "generator": "easy_rider_etap1_fixture",
+  "osm3s": {
+    "timestamp_osm_base": "1970-01-01T00:00:00Z",
+    "copyright": "SYNTHETIC FIXTURE — NOT OSM"
+  },
+  "elements": [
+    {"type": "node", "id": 11601, "lat": 52.2360, "lon": 21.0100},
+    {"type": "node", "id": 11602, "lat": 52.2360, "lon": 21.0106},
+    {"type": "node", "id": 11603, "lat": 52.2363, "lon": 21.0112},
+    {"type": "node", "id": 11604, "lat": 52.2357, "lon": 21.0112},
+    {"type": "node", "id": 11605, "lat": 52.2360, "lon": 21.0118},
+    {"type": "node", "id": 11606, "lat": 52.2360, "lon": 21.0124},
+    {
+      "type": "way",
+      "id": 21601,
+      "nodes": [11601, 11602],
+      "tags": {"highway": "residential", "oneway": "yes", "name": "Stem"}
+    },
+    {
+      "type": "way",
+      "id": 21602,
+      "nodes": [11602, 11603],
+      "tags": {"highway": "residential", "oneway": "yes", "name": "LeftFork"}
+    },
+    {
+      "type": "way",
+      "id": 21603,
+      "nodes": [11602, 11604],
+      "tags": {"highway": "residential", "oneway": "yes", "name": "RightFork"}
+    },
+    {
+      "type": "way",
+      "id": 21604,
+      "nodes": [11603, 11605],
+      "tags": {"highway": "residential", "oneway": "yes", "name": "LeftJoin"}
+    },
+    {
+      "type": "way",
+      "id": 21605,
+      "nodes": [11604, 11605],
+      "tags": {"highway": "residential", "oneway": "yes", "name": "RightJoin"}
+    },
+    {
+      "type": "way",
+      "id": 21606,
+      "nodes": [11605, 11606],
+      "tags": {"highway": "residential", "oneway": "yes", "name": "Merge"}
+    }
+  ]
+}

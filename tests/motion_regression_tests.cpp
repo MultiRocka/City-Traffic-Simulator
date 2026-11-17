@@ -47,8 +47,22 @@ int runMapCameraTests();
 int mapCameraPassedCount();
 int runMapDownloadTests();
 int mapDownloadPassedCount();
+int runGeometryControlTests();
+int geometryControlPassedCount();
+int runTrafficBaselineTests();
+int trafficBaselinePassedCount();
+#if defined(_WIN32)
 int runEncodingTests();
 int encodingPassedCount();
+#else
+static int runEncodingTests() {
+    cout << "SKIP  encoding_tests (Win32-only)\n";
+    return 0;
+}
+static int encodingPassedCount() {
+    return 0;
+}
+#endif
 
 namespace {
 
@@ -1492,6 +1506,14 @@ int main() {
     const int downloadFailures = runMapDownloadTests();
     g_failures += downloadFailures;
     g_passed += mapDownloadPassedCount();
+
+    const int geometryFailures = runGeometryControlTests();
+    g_failures += geometryFailures;
+    g_passed += geometryControlPassedCount();
+
+    const int trafficFailures = runTrafficBaselineTests();
+    g_failures += trafficFailures;
+    g_passed += trafficBaselinePassedCount();
 
     const int encodingFailures = runEncodingTests();
     g_failures += encodingFailures;

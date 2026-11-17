@@ -11,6 +11,7 @@ VehicleGenerator::VehicleGenerator()
       vehicleSpeed(10.0),
       targetVehicleCount(0),
       generatedCount(0),
+      failedSpawnAttempts(0),
       timeSinceLastSpawn(0.0),
       spawnSafeDistance(10.0),
       rngState(defaultSeed),
@@ -23,6 +24,7 @@ VehicleGenerator::VehicleGenerator(double spawnInterval, double vehicleSpeed, in
       vehicleSpeed(vehicleSpeed),
       targetVehicleCount(targetVehicleCount),
       generatedCount(0),
+      failedSpawnAttempts(0),
       timeSinceLastSpawn(0.0),
       spawnSafeDistance(spawnSafeDistance),
       rngState(defaultSeed),
@@ -61,6 +63,10 @@ void VehicleGenerator::setSpawnInterval(double intervalSeconds) {
 
 int VehicleGenerator::getGeneratedCount() const {
     return generatedCount;
+}
+
+int VehicleGenerator::getFailedSpawnAttempts() const {
+    return failedSpawnAttempts;
 }
 
 uint32_t VehicleGenerator::nextRandom() {
@@ -171,6 +177,7 @@ void VehicleGenerator::update(
     }
 
     if (chosenLane < 0) {
+        ++failedSpawnAttempts;
         return;
     }
 

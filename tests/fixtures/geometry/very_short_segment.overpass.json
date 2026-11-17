@@ -1,0 +1,26 @@
+{
+  "_comment": "SYNTHETIC — very short (~3–5 m) directed stubs between junctions.",
+  "version": 0.6,
+  "generator": "easy_rider_etap1_fixture",
+  "osm3s": {
+    "timestamp_osm_base": "1970-01-01T00:00:00Z",
+    "copyright": "SYNTHETIC FIXTURE — NOT OSM"
+  },
+  "elements": [
+    {"type": "node", "id": 11301, "lat": 52.2330, "lon": 21.0100},
+    {"type": "node", "id": 11302, "lat": 52.2330, "lon": 21.01004},
+    {"type": "node", "id": 11303, "lat": 52.2330, "lon": 21.01008},
+    {
+      "type": "way",
+      "id": 21301,
+      "nodes": [11301, 11302],
+      "tags": {"highway": "residential", "oneway": "yes"}
+    },
+    {
+      "type": "way",
+      "id": 21302,
+      "nodes": [11302, 11303],
+      "tags": {"highway": "residential", "oneway": "yes"}
+    }
+  ]
+}

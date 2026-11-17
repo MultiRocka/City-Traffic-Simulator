@@ -1,0 +1,21 @@
+{
+  "_comment": "SYNTHETIC — gentle curve with shape nodes (not junctions).",
+  "version": 0.6,
+  "generator": "easy_rider_etap1_fixture",
+  "osm3s": {
+    "timestamp_osm_base": "1970-01-01T00:00:00Z",
+    "copyright": "SYNTHETIC FIXTURE — NOT OSM"
+  },
+  "elements": [
+    {"type": "node", "id": 11101, "lat": 52.2310, "lon": 21.0100},
+    {"type": "node", "id": 11102, "lat": 52.23105, "lon": 21.01035},
+    {"type": "node", "id": 11103, "lat": 52.23115, "lon": 21.01070},
+    {"type": "node", "id": 11104, "lat": 52.2313, "lon": 21.0110},
+    {
+      "type": "way",
+      "id": 21101,
+      "nodes": [11101, 11102, 11103, 11104],
+      "tags": {"highway": "residential", "oneway": "yes", "maxspeed": "40"}
+    }
+  ]
+}
