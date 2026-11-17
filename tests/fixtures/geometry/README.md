@@ -8,7 +8,7 @@ Additional precise layouts are built in-process as `MapDescription` (no JSON).
 | `straight_oneway.overpass.json` | Straight short oneway |
 | `gentle_curve.overpass.json` | Gentle polyline curve |
 | `sharp_turn.overpass.json` | Near-90° two-segment turn |
-| `very_short_segment.overpass.json` | Sub-5 m directed edges |
+| `very_short_segment.overpass.json` | Sub-5 m directed edges (Etap 2 merges degree-2 chain) |
 | `t_junction.overpass.json` | T junction (shared node) |
 | `four_way.overpass.json` | 4-way crossroads |
 | `fork_merge.overpass.json` | Fork then merge |

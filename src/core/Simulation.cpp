@@ -1,5 +1,6 @@
 #include "core/Simulation.h"
 #include "core/CollisionDetector.h"
+#include "core/TrafficPolicy.h"
 #include <algorithm>
 
 using namespace std;
@@ -172,6 +173,40 @@ void Simulation::update(double dt, const City& city) {
         }
     }
 
+    // Etap 2: when approaching a junction, bias preferLane toward the turn-appropriate
+    // entry lane on the next road (same-road LC only — still no junction path mesh).
+    for (auto& vehicle : vehicles) {
+        if (vehicle.isFinished()) {
+            continue;
+        }
+        const RoadSegment* current = city.findRoadSegmentById(vehicle.getCurrentRoadSegmentId());
+        const int nextId = vehicle.getNextRoadSegmentId();
+        const RoadSegment* next = city.findRoadSegmentById(nextId);
+        if (current == nullptr || next == nullptr) {
+            continue;
+        }
+        const double remaining = current->getLength() - vehicle.getPositionOnRoad();
+        if (remaining < 0.0 || remaining > TrafficPolicy::APPROACH_RELEVANCE_DISTANCE_M) {
+            continue;
+        }
+        if (!city.areRoadsConnected(current->getId(), next->getId())) {
+            continue;
+        }
+        const TurnType turn = intersectionRules.classifyTurn(city, current->getId(), next->getId());
+        const int target = IntersectionRules::suggestEntryLane(
+            vehicle.getLaneIndex(),
+            current->getLaneCount(),
+            next->getLaneCount(),
+            turn
+        );
+        // Prefer the proportional/straight mapping while still on the approach road when
+        // lane counts differ; clamp onto current road's lane indices for same-road LC.
+        const int approachPrefer = min(target, max(0, current->getLaneCount() - 1));
+        if (vehicle.getPreferLane() < 0 || remaining <= TrafficPolicy::APPROACH_RELEVANCE_DISTANCE_M) {
+            vehicle.setPreferLane(approachPrefer);
+        }
+    }
+
     // Optional preferLane: try one intentional LC per vehicle when cooldown allows.
     // Not zipper — blockage escape LC runs earlier via LaneBlockageManager.
     for (auto& vehicle : vehicles) {
@@ -296,7 +331,13 @@ void Simulation::update(double dt, const City& city) {
         const RoadSegment* nextRoad = city.findRoadSegmentById(nextRoadId);
         int entryLane = vehicle.getLaneIndex();
         if (nextRoad != nullptr) {
-            entryLane = min(vehicle.getLaneIndex(), max(0, nextRoad->getLaneCount() - 1));
+            const TurnType turn = intersectionRules.classifyTurn(city, currentRoadId, nextRoadId);
+            entryLane = IntersectionRules::suggestEntryLane(
+                vehicle.getLaneIndex(),
+                currentRoad->getLaneCount(),
+                nextRoad->getLaneCount(),
+                turn
+            );
         }
 
         // Lights + entrance space are hard gates. Yield/priority among peers is resolved below
@@ -343,10 +384,17 @@ void Simulation::update(double dt, const City& city) {
 
             const int currentRoadId = vehiclePtr->getCurrentRoadSegmentId();
             const int nextRoadId = vehiclePtr->getNextRoadSegmentId();
+            const RoadSegment* currentRoad = city.findRoadSegmentById(currentRoadId);
             const RoadSegment* nextRoad = city.findRoadSegmentById(nextRoadId);
             int entryLane = vehiclePtr->getLaneIndex();
-            if (nextRoad != nullptr) {
-                entryLane = min(vehiclePtr->getLaneIndex(), max(0, nextRoad->getLaneCount() - 1));
+            if (currentRoad != nullptr && nextRoad != nullptr) {
+                const TurnType turn = intersectionRules.classifyTurn(city, currentRoadId, nextRoadId);
+                entryLane = IntersectionRules::suggestEntryLane(
+                    vehiclePtr->getLaneIndex(),
+                    currentRoad->getLaneCount(),
+                    nextRoad->getLaneCount(),
+                    turn
+                );
             }
 
             // Re-check space: green does not skip conflict clearance / entrance room.
@@ -363,7 +411,9 @@ void Simulation::update(double dt, const City& city) {
 
             vehiclePtr->moveToNextRoad();
             if (nextRoad != nullptr) {
+                vehiclePtr->setLaneIndex(entryLane);
                 vehiclePtr->clampLaneIndex(nextRoad->getLaneCount());
+                vehiclePtr->setPreferLane(-1);
             }
 
             eventLog.addEvent(

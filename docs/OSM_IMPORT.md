@@ -91,6 +91,7 @@ Equirectangular meters around the document bbox center:
 | `sourceRef` | Roads: `way/<id>#nodes=<fromIdx>-<toIdx>;dir=fwd\|rev`; intersections: `node/<id>` |
 | No fake joins | Crossing geometries **without** a shared OSM node are **not** connected |
 | layer / bridge / tunnel | Never create proximity joins; shared node ids still join (OSM intent). Multi-layer shared nodes are warned |
+| Etap 2 short stubs | After emit + restrictions, `MapGeometryContinuity` merges `<5 m` **degree-2** stubs into neighbors (mid → intermediate; soft signal priority absorbed). Hard–hard micro-links and dual carriageways without OSM connectors are **not** joined |
 | Boundary | Dangling ends kept as entries/exits; incompleteness noted; **no** invented links outside data |
 
 Car-allowed `highway` values: motorway(+link), trunk(+link), primary(+link), secondary(+link), tertiary(+link), unclassified, residential, living_street, service, road. Others skipped.

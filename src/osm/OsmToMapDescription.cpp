@@ -1,4 +1,5 @@
 #include "osm/OsmToMapDescription.h"
+#include "osm/MapGeometryContinuity.h"
 
 #include <algorithm>
 #include <cmath>
@@ -1373,6 +1374,20 @@ OsmToMapResult OsmToMapDescription::convert(
         }
     }
 
+    // Etap 2: collapse degree-2 micro-stubs (signal/stop near a real fork) without
+    // inventing dual-carriage connectors or proximity joins across layers.
+    {
+        const MapGeometryContinuityStats continuity =
+            MapGeometryContinuity::mergeShortDegree2Stubs(map, &report);
+        if (continuity.removedIntersections > 0) {
+            // Rebuild lane sum after merges (lane counts may change with surviving roads).
+            report.builtLaneCount = 0;
+            for (const MapRoadDesc& road : map.roads) {
+                report.builtLaneCount += static_cast<size_t>(max(1, road.laneCount));
+            }
+        }
+    }
+
     // Graph components (undirected over intersection adjacency via roads).
     unordered_map<int, vector<int>> adjacency;
     for (const MapRoadDesc& road : map.roads) {
@@ -1426,14 +1441,17 @@ OsmToMapResult OsmToMapDescription::convert(
         "access→vehicle→motor_vehicle→motorcar (no/private excluded; destination/conditional "
         "excluded from auto demand). Still unsupported: via-way / conditional / complex "
         "restrictions, turn:lanes*. Crossings without a shared OSM node are never joined. "
-        "layer/bridge/tunnel do not create proximity joins.";
+        "layer/bridge/tunnel do not create proximity joins. Dual carriageways without OSM "
+        "link/U-turn ways stay disconnected (honest components). Etap 2 merges only "
+        "degree-2 short stubs (<5 m) into neighbors.";
     if (!missingNodeRefs.empty()) {
         report.incompletenessNote =
             "Missing node refs present; incomplete ways were split/skipped. "
             "Bbox clips may leave dangling ends.";
     } else if (components > 1) {
         report.incompletenessNote =
-            "Multiple disconnected network components — likely incomplete extract or disjoint streets.";
+            "Multiple disconnected network components — dual carriageways without connectors, "
+            "incomplete extract, or disjoint streets. No proximity joins invented.";
     } else {
         report.incompletenessNote = "Network imported without inventing external links.";
     }
