@@ -1,0 +1,25 @@
+{
+  "_comment": "SYNTHETIC — 2+1 directional lanes on bidirectional tertiary.",
+  "version": 0.6,
+  "generator": "easy_rider_etap1_fixture",
+  "osm3s": {
+    "timestamp_osm_base": "1970-01-01T00:00:00Z",
+    "copyright": "SYNTHETIC FIXTURE — NOT OSM"
+  },
+  "elements": [
+    {"type": "node", "id": 11701, "lat": 52.2370, "lon": 21.0100},
+    {"type": "node", "id": 11702, "lat": 52.2370, "lon": 21.0112},
+    {
+      "type": "way",
+      "id": 21701,
+      "nodes": [11701, 11702],
+      "tags": {
+        "highway": "tertiary",
+        "lanes": "3",
+        "lanes:forward": "2",
+        "lanes:backward": "1",
+        "maxspeed": "50"
+      }
+    }
+  ]
+}

@@ -1,0 +1,19 @@
+{
+  "_comment": "SYNTHETIC — straight oneway residential (geometry control).",
+  "version": 0.6,
+  "generator": "easy_rider_etap1_fixture",
+  "osm3s": {
+    "timestamp_osm_base": "1970-01-01T00:00:00Z",
+    "copyright": "SYNTHETIC FIXTURE — NOT OSM"
+  },
+  "elements": [
+    {"type": "node", "id": 11001, "lat": 52.2300, "lon": 21.0100},
+    {"type": "node", "id": 11002, "lat": 52.2300, "lon": 21.0110},
+    {
+      "type": "way",
+      "id": 21001,
+      "nodes": [11001, 11002],
+      "tags": {"highway": "residential", "oneway": "yes", "maxspeed": "30"}
+    }
+  ]
+}

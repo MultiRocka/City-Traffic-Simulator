@@ -1,0 +1,26 @@
+{
+  "_comment": "SYNTHETIC — sharp ~90° turn via shared junction node.",
+  "version": 0.6,
+  "generator": "easy_rider_etap1_fixture",
+  "osm3s": {
+    "timestamp_osm_base": "1970-01-01T00:00:00Z",
+    "copyright": "SYNTHETIC FIXTURE — NOT OSM"
+  },
+  "elements": [
+    {"type": "node", "id": 11201, "lat": 52.2320, "lon": 21.0100},
+    {"type": "node", "id": 11202, "lat": 52.2320, "lon": 21.0108},
+    {"type": "node", "id": 11203, "lat": 52.2327, "lon": 21.0108},
+    {
+      "type": "way",
+      "id": 21201,
+      "nodes": [11201, 11202],
+      "tags": {"highway": "residential", "oneway": "yes", "name": "Approach"}
+    },
+    {
+      "type": "way",
+      "id": 21202,
+      "nodes": [11202, 11203],
+      "tags": {"highway": "residential", "oneway": "yes", "name": "Exit"}
+    }
+  ]
+}

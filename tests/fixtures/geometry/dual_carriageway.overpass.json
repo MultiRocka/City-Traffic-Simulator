@@ -1,0 +1,27 @@
+{
+  "_comment": "SYNTHETIC — dual carriageway as two parallel oneways (not joined laterally).",
+  "version": 0.6,
+  "generator": "easy_rider_etap1_fixture",
+  "osm3s": {
+    "timestamp_osm_base": "1970-01-01T00:00:00Z",
+    "copyright": "SYNTHETIC FIXTURE — NOT OSM"
+  },
+  "elements": [
+    {"type": "node", "id": 11901, "lat": 52.2390, "lon": 21.0100},
+    {"type": "node", "id": 11902, "lat": 52.2390, "lon": 21.0112},
+    {"type": "node", "id": 11903, "lat": 52.23892, "lon": 21.0100},
+    {"type": "node", "id": 11904, "lat": 52.23892, "lon": 21.0112},
+    {
+      "type": "way",
+      "id": 21901,
+      "nodes": [11901, 11902],
+      "tags": {"highway": "primary", "oneway": "yes", "lanes": "2", "name": "Eastbound"}
+    },
+    {
+      "type": "way",
+      "id": 21902,
+      "nodes": [11904, 11903],
+      "tags": {"highway": "primary", "oneway": "yes", "lanes": "2", "name": "Westbound"}
+    }
+  ]
+}

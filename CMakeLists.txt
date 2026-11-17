@@ -54,9 +54,13 @@ add_library(easy_rider_core STATIC
     src/osm/OverpassQuery.cpp
     src/osm/DownloadCache.cpp
     src/osm/FakeHttpTransport.cpp
-    src/osm/WinHttpTransport.cpp
     src/osm/MapDownloadService.cpp
 )
+
+# WinHTTP is Windows-only. Offline tests use FakeHttpTransport; GUI download uses WinHTTP.
+if(WIN32)
+    target_sources(easy_rider_core PRIVATE src/osm/WinHttpTransport.cpp)
+endif()
 
 target_include_directories(easy_rider_core
     PUBLIC
@@ -96,39 +100,42 @@ target_link_libraries(easy_rider_ui
         easy_rider_core
 )
 
-add_library(easy_rider_gui STATIC
-    src/gui/MapView.cpp
-    src/gui/MainWindow.cpp
-    src/gui/MapDownloadDialog.cpp
-)
+# Native Win32 GDI GUI — Windows only (cloud Linux builds core/tests/console).
+if(WIN32)
+    add_library(easy_rider_gui STATIC
+        src/gui/MapView.cpp
+        src/gui/MainWindow.cpp
+        src/gui/MapDownloadDialog.cpp
+    )
 
-target_include_directories(easy_rider_gui
-    PUBLIC
-        ${PROJECT_SOURCE_DIR}/include
-)
+    target_include_directories(easy_rider_gui
+        PUBLIC
+            ${PROJECT_SOURCE_DIR}/include
+    )
 
-target_link_libraries(easy_rider_gui
-    PUBLIC
-        easy_rider_ui
-)
+    target_link_libraries(easy_rider_gui
+        PUBLIC
+            easy_rider_ui
+    )
 
-add_executable(easy_rider_app WIN32
-    src/app/main.cpp
-)
+    add_executable(easy_rider_app WIN32
+        src/app/main.cpp
+    )
 
-target_include_directories(easy_rider_app
-    PRIVATE
-        ${PROJECT_SOURCE_DIR}/include
-)
+    target_include_directories(easy_rider_app
+        PRIVATE
+            ${PROJECT_SOURCE_DIR}/include
+    )
 
-target_link_libraries(easy_rider_app
-    PRIVATE
-        easy_rider_gui
-        user32
-        gdi32
-        comctl32
-        comdlg32
-)
+    target_link_libraries(easy_rider_app
+        PRIVATE
+            easy_rider_gui
+            user32
+            gdi32
+            comctl32
+            comdlg32
+    )
+endif()
 
 add_executable(easy_rider_console
     src/app/main_console.cpp
@@ -160,8 +167,13 @@ add_executable(easy_rider_motion_tests
     tests/osm_larger_map_tests.cpp
     tests/osm_session_tests.cpp
     tests/map_download_tests.cpp
-    tests/encoding_tests.cpp
+    tests/geometry_control_tests.cpp
+    tests/traffic_baseline_tests.cpp
 )
+
+if(WIN32)
+    target_sources(easy_rider_motion_tests PRIVATE tests/encoding_tests.cpp)
+endif()
 
 target_include_directories(easy_rider_motion_tests
     PRIVATE

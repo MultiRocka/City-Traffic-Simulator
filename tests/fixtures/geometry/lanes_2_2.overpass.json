@@ -1,0 +1,25 @@
+{
+  "_comment": "SYNTHETIC — 2+2 equal directional lanes.",
+  "version": 0.6,
+  "generator": "easy_rider_etap1_fixture",
+  "osm3s": {
+    "timestamp_osm_base": "1970-01-01T00:00:00Z",
+    "copyright": "SYNTHETIC FIXTURE — NOT OSM"
+  },
+  "elements": [
+    {"type": "node", "id": 11801, "lat": 52.2380, "lon": 21.0100},
+    {"type": "node", "id": 11802, "lat": 52.2380, "lon": 21.0112},
+    {
+      "type": "way",
+      "id": 21801,
+      "nodes": [11801, 11802],
+      "tags": {
+        "highway": "secondary",
+        "lanes": "4",
+        "lanes:forward": "2",
+        "lanes:backward": "2",
+        "maxspeed": "50"
+      }
+    }
+  ]
+}

@@ -1,0 +1,27 @@
+{
+  "_comment": "SYNTHETIC — T junction (through road + spur).",
+  "version": 0.6,
+  "generator": "easy_rider_etap1_fixture",
+  "osm3s": {
+    "timestamp_osm_base": "1970-01-01T00:00:00Z",
+    "copyright": "SYNTHETIC FIXTURE — NOT OSM"
+  },
+  "elements": [
+    {"type": "node", "id": 11401, "lat": 52.2340, "lon": 21.0100},
+    {"type": "node", "id": 11402, "lat": 52.2340, "lon": 21.0108},
+    {"type": "node", "id": 11403, "lat": 52.2340, "lon": 21.0116},
+    {"type": "node", "id": 11404, "lat": 52.2346, "lon": 21.0108},
+    {
+      "type": "way",
+      "id": 21401,
+      "nodes": [11401, 11402, 11403],
+      "tags": {"highway": "residential", "name": "Through"}
+    },
+    {
+      "type": "way",
+      "id": 21402,
+      "nodes": [11404, 11402],
+      "tags": {"highway": "residential", "name": "Spur"}
+    }
+  ]
+}

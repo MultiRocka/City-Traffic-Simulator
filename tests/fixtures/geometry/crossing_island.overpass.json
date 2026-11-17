@@ -1,0 +1,29 @@
+{
+  "_comment": "SYNTHETIC — dual carriage with highway=crossing nodes (island between).",
+  "version": 0.6,
+  "generator": "easy_rider_etap1_fixture",
+  "osm3s": {
+    "timestamp_osm_base": "1970-01-01T00:00:00Z",
+    "copyright": "SYNTHETIC FIXTURE — NOT OSM"
+  },
+  "elements": [
+    {"type": "node", "id": 12001, "lat": 52.2400, "lon": 21.0100},
+    {"type": "node", "id": 12002, "lat": 52.2400, "lon": 21.0106, "tags": {"highway": "crossing"}},
+    {"type": "node", "id": 12003, "lat": 52.2400, "lon": 21.0112},
+    {"type": "node", "id": 12004, "lat": 52.23988, "lon": 21.0100},
+    {"type": "node", "id": 12005, "lat": 52.23988, "lon": 21.0106, "tags": {"highway": "crossing"}},
+    {"type": "node", "id": 12006, "lat": 52.23988, "lon": 21.0112},
+    {
+      "type": "way",
+      "id": 22001,
+      "nodes": [12001, 12002, 12003],
+      "tags": {"highway": "primary", "oneway": "yes", "name": "EB"}
+    },
+    {
+      "type": "way",
+      "id": 22002,
+      "nodes": [12006, 12005, 12004],
+      "tags": {"highway": "primary", "oneway": "yes", "name": "WB"}
+    }
+  ]
+}

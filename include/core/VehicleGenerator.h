@@ -41,6 +41,9 @@ public:
     );
 
     int getGeneratedCount() const;
+    // Cadence ticks where spawn was due but every entrance lane was blocked
+    // (occupancy / entrance blockage). Does not include idle waits before interval.
+    int getFailedSpawnAttempts() const;
 
 private:
     bool canSpawn(
@@ -57,6 +60,7 @@ private:
     double vehicleSpeed; // base desired/max cruise used as center of variety
     int targetVehicleCount;
     int generatedCount;
+    int failedSpawnAttempts;
     double timeSinceLastSpawn;
     double spawnSafeDistance;
     vector<int> route;
