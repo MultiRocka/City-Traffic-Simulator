@@ -1,9 +1,11 @@
 # Easy Rider / City Traffic Simulator — Build & Run
 
+Desktop UI is **native Win32 GDI** (`easy_rider_app`). There is **no Qt** in this repository (no `easy_rider_qt`, no `Uruchom.bat`). Core / console / offline tests also build on Linux with `g++` (WinHTTP + GUI + encoding tests are `WIN32`-gated).
+
 ## Prerequisites
 
-- Windows with Visual Studio 2022 (MSVC)
-- CMake 3.16+
+- **GUI (primary product path):** Windows with Visual Studio 2022 (MSVC)
+- **Core / tests / console (also Linux):** CMake 3.16+, `g++` or MSVC
 - Network on **first** configure (downloads pinned **nlohmann/json v3.11.3** via FetchContent; MIT; see [docs/OSM_IMPORT.md](docs/OSM_IMPORT.md))
 
 ## Configure
@@ -190,12 +192,13 @@ Offline pipeline: Overpass JSON → `OsmDocument` → `MapDescription` + `Import
 #### Szukaj miejsca… (limited map download)
 
 1. Click **Szukaj miejsca…** (GUI stays on Demo/previous map until a successful import).
-2. Type a place name and click **Szukaj** (no search-on-keystroke).
-3. Pick a result from the list.
-4. Choose area size (default **~0.5 km** radius). The download area is a **rectangle (bbox)** around the center, not a circle.
-5. Larger presets (**~1 km**, **~2 km**) show a warning before download. Whole-city download is not offered.
-6. **Pobierz i zaimportuj** — worker thread + progress; **Anuluj czekanie** cancels. Cache under `data/cache/` is reused unless **Wymuś ponowne pobranie**.
-7. On success: import summary → **Start**. Failed download/import keeps the previous scenario.
+2. Type a place name and click **Szukaj** (no search-on-keystroke). Pick a result — the locator centers and places a pin; this does **not** start Overpass.
+3. Choose a locator mode: **Pan**, **Pinezka+rozmiar** (pin + size → rectangular bbox), or **Prostokąt** (drag corners). Area sizes use radius presets but always download an axis-aligned **rectangle**, not a circle. The locator underlay is a drawn grid (no tile API).
+4. Larger presets (**~1 km**, **~2 km**) show a warning before download. Whole-city download is not offered. Hard reject above **2 km** radius / body-size caps.
+5. **Pobierz i zaimportuj** — worker thread + progress; **Anuluj czekanie** cancels. Cache under `data/cache/` is reused unless **Wymuś ponowne pobranie**. Shown bbox ≡ Overpass QL bbox ≡ cache key.
+6. On success: import summary → **Start**. Failed download/import keeps the previous scenario.
+
+**Linux note:** Win32 GUI visual QA is Windows-only. Cloud/Linux agents verify selection mechanics via offline unit tests (`locator_selection_tests`), not pixel PASS.
 
 | Limit | Value |
 |-------|--------|

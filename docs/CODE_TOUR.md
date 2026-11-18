@@ -23,7 +23,8 @@ Related: [OSM_READINESS.md](OSM_READINESS.md), [OSM_IMPORT.md](OSM_IMPORT.md), [
 | `OsmJsonParser` → `OsmToMapDescription` | Overpass JSON → map + `ImportReport` | Import OSM → mapa + raport |
 | `OsmScenarioBuilder` | Attach gens / phases / crossings (policy caps) | Podpięcie scenariusza (limity polityki) |
 | `SimulationSession` | Demo/OSM swap, accumulator, render snapshot | Sesja GUI: start/pauza/reset, interpolacja |
-| `MainWindow` / `MapView` / `MapCamera` | Win32 UI, zoom/pan/fit | Okno, mapa, kamera (tylko widok) |
+| `MainWindow` / `MapView` / `MapCamera` | **Win32 GDI** UI (not Qt), zoom/pan/fit | UI **Win32 GDI** (bez Qt), zoom/pan/fit |
+| `MapDownloadDialog` / `LocatorMap` | Place search + pin/size / rectangle locator | Szukaj miejsca + pinezka / prostokąt |
 | `MapDownloadService` | Nominatim + Overpass (cache, size caps) | Szukaj miejsca + pobranie (cache, limity) |
 
 ---
