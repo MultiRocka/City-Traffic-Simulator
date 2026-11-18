@@ -100,6 +100,33 @@ void IntersectionRules::clearStaleReservations(const City& city, const vector<Ve
     (void)city;
 }
 
+int IntersectionRules::suggestEntryLane(
+    int fromLaneIndex,
+    int fromLaneCount,
+    int toLaneCount,
+    TurnType turn
+) {
+    fromLaneCount = max(1, fromLaneCount);
+    toLaneCount = max(1, toLaneCount);
+    fromLaneIndex = max(0, min(fromLaneIndex, fromLaneCount - 1));
+    if (toLaneCount == 1) {
+        return 0;
+    }
+
+    switch (turn) {
+    case TurnType::Right:
+        return 0;
+    case TurnType::Left:
+        return toLaneCount - 1;
+    case TurnType::Straight:
+    default:
+        if (fromLaneCount == 1) {
+            return (toLaneCount - 1) / 2;
+        }
+        return (fromLaneIndex * (toLaneCount - 1) + (fromLaneCount - 1) / 2) / (fromLaneCount - 1);
+    }
+}
+
 TurnType IntersectionRules::classifyTurn(const City& city, int fromRoadId, int toRoadId) const {
     const Vector2D inbound = roadInboundDirection(city, fromRoadId);
     const Vector2D outbound = roadOutboundDirection(city, toRoadId);
@@ -662,11 +689,38 @@ Vector2D IntersectionRules::roadInboundDirection(const City& city, int roadId) c
     if (from == nullptr || to == nullptr) {
         return Vector2D(0.0, 0.0);
     }
-    return Vector2D(to->getPosition().x - from->getPosition().x, to->getPosition().y - from->getPosition().y);
+    // Use the final polyline leg into the junction so curved approaches classify correctly.
+    const vector<Vector2D>& mids = road->getIntermediatePoints();
+    if (!mids.empty()) {
+        const Vector2D& prev = mids.back();
+        return Vector2D(to->getPosition().x - prev.x, to->getPosition().y - prev.y);
+    }
+    return Vector2D(
+        to->getPosition().x - from->getPosition().x,
+        to->getPosition().y - from->getPosition().y
+    );
 }
 
 Vector2D IntersectionRules::roadOutboundDirection(const City& city, int roadId) const {
-    return roadInboundDirection(city, roadId);
+    const RoadSegment* road = city.findRoadSegmentById(roadId);
+    if (road == nullptr) {
+        return Vector2D(0.0, 0.0);
+    }
+    const Intersection* from = city.findIntersectionById(road->getFromIntersectionId());
+    const Intersection* to = city.findIntersectionById(road->getToIntersectionId());
+    if (from == nullptr || to == nullptr) {
+        return Vector2D(0.0, 0.0);
+    }
+    // First polyline leg leaving the junction (not the full chord).
+    const vector<Vector2D>& mids = road->getIntermediatePoints();
+    if (!mids.empty()) {
+        const Vector2D& next = mids.front();
+        return Vector2D(next.x - from->getPosition().x, next.y - from->getPosition().y);
+    }
+    return Vector2D(
+        to->getPosition().x - from->getPosition().x,
+        to->getPosition().y - from->getPosition().y
+    );
 }
 
 bool IntersectionRules::segmentIntersect(

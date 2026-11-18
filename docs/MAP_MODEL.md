@@ -101,5 +101,5 @@ Lane change (`Simulation::tryLaneChange`): same directed road only; requires saf
 ## Not implemented yet
 
 - OSM Overpass JSON → `MapDescription` → scenario/GUI load exists offline (see [OSM_IMPORT.md](OSM_IMPORT.md)); basic via-node restrictions + car access hierarchy enforced; still not plug-and-play (no PBF/XML, via-way/conditional/`turn:lanes` unsupported, generated signal timing)
-- No turn-specific target lane / connection lane mapping (LC intentional / preferLane / zipper)
+- Turn entry lane is a heuristic (`IntersectionRules::suggestEntryLane` by turn type + lane counts) plus approach `preferLane`; still no OSM `turn:lanes*` / per-connection lane fields
 - No sidewalk network between crossings (Stage 4 is crossing-local only)

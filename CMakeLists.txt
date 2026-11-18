@@ -49,6 +49,7 @@ add_library(easy_rider_core STATIC
     src/core/IntersectionRules.cpp
     src/osm/OsmJsonParser.cpp
     src/osm/OsmToMapDescription.cpp
+    src/osm/MapGeometryContinuity.cpp
     src/osm/OsmScenarioBuilder.cpp
     src/osm/GeoBbox.cpp
     src/osm/OverpassQuery.cpp

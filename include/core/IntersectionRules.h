@@ -56,6 +56,15 @@ public:
 
     TurnType classifyTurn(const City& city, int fromRoadId, int toRoadId) const;
 
+    // Etap 2: pick an entry lane on the exit road from turn type + lane counts.
+    // Lane 0 = rightmost (RHT); laneCount-1 = leftmost. Clamps to [0, toLaneCount-1].
+    static int suggestEntryLane(
+        int fromLaneIndex,
+        int fromLaneCount,
+        int toLaneCount,
+        TurnType turn
+    );
+
     MovementKey makeMovement(const City& city, const Vehicle& vehicle) const;
 
     // Unsignalized None → YieldToRight. Signalized / PriorityRoad kept as stored.
