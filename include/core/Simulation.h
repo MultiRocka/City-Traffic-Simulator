@@ -41,6 +41,12 @@ public:
     const vector<VehicleGenerator>& getVehicleGenerators() const;
     void setMinVehicleGap(double newMinVehicleGap);
 
+    // Soft concurrent active-vehicle cap (Etap 3). 0 = unlimited.
+    // Generators defer when at cap; vehicles are never deleted to free slots.
+    void setMaxActiveVehicles(int limit);
+    int getMaxActiveVehicles() const;
+    int countActiveVehicles() const;
+
     // Stage 6: scale all generator spawn intervals relative to captured baselines.
     // rate > 1 → more frequent spawns (shorter intervals). Clamped to [0.1, 10].
     void setVehicleSpawnRateMultiplier(double rate);
@@ -111,6 +117,7 @@ private:
     vector<double> vehicleSpawnBaselines;
     double vehicleSpawnRateMultiplier;
     double minVehicleGap;
+    int maxActiveVehicles;
     int nextVehicleId;
     vector<TrafficLight> trafficLights;
     vector<PhaseController> phaseControllers;

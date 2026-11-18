@@ -170,6 +170,7 @@ add_executable(easy_rider_motion_tests
     tests/map_download_tests.cpp
     tests/geometry_control_tests.cpp
     tests/traffic_baseline_tests.cpp
+    tests/etap3_traffic_tests.cpp
 )
 
 if(WIN32)

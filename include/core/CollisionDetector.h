@@ -54,6 +54,13 @@ public:
         const vector<Vehicle>& vehicles
     ) const;
 
+    // Same-road helper: `sameRoad` is typically front-most-first for that road only.
+    // Scans only that list (O(road occupancy)) instead of the full fleet.
+    const Vehicle* findPredecessorOnRoad(
+        const Vehicle& vehicle,
+        const vector<Vehicle*>& sameRoad
+    ) const;
+
     // Front of ego may not pass leader.front - leader.length - minGap.
     // positionOnRoad is the front reference for each vehicle.
     double computeLeaderStopPosition(const Vehicle& leader) const;

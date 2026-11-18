@@ -1,6 +1,9 @@
 #pragma once
 
+#include <cstdint>
 #include <string>
+#include <unordered_map>
+#include <unordered_set>
 #include <vector>
 #include "core/Intersection.h"
 #include "core/RoadSegment.h"
@@ -51,8 +54,19 @@ public:
     vector<int> getRoadIdsAtIntersection(int intersectionId) const;
 
 private:
+    static uint64_t connectionKey(int fromRoadId, int toRoadId);
+
     string name;
     vector<Intersection> intersections;
     vector<RoadSegment> roadSegments;
     vector<RoadConnection> disallowedConnections;
+
+    // O(1) id → storage index (kept in sync by add*).
+    unordered_map<int, size_t> intersectionIndexById;
+    unordered_map<int, size_t> roadIndexById;
+    // Roads whose fromIntersectionId == key (for outgoing lookups).
+    unordered_map<int, vector<int>> roadsFromIntersection;
+    // Roads whose toIntersectionId == key (for incoming lookups).
+    unordered_map<int, vector<int>> roadsToIntersection;
+    unordered_set<uint64_t> disallowedConnectionKeys;
 };

@@ -101,10 +101,18 @@ std::string SimulationSession::formatImportSummary(const OsmScenarioResult& resu
         << "  Lanes (dir sum): " << result.report.builtLaneCount << "\n";
     out << "Crossings: " << result.attachedCrossingCount
         << "  Generators: " << result.attachedGeneratorCount
-        << "  Routes: " << result.routeCount << "\n";
+        << "  Routes: " << result.routeCount
+        << "  Starts: " << result.distinctStartRoadCount << "\n";
     out << "Generated signals: " << result.generatedPhaseControllerCount
         << " controllers / " << result.attachedTrafficLightCount << " lights"
         << " (timing NOT from OSM)\n";
+
+    for (const auto& note : result.notes) {
+        if (note.find("Demand mode=") != std::string::npos) {
+            out << note << "\n";
+            break;
+        }
+    }
 
     if (!result.report.warnings.empty()) {
         out << "Warnings: " << result.report.warnings.size();

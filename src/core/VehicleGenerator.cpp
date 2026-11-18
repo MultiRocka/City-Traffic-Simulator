@@ -12,6 +12,7 @@ VehicleGenerator::VehicleGenerator()
       targetVehicleCount(0),
       generatedCount(0),
       failedSpawnAttempts(0),
+      deferredDueToActiveCap(0),
       timeSinceLastSpawn(0.0),
       spawnSafeDistance(10.0),
       rngState(defaultSeed),
@@ -25,6 +26,7 @@ VehicleGenerator::VehicleGenerator(double spawnInterval, double vehicleSpeed, in
       targetVehicleCount(targetVehicleCount),
       generatedCount(0),
       failedSpawnAttempts(0),
+      deferredDueToActiveCap(0),
       timeSinceLastSpawn(0.0),
       spawnSafeDistance(spawnSafeDistance),
       rngState(defaultSeed),
@@ -61,12 +63,28 @@ void VehicleGenerator::setSpawnInterval(double intervalSeconds) {
     spawnInterval = max(0.05, intervalSeconds);
 }
 
+int VehicleGenerator::getTargetVehicleCount() const {
+    return targetVehicleCount;
+}
+
+void VehicleGenerator::setTargetVehicleCount(int count) {
+    targetVehicleCount = count;
+}
+
+bool VehicleGenerator::isContinuous() const {
+    return targetVehicleCount <= 0;
+}
+
 int VehicleGenerator::getGeneratedCount() const {
     return generatedCount;
 }
 
 int VehicleGenerator::getFailedSpawnAttempts() const {
     return failedSpawnAttempts;
+}
+
+int VehicleGenerator::getDeferredDueToActiveCap() const {
+    return deferredDueToActiveCap;
 }
 
 uint32_t VehicleGenerator::nextRandom() {
@@ -137,15 +155,24 @@ void VehicleGenerator::update(
     int& nextVehicleId,
     const City* city,
     const LaneBlockageManager* laneBlocks,
-    double currentTime
+    double currentTime,
+    int* activeCount,
+    int maxActive
 ) {
-    if (generatedCount >= targetVehicleCount) {
+    if (!isContinuous() && generatedCount >= targetVehicleCount) {
         return;
     }
 
     timeSinceLastSpawn += dt;
 
     if (timeSinceLastSpawn < spawnInterval) {
+        return;
+    }
+
+    // Soft concurrent cap: do not delete vehicles; wait until under limit.
+    if (maxActive > 0 && activeCount != nullptr && *activeCount >= maxActive) {
+        ++deferredDueToActiveCap;
+        // Do not consume the interval — fill the next free slot promptly.
         return;
     }
 
@@ -191,4 +218,7 @@ void VehicleGenerator::update(
     nextVehicleId++;
     generatedCount++;
     timeSinceLastSpawn = 0.0;
+    if (activeCount != nullptr) {
+        ++(*activeCount);
+    }
 }

@@ -94,6 +94,36 @@ const Vehicle* CollisionDetector::findPredecessor(
     return best;
 }
 
+const Vehicle* CollisionDetector::findPredecessorOnRoad(
+    const Vehicle& vehicle,
+    const vector<Vehicle*>& sameRoad
+) const {
+    const Vehicle* best = nullptr;
+    const int lane = vehicle.getLaneIndex();
+    const double position = vehicle.getPositionOnRoad();
+
+    for (const Vehicle* otherPtr : sameRoad) {
+        if (otherPtr == nullptr) {
+            continue;
+        }
+        const Vehicle& other = *otherPtr;
+        if (other.getId() == vehicle.getId() || other.isFinished()) {
+            continue;
+        }
+        if (other.getLaneIndex() != lane) {
+            continue;
+        }
+        if (other.getPositionOnRoad() <= position) {
+            continue;
+        }
+        if (best == nullptr || other.getPositionOnRoad() < best->getPositionOnRoad()) {
+            best = &other;
+        }
+    }
+
+    return best;
+}
+
 double CollisionDetector::computeLeaderStopPosition(const Vehicle& leader) const {
     return leader.getPositionOnRoad() - leader.getLength() - minVehicleGap;
 }
