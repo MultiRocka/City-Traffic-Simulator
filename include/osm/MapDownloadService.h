@@ -92,6 +92,15 @@ public:
         ProgressFn progress = nullptr
     );
 
+    // Download by explicit rectangular bbox (pin+size or drawn rectangle).
+    // Shown selection, Overpass query, and cache key all use the same GeoBbox.
+    MapFetchResult downloadRoadsForBbox(
+        const GeoBbox& bbox,
+        bool forceRefresh = false,
+        std::atomic<bool>* cancelFlag = nullptr,
+        ProgressFn progress = nullptr
+    );
+
     // Parse Nominatim JSON array (also used by tests / cache replay).
     static GeocodeResult parseNominatimJson(const std::string& jsonText, int maxResults);
 

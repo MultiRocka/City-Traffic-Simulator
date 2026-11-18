@@ -24,8 +24,17 @@ struct GeoBbox {
     // Stable cache / Overpass key: "S,W,N,E" with fixed decimals.
     std::string toKey(int decimals = 5) const;
 
+    // Same formatting as toKey(5) — Overpass QL bbox fragment must match cache key.
     std::string toOverpassBBox() const;
 };
+
+struct BboxDimensionsMeters {
+    double widthMeters = 0.0;   // east–west
+    double heightMeters = 0.0;  // north–south
+};
+
+// Equirectangular width/height of a geographic rectangle.
+BboxDimensionsMeters bboxDimensionsMeters(const GeoBbox& box);
 
 struct AreaSizeChoice {
     const char* id;           // stable id e.g. "r500"
@@ -52,5 +61,8 @@ inline constexpr double kMaxDownloadAreaKm2 = 20.0; // hard reject above this
 GeoBbox bboxFromRadiusMeters(double latDeg, double lonDeg, double radiusMeters);
 
 bool radiusAllowed(double radiusMeters, std::string& errorOut);
+
+// Arbitrary rectangle limits (pin+size or drawn). Max side ≈ 2 × max radius.
+bool bboxAllowed(const GeoBbox& box, std::string& errorOut);
 
 } // namespace osm_net
