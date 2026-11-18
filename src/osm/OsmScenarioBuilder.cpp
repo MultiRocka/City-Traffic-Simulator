@@ -11,12 +11,58 @@
 
 #include <algorithm>
 #include <cmath>
+#include <limits>
 #include <queue>
 #include <sstream>
 #include <unordered_map>
 #include <unordered_set>
 
 using namespace std;
+
+OsmScenarioConfig OsmScenarioConfig::presetSmall(uint32_t seed) {
+    OsmScenarioConfig c;
+    c.seed = seed;
+    c.intensityPreset = TrafficIntensityPreset::Small;
+    c.continuousDemand = true;
+    c.maxGenerators = 12;
+    c.vehiclesPerGenerator = 0; // continuous — quota unused
+    c.spawnIntervalSeconds = 2.0;
+    c.maxActiveVehicles = 80;
+    c.spatiallyDistributeStarts = true;
+    c.maxRouteHops = 10;
+    c.maxRouteSearchAttempts = 320;
+    return c;
+}
+
+OsmScenarioConfig OsmScenarioConfig::presetMedium(uint32_t seed) {
+    OsmScenarioConfig c;
+    c.seed = seed;
+    c.intensityPreset = TrafficIntensityPreset::Medium;
+    c.continuousDemand = true;
+    c.maxGenerators = 24;
+    c.vehiclesPerGenerator = 0;
+    c.spawnIntervalSeconds = 1.2;
+    c.maxActiveVehicles = 160;
+    c.spatiallyDistributeStarts = true;
+    c.maxRouteHops = 12;
+    c.maxRouteSearchAttempts = 480;
+    return c;
+}
+
+OsmScenarioConfig OsmScenarioConfig::presetLarge(uint32_t seed) {
+    OsmScenarioConfig c;
+    c.seed = seed;
+    c.intensityPreset = TrafficIntensityPreset::Large;
+    c.continuousDemand = true;
+    c.maxGenerators = 40;
+    c.vehiclesPerGenerator = 0;
+    c.spawnIntervalSeconds = 0.8;
+    c.maxActiveVehicles = 280;
+    c.spatiallyDistributeStarts = true;
+    c.maxRouteHops = 14;
+    c.maxRouteSearchAttempts = 640;
+    return c;
+}
 
 namespace {
 
@@ -307,15 +353,33 @@ void attachGeneratedSignals(
     }
 }
 
+Vector2D roadMidpoint(const City& city, int roadId) {
+    const RoadSegment* road = city.findRoadSegmentById(roadId);
+    if (road == nullptr) {
+        return Vector2D(0.0, 0.0);
+    }
+    const Intersection* from = city.findIntersectionById(road->getFromIntersectionId());
+    const Intersection* to = city.findIntersectionById(road->getToIntersectionId());
+    if (from == nullptr || to == nullptr) {
+        return Vector2D(0.0, 0.0);
+    }
+    return Vector2D(
+        0.5 * (from->getPosition().x + to->getPosition().x),
+        0.5 * (from->getPosition().y + to->getPosition().y)
+    );
+}
+
 vector<vector<int>> buildRoutes(
     const City& city,
     const unordered_set<int>& componentRoads,
     const OsmScenarioConfig& config,
     Lcg& rng,
-    size_t& largestReachable
+    size_t& largestReachable,
+    size_t& distinctStarts
 ) {
     vector<vector<int>> routes;
     largestReachable = 0;
+    distinctStarts = 0;
     if (componentRoads.empty()) {
         return routes;
     }
@@ -341,10 +405,12 @@ vector<vector<int>> buildRoutes(
         return true;
     };
 
-    // Prefer starts with the largest directed reachable set inside the component.
+    // Cache directed reachability once per start (was recomputed every attempt).
     struct StartInfo {
         int roadId = -1;
         size_t reach = 0;
+        Vector2D mid;
+        unordered_set<int> reachable;
     };
     vector<StartInfo> starts;
     starts.reserve(roadList.size());
@@ -352,12 +418,18 @@ vector<vector<int>> buildRoutes(
         if (demandComponent.count(roadId) == 0) {
             continue;
         }
-        const size_t reach = directedReachable(city, roadId, demandComponent).size();
+        unordered_set<int> reachSet = directedReachable(city, roadId, demandComponent);
+        const size_t reach = reachSet.size();
         if (reach > largestReachable) {
             largestReachable = reach;
         }
         if (reach >= 1) {
-            starts.push_back({roadId, reach});
+            StartInfo info;
+            info.roadId = roadId;
+            info.reach = reach;
+            info.mid = roadMidpoint(city, roadId);
+            info.reachable = move(reachSet);
+            starts.push_back(move(info));
         }
     }
     sort(starts.begin(), starts.end(), [](const StartInfo& a, const StartInfo& b) {
@@ -368,9 +440,45 @@ vector<vector<int>> buildRoutes(
     });
 
     unordered_set<uint64_t> seenPairs;
+    unordered_set<int> usedStartRoads;
+    vector<Vector2D> usedStartMids;
     auto pairKey = [](int a, int b) -> uint64_t {
         return (static_cast<uint64_t>(static_cast<uint32_t>(a)) << 32) |
                static_cast<uint32_t>(b);
+    };
+
+    auto pickStartIndex = [&](size_t cursor) -> size_t {
+        if (starts.empty()) {
+            return 0;
+        }
+        if (!config.spatiallyDistributeStarts || usedStartMids.empty()) {
+            return cursor % starts.size();
+        }
+
+        // Prefer unused starts that are far from already-chosen entrances.
+        size_t bestIdx = cursor % starts.size();
+        double bestScore = -1.0;
+        const size_t scan = min(starts.size(), static_cast<size_t>(48));
+        for (size_t k = 0; k < scan; ++k) {
+            const size_t idx = (cursor + k) % starts.size();
+            const StartInfo& candidate = starts[idx];
+            // Soft prefer unused entrances; still allow reuse after all starts tried.
+            const double reusePenalty = usedStartRoads.count(candidate.roadId) != 0 ? 0.15 : 1.0;
+            double minDist2 = numeric_limits<double>::infinity();
+            for (const Vector2D& mid : usedStartMids) {
+                const double dx = candidate.mid.x - mid.x;
+                const double dy = candidate.mid.y - mid.y;
+                minDist2 = min(minDist2, dx * dx + dy * dy);
+            }
+            // Blend reach rank (earlier = larger) with spatial separation.
+            const double reachBias = 1.0 + 0.02 * static_cast<double>(candidate.reach);
+            const double score = reusePenalty * reachBias * (std::isfinite(minDist2) ? minDist2 : 1.0);
+            if (score > bestScore) {
+                bestScore = score;
+                bestIdx = idx;
+            }
+        }
+        return bestIdx;
     };
 
     const int want = max(0, config.maxGenerators);
@@ -383,14 +491,13 @@ vector<vector<int>> buildRoutes(
             break;
         }
 
-        const StartInfo& start = starts[startCursor % starts.size()];
+        const size_t startIdx = pickStartIndex(startCursor);
         ++startCursor;
+        const StartInfo& start = starts[startIdx];
 
-        const unordered_set<int> reachable =
-            directedReachable(city, start.roadId, demandComponent);
         vector<int> goals;
-        goals.reserve(reachable.size());
-        for (int goalId : reachable) {
+        goals.reserve(start.reachable.size());
+        for (int goalId : start.reachable) {
             if (goalId == start.roadId) {
                 continue;
             }
@@ -403,6 +510,9 @@ vector<vector<int>> buildRoutes(
                 const uint64_t key = pairKey(start.roadId, start.roadId);
                 if (seenPairs.insert(key).second) {
                     routes.push_back(solo);
+                    if (usedStartRoads.insert(start.roadId).second) {
+                        usedStartMids.push_back(start.mid);
+                    }
                 }
             }
             continue;
@@ -453,8 +563,12 @@ vector<vector<int>> buildRoutes(
             continue;
         }
         routes.push_back(best);
+        if (usedStartRoads.insert(start.roadId).second) {
+            usedStartMids.push_back(start.mid);
+        }
     }
 
+    distinctStarts = usedStartRoads.size();
     return routes;
 }
 
@@ -473,17 +587,23 @@ void attachGenerators(
 
     Lcg rng(mixSeed(config.seed, 0xA11ACCEu));
     size_t largestReachable = 0;
+    size_t distinctStarts = 0;
     const vector<vector<int>> routes =
-        buildRoutes(city, componentRoads, config, rng, largestReachable);
+        buildRoutes(city, componentRoads, config, rng, largestReachable, distinctStarts);
+    result.distinctStartRoadCount = distinctStarts;
 
     ostringstream routingNote;
     routingNote << "Routing limited to largest weakly-connected intersection component ("
                 << componentRoads.size() << " directed roads; max directed reach from a start="
-                << largestReachable << "). PathFinder uses directed edges + City turn disallows "
+                << largestReachable << "; distinct_starts=" << distinctStarts
+                << "; spatial_distribute=" << (config.spatiallyDistributeStarts ? 1 : 0)
+                << "). PathFinder uses directed edges + City turn disallows "
                 << "(MapConnectionDesc from enforced OSM no_*/only_* via-node restrictions). "
                 << "Auto demand skips roads with allowAutoDemand=false (destination/conditional "
                 << "access). turn:lanes / via-way / conditional restrictions remain unsupported.";
     result.notes.push_back(routingNote.str());
+
+    const int quotaPerGenerator = config.continuousDemand ? 0 : config.vehiclesPerGenerator;
 
     int generatorIndex = 0;
     for (const auto& route : routes) {
@@ -495,7 +615,7 @@ void attachGenerators(
         VehicleGenerator generator(
             config.spawnIntervalSeconds,
             speed,
-            config.vehiclesPerGenerator,
+            quotaPerGenerator,
             config.spawnSafeDistance
         );
         generator.setSeed(mixSeed(config.seed, static_cast<uint32_t>(17 + generatorIndex * 31)));
@@ -510,6 +630,27 @@ void attachGenerators(
         ++result.attachedGeneratorCount;
         ++result.routeCount;
         ++generatorIndex;
+    }
+
+    if (config.maxActiveVehicles > 0) {
+        sim.setMaxActiveVehicles(config.maxActiveVehicles);
+    }
+
+    {
+        ostringstream demandNote;
+        demandNote << "Demand mode="
+                   << (config.continuousDemand ? "continuous" : "finite_quota")
+                   << " maxActive=" << config.maxActiveVehicles
+                   << " spawnInterval=" << config.spawnIntervalSeconds << "s"
+                   << " generators=" << result.attachedGeneratorCount
+                   << " preset=";
+        switch (config.intensityPreset) {
+            case TrafficIntensityPreset::Small: demandNote << "small"; break;
+            case TrafficIntensityPreset::Medium: demandNote << "medium"; break;
+            case TrafficIntensityPreset::Large: demandNote << "large"; break;
+            default: demandNote << "custom"; break;
+        }
+        result.notes.push_back(demandNote.str());
     }
 
     if (result.attachedGeneratorCount == 0) {

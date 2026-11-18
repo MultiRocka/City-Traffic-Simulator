@@ -8,6 +8,11 @@ RoadConnection::RoadConnection() : fromRoadId(-1), toRoadId(-1) {
 RoadConnection::RoadConnection(int fromId, int toId) : fromRoadId(fromId), toRoadId(toId) {
 }
 
+uint64_t City::connectionKey(int fromRoadId, int toRoadId) {
+    return (static_cast<uint64_t>(static_cast<uint32_t>(fromRoadId)) << 32) |
+           static_cast<uint32_t>(toRoadId);
+}
+
 City::City() : name("Unnamed City") {
 }
 
@@ -23,11 +28,16 @@ string City::getName() const {
 }
 
 void City::addIntersection(const Intersection& intersection) {
+    intersectionIndexById[intersection.getId()] = intersections.size();
     intersections.push_back(intersection);
 }
 
 void City::addRoadSegment(const RoadSegment& roadSegment) {
+    roadIndexById[roadSegment.getId()] = roadSegments.size();
     roadSegments.push_back(roadSegment);
+
+    roadsFromIntersection[roadSegment.getFromIntersectionId()].push_back(roadSegment.getId());
+    roadsToIntersection[roadSegment.getToIntersectionId()].push_back(roadSegment.getId());
 
     Intersection* fromIntersection = findIntersectionById(roadSegment.getFromIntersectionId());
     Intersection* toIntersection = findIntersectionById(roadSegment.getToIntersectionId());
@@ -50,43 +60,35 @@ const vector<RoadSegment>& City::getRoadSegments() const {
 }
 
 Intersection* City::findIntersectionById(int id) {
-    for (auto& intersection : intersections) {
-        if (intersection.getId() == id) {
-            return &intersection;
-        }
+    const auto it = intersectionIndexById.find(id);
+    if (it == intersectionIndexById.end()) {
+        return nullptr;
     }
-
-    return nullptr;
+    return &intersections[it->second];
 }
 
 RoadSegment* City::findRoadSegmentById(int id) {
-    for (auto& roadSegment : roadSegments) {
-        if (roadSegment.getId() == id) {
-            return &roadSegment;
-        }
+    const auto it = roadIndexById.find(id);
+    if (it == roadIndexById.end()) {
+        return nullptr;
     }
-
-    return nullptr;
+    return &roadSegments[it->second];
 }
 
 const Intersection* City::findIntersectionById(int id) const {
-    for (const auto& intersection : intersections) {
-        if (intersection.getId() == id) {
-            return &intersection;
-        }
+    const auto it = intersectionIndexById.find(id);
+    if (it == intersectionIndexById.end()) {
+        return nullptr;
     }
-
-    return nullptr;
+    return &intersections[it->second];
 }
 
 const RoadSegment* City::findRoadSegmentById(int id) const {
-    for (const auto& roadSegment : roadSegments) {
-        if (roadSegment.getId() == id) {
-            return &roadSegment;
-        }
+    const auto it = roadIndexById.find(id);
+    if (it == roadIndexById.end()) {
+        return nullptr;
     }
-
-    return nullptr;
+    return &roadSegments[it->second];
 }
 
 void City::disallowConnection(int fromRoadId, int toRoadId) {
@@ -95,16 +97,11 @@ void City::disallowConnection(int fromRoadId, int toRoadId) {
     }
 
     disallowedConnections.push_back(RoadConnection(fromRoadId, toRoadId));
+    disallowedConnectionKeys.insert(connectionKey(fromRoadId, toRoadId));
 }
 
 bool City::isConnectionDisallowed(int fromRoadId, int toRoadId) const {
-    for (const auto& connection : disallowedConnections) {
-        if (connection.fromRoadId == fromRoadId && connection.toRoadId == toRoadId) {
-            return true;
-        }
-    }
-
-    return false;
+    return disallowedConnectionKeys.count(connectionKey(fromRoadId, toRoadId)) != 0;
 }
 
 const vector<RoadConnection>& City::getDisallowedConnections() const {
@@ -152,13 +149,15 @@ vector<int> City::getOutgoingRoadIds(int roadId) const {
         return outgoingRoadIds;
     }
 
-    int intersectionId = road->getToIntersectionId();
+    const int intersectionId = road->getToIntersectionId();
+    const auto it = roadsFromIntersection.find(intersectionId);
+    if (it == roadsFromIntersection.end()) {
+        return outgoingRoadIds;
+    }
 
-    for (const auto& candidateRoad : roadSegments) {
-        if (candidateRoad.getFromIntersectionId() == intersectionId &&
-            candidateRoad.getId() != roadId &&
-            areRoadsConnected(roadId, candidateRoad.getId())) {
-            outgoingRoadIds.push_back(candidateRoad.getId());
+    for (int candidateId : it->second) {
+        if (candidateId != roadId && areRoadsConnected(roadId, candidateId)) {
+            outgoingRoadIds.push_back(candidateId);
         }
     }
 
@@ -173,13 +172,15 @@ vector<int> City::getIncomingRoadIds(int roadId) const {
         return incomingRoadIds;
     }
 
-    int intersectionId = road->getFromIntersectionId();
+    const int intersectionId = road->getFromIntersectionId();
+    const auto it = roadsToIntersection.find(intersectionId);
+    if (it == roadsToIntersection.end()) {
+        return incomingRoadIds;
+    }
 
-    for (const auto& candidateRoad : roadSegments) {
-        if (candidateRoad.getToIntersectionId() == intersectionId &&
-            candidateRoad.getId() != roadId &&
-            areRoadsConnected(candidateRoad.getId(), roadId)) {
-            incomingRoadIds.push_back(candidateRoad.getId());
+    for (int candidateId : it->second) {
+        if (candidateId != roadId && areRoadsConnected(candidateId, roadId)) {
+            incomingRoadIds.push_back(candidateId);
         }
     }
 
@@ -187,12 +188,11 @@ vector<int> City::getIncomingRoadIds(int roadId) const {
 }
 
 vector<int> City::getRoadIdsAtIntersection(int intersectionId) const {
-    vector<int> roadIds;
     const Intersection* intersection = findIntersectionById(intersectionId);
 
     if (intersection != nullptr) {
         return intersection->getConnectedRoadIds();
     }
 
-    return roadIds;
+    return {};
 }

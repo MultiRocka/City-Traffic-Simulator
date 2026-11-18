@@ -51,6 +51,8 @@ int runGeometryControlTests();
 int geometryControlPassedCount();
 int runTrafficBaselineTests();
 int trafficBaselinePassedCount();
+int runEtap3TrafficTests();
+int etap3TrafficPassedCount();
 #if defined(_WIN32)
 int runEncodingTests();
 int encodingPassedCount();
@@ -1514,6 +1516,10 @@ int main() {
     const int trafficFailures = runTrafficBaselineTests();
     g_failures += trafficFailures;
     g_passed += trafficBaselinePassedCount();
+
+    const int etap3Failures = runEtap3TrafficTests();
+    g_failures += etap3Failures;
+    g_passed += etap3TrafficPassedCount();
 
     const int encodingFailures = runEncodingTests();
     g_failures += encodingFailures;

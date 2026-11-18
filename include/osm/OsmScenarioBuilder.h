@@ -18,15 +18,34 @@ using namespace std;
 // Honors MapConnectionDesc turn disallows and RoadSegment::allowAutoDemand from Stage 3.
 // Does not invent extra restrictions beyond the imported map.
 
+enum class TrafficIntensityPreset {
+    Custom = 0,
+    Small = 1,
+    Medium = 2,
+    Large = 3
+};
+
 struct OsmScenarioConfig {
     uint32_t seed = VehicleGenerator::defaultSeed;
 
-    // Finite demand — not an endless flood.
+    // Finite demand — not an endless flood (unless continuousDemand).
     int maxGenerators = 8;
     int vehiclesPerGenerator = 5;
     double spawnIntervalSeconds = 2.5;
     double spawnSafeDistance = 6.0;
     double minVehicleGap = 4.0;
+
+    // Etap 3: continuous urban demand. When true, generators keep spawning (no finite
+    // per-generator quota). Soft concurrent cap is maxActiveVehicles (0 = unlimited).
+    // Vehicles are never deleted to free slots; no unbounded spawn request queue.
+    bool continuousDemand = false;
+    int maxActiveVehicles = 0;
+
+    // Prefer spatially spread starts (reduces entrance pile-up vs reach-sorted only).
+    bool spatiallyDistributeStarts = true;
+
+    // Named intensity presets (visible limit + intensity). Custom leaves fields as set.
+    TrafficIntensityPreset intensityPreset = TrafficIntensityPreset::Custom;
 
     // Generated PhaseController greens (seconds per approach phase).
     double phaseGreenSeconds = 8.0;
@@ -51,6 +70,11 @@ struct OsmScenarioConfig {
     // Dense OSM extracts often tag many traffic_signals; unlimited sequential greens
     // creates long cycles that prevent credible completion in offline checks.
     int maxGeneratedPhaseControllers = 24;
+
+    // Factory helpers — set continuousDemand, maxActive, generators, interval.
+    static OsmScenarioConfig presetSmall(uint32_t seed = VehicleGenerator::defaultSeed);
+    static OsmScenarioConfig presetMedium(uint32_t seed = VehicleGenerator::defaultSeed);
+    static OsmScenarioConfig presetLarge(uint32_t seed = VehicleGenerator::defaultSeed);
 };
 
 struct OsmScenarioResult {
@@ -66,6 +90,7 @@ struct OsmScenarioResult {
     size_t attachedGeneratorCount = 0;
     size_t routeCount = 0;
     size_t largestComponentRoadCount = 0;
+    size_t distinctStartRoadCount = 0;
 
     // Human-readable notes (generated signals, routing limits, etc.).
     vector<string> notes;

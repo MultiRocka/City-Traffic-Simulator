@@ -10,6 +10,7 @@ Simulation::Simulation()
       currentTime(0.0),
       vehicleSpawnRateMultiplier(1.0),
       minVehicleGap(2.5),
+      maxActiveVehicles(0),
       nextVehicleId(1),
       collisionDetector(minVehicleGap) {
 }
@@ -31,6 +32,7 @@ void Simulation::clear() {
     vehicleSpawnBaselines.clear();
     vehicleSpawnRateMultiplier = 1.0;
     minVehicleGap = 2.5;
+    maxActiveVehicles = 0;
     collisionDetector.setMinVehicleGap(minVehicleGap);
     intersectionRules.clear();
     nextVehicleId = 1;
@@ -152,8 +154,18 @@ void Simulation::update(double dt, const City& city) {
         }
     }
 
+    int activeForSpawn = countActiveVehicles();
     for (auto& generator : generators) {
-        generator.update(dt, vehicles, nextVehicleId, &city, &laneBlockageManager, currentTime);
+        generator.update(
+            dt,
+            vehicles,
+            nextVehicleId,
+            &city,
+            &laneBlockageManager,
+            currentTime,
+            &activeForSpawn,
+            maxActiveVehicles
+        );
     }
 
     for (const auto& vehicle : vehicles) {
@@ -239,7 +251,7 @@ void Simulation::update(double dt, const City& city) {
             });
 
         for (Vehicle* vehiclePtr : vehiclesOnRoad) {
-            const Vehicle* leader = collisionDetector.findPredecessor(*vehiclePtr, vehicles);
+            const Vehicle* leader = collisionDetector.findPredecessorOnRoad(*vehiclePtr, vehiclesOnRoad);
             double aheadPosition = -1.0;
             double aheadLength = 0.0;
 
@@ -570,6 +582,24 @@ vector<VehicleGenerator>& Simulation::getVehicleGenerators() {
 
 const vector<VehicleGenerator>& Simulation::getVehicleGenerators() const {
     return generators;
+}
+
+void Simulation::setMaxActiveVehicles(int limit) {
+    maxActiveVehicles = max(0, limit);
+}
+
+int Simulation::getMaxActiveVehicles() const {
+    return maxActiveVehicles;
+}
+
+int Simulation::countActiveVehicles() const {
+    int active = 0;
+    for (const auto& vehicle : vehicles) {
+        if (!vehicle.isFinished()) {
+            ++active;
+        }
+    }
+    return active;
 }
 
 void Simulation::captureVehicleSpawnBaselines() {

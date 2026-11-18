@@ -34,7 +34,10 @@ static string escapeJsonString(const string& value) {
     return escaped;
 }
 
-EventLog::EventLog() : outputFilePath("event_log.json") {
+EventLog::EventLog()
+    : outputFilePath("event_log.json"),
+      maxEvents(defaultMaxEvents),
+      droppedEvents(0) {
 }
 
 void EventLog::setOutputFile(const string& filePath) {
@@ -43,9 +46,33 @@ void EventLog::setOutputFile(const string& filePath) {
 
 void EventLog::clear() {
     events.clear();
+    droppedEvents = 0;
+}
+
+void EventLog::setMaxEvents(size_t limit) {
+    maxEvents = limit;
+    if (maxEvents > 0 && events.size() > maxEvents) {
+        const size_t overflow = events.size() - maxEvents;
+        events.erase(events.begin(), events.begin() + static_cast<long>(overflow));
+        droppedEvents += overflow;
+    }
+}
+
+size_t EventLog::getMaxEvents() const {
+    return maxEvents;
+}
+
+size_t EventLog::getDroppedEventCount() const {
+    return droppedEvents;
 }
 
 void EventLog::addEvent(double time, const string& type, int vehicleId, int roadId, const string& reason, const string& description) {
+    if (maxEvents > 0 && events.size() >= maxEvents) {
+        // Hard cap: stop accepting rather than unbounded growth on continuous runs.
+        ++droppedEvents;
+        return;
+    }
+
     SimulationEvent event;
     event.time = time;
     event.type = type;
