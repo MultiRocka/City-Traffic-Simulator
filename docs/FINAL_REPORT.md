@@ -1,7 +1,7 @@
 # Easy Rider — Final integration report (Etap 5 draft)
 
 **Status:** draft for Independent Review. **No blanket PASS.**  
-**Stack:** PR [#1](https://github.com/MultiRocka/City-Traffic-Simulator/pull/1) → [#2](https://github.com/MultiRocka/City-Traffic-Simulator/pull/2) → [#3](https://github.com/MultiRocka/City-Traffic-Simulator/pull/3) → [#5](https://github.com/MultiRocka/City-Traffic-Simulator/pull/5) → [#6](https://github.com/MultiRocka/City-Traffic-Simulator/pull/6) → Etap 5 cleanup/docs.  
+**Stack:** PR [#1](https://github.com/MultiRocka/City-Traffic-Simulator/pull/1) → [#2](https://github.com/MultiRocka/City-Traffic-Simulator/pull/2) → [#3](https://github.com/MultiRocka/City-Traffic-Simulator/pull/3) → [#5](https://github.com/MultiRocka/City-Traffic-Simulator/pull/5) → [#6](https://github.com/MultiRocka/City-Traffic-Simulator/pull/6) → [#7](https://github.com/MultiRocka/City-Traffic-Simulator/pull/7) (cleanup/docs).  
 **UI stack:** native **Win32 GDI** only — **no Qt** in this tree.
 
 This file is the in-repo mirror of the Project store report. Prefer the store copy under Project Context `docs/final-report.md` for the full kickoff §14 sections and absolute evidence paths.
@@ -29,7 +29,7 @@ Mature C++17 Easy Rider: `core` → `ui` → Win32 `gui`, OSM Overpass pipeline,
 | 2 Geometry | #3 | Degree-2 `<5 m` stub merge; turn-aware entry lane; shorts **57→18**; components **9** |
 | 3 Traffic | #5 | `continuousDemand` + soft `maxActive`; presets; peak **~964** @ 1000; route prep ~3 s→~0.2 s |
 | 4 Selection | #6 | Win32 locator pin+size / rectangle; bbox≡query≡cache; 1032 PASS / 0 FAIL offline |
-| 5 Cleanup | (this) | Proven cruft removal + docs clarifications + this report |
+| 5 Cleanup | #7 | Proven cruft removal + docs clarifications + this report |
 
 ## Roads / vehicles / selection (measured)
 
