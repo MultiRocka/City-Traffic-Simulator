@@ -14,7 +14,7 @@ This file is the in-repo mirror of the Project store report. Prefer the store co
 | Continuous traffic | **Improved (measured)** | Presets fill soft caps 80/160/280; continuous probe peaks ~964 / 1000 (cap unbound) |
 | Map selection | **Implemented (code+tests)** | Pin+size + rectangle + text search; **no Windows visual PASS** from Linux cloud |
 | Cleanup | **Conservative** | Removed tracked `diag*.obj` + tracked `event_log.json`; ignored `*.obj`/`*.o`/`*.pdb` |
-| Integration | **Draft** | Linux offline suite green on Etap 4 head; GUI checklist still Windows-only |
+| Integration | **Draft (PARTIAL)** | Independently confirmed **1032 PASS / 0 FAIL** on PR #7 @ `e7634e9`; GUI checklist still Windows-only |
 
 ## As found (Etap 0)
 
@@ -48,8 +48,9 @@ Mature C++17 Easy Rider: `core` → `ui` → Win32 `gui`, OSM Overpass pipeline,
 ## Verification
 
 - Etap 4 independent review: **1032 PASS / 0 FAIL** on Linux (`easy_rider_motion_tests`).
+- **Etap 5 / Integration (PR #7 @ `e7634e9`):** independently confirmed **1032 PASS / 0 FAIL** (cruft/docs only; no logic change).
 - **No Win32 visual PASS** claimed from this cloud environment.
-- Etap 5: same Linux suite expected green after doc/cruft-only changes.
+- Finite-demand rows labeled “~200” in summaries mean configured demand **208** (Etap 1/3 baselines).
 
 ## How to run
 
