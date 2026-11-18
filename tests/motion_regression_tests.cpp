@@ -47,6 +47,8 @@ int runMapCameraTests();
 int mapCameraPassedCount();
 int runMapDownloadTests();
 int mapDownloadPassedCount();
+int runLocatorSelectionTests();
+int locatorSelectionPassedCount();
 int runGeometryControlTests();
 int geometryControlPassedCount();
 int runTrafficBaselineTests();
@@ -1508,6 +1510,10 @@ int main() {
     const int downloadFailures = runMapDownloadTests();
     g_failures += downloadFailures;
     g_passed += mapDownloadPassedCount();
+
+    const int locatorFailures = runLocatorSelectionTests();
+    g_failures += locatorFailures;
+    g_passed += locatorSelectionPassedCount();
 
     const int geometryFailures = runGeometryControlTests();
     g_failures += geometryFailures;

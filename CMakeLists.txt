@@ -168,6 +168,7 @@ add_executable(easy_rider_motion_tests
     tests/osm_larger_map_tests.cpp
     tests/osm_session_tests.cpp
     tests/map_download_tests.cpp
+    tests/locator_selection_tests.cpp
     tests/geometry_control_tests.cpp
     tests/traffic_baseline_tests.cpp
     tests/etap3_traffic_tests.cpp

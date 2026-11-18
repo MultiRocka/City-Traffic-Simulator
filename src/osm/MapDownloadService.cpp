@@ -251,32 +251,24 @@ GeocodeResult MapDownloadService::searchPlaces(
     return parsed;
 }
 
-MapFetchResult MapDownloadService::downloadRoads(
-    double latDeg,
-    double lonDeg,
-    double radiusMeters,
+MapFetchResult MapDownloadService::downloadRoadsForBbox(
+    const GeoBbox& bbox,
     bool forceRefresh,
     std::atomic<bool>* cancelFlag,
     ProgressFn progress
 ) {
     MapFetchResult result;
-    result.radiusMeters = radiusMeters;
+    result.bbox = bbox;
 
-    std::string radiusError;
-    if (!radiusAllowed(radiusMeters, radiusError)) {
-        result.error = radiusError;
+    std::string bboxError;
+    if (!bboxAllowed(bbox, bboxError)) {
+        result.error = bboxError;
         return result;
     }
 
-    result.bbox = bboxFromRadiusMeters(latDeg, lonDeg, radiusMeters);
-    if (!result.bbox.isValid()) {
-        result.error = "Invalid bounding box for the selected place/radius.";
-        return result;
-    }
-    if (result.bbox.areaKm2() > kMaxDownloadAreaKm2) {
-        result.error = "Download area too large — choose a smaller radius.";
-        return result;
-    }
+    // Approximate "radius" for UI/legacy callers: half the larger side.
+    const BboxDimensionsMeters dims = bboxDimensionsMeters(bbox);
+    result.radiusMeters = 0.5 * std::max(dims.widthMeters, dims.heightMeters);
 
     const std::string bboxKey = result.bbox.toKey(5);
     result.cachePath = cache_.overpassPath(bboxKey);
@@ -302,6 +294,7 @@ MapFetchResult MapDownloadService::downloadRoads(
         progress("Pobieranie dróg (Overpass) — obszar prostokątny…");
     }
 
+    // Query bbox string must equal cache key (toKey(5) == toOverpassBBox()).
     const std::string query = buildRoadNetworkQuery(result.bbox);
     HttpRequest req;
     req.method = "POST";
@@ -348,6 +341,34 @@ MapFetchResult MapDownloadService::downloadRoads(
     result.ok = true;
     result.fromCache = false;
     result.responseBytes = http.body.size();
+    return result;
+}
+
+MapFetchResult MapDownloadService::downloadRoads(
+    double latDeg,
+    double lonDeg,
+    double radiusMeters,
+    bool forceRefresh,
+    std::atomic<bool>* cancelFlag,
+    ProgressFn progress
+) {
+    MapFetchResult result;
+    result.radiusMeters = radiusMeters;
+
+    std::string radiusError;
+    if (!radiusAllowed(radiusMeters, radiusError)) {
+        result.error = radiusError;
+        return result;
+    }
+
+    const GeoBbox box = bboxFromRadiusMeters(latDeg, lonDeg, radiusMeters);
+    if (!box.isValid()) {
+        result.error = "Invalid bounding box for the selected place/radius.";
+        return result;
+    }
+
+    result = downloadRoadsForBbox(box, forceRefresh, cancelFlag, progress);
+    result.radiusMeters = radiusMeters;
     return result;
 }
 
