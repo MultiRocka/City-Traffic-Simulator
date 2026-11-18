@@ -5,6 +5,10 @@ simulation_summary.csv
 simulation_timeline.csv
 event_log.json
 *.csv
+# MSVC/local compiler leftovers (never commit)
+*.obj
+*.o
+*.pdb
 
 # OSM fetch temps / partial downloads (keep committed sample + fixtures)
 data/osm/.*.tmp
@@ -20,3 +24,5 @@ data/cache/overpass/
 data/cache/**/*.tmp
 data/cache/**/.*.tmp
 tests/output/cache_stage3/
+# Local/agent CMake build trees
+build-*/
